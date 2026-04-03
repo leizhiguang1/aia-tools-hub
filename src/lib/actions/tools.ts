@@ -22,6 +22,7 @@ export async function createToolAction(formData: FormData) {
     url: formData.get("url") as string,
     icon: (formData.get("icon") as string) || "",
     category_id: formData.get("category_id") as string,
+    pricing: (formData.get("pricing") as string) || "freemium",
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
     is_published: formData.get("is_published") === "on" ? 1 : 0,
   });
@@ -38,6 +39,7 @@ export async function updateToolAction(id: string, formData: FormData) {
     url: formData.get("url") as string,
     icon: (formData.get("icon") as string) || "",
     category_id: formData.get("category_id") as string,
+    pricing: (formData.get("pricing") as string) || "freemium",
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
     is_published: formData.get("is_published") === "on" ? 1 : 0,
   });

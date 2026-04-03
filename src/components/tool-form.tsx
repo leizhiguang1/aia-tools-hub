@@ -49,7 +49,7 @@ export function ToolForm({
         <Textarea id="description_en" name="description_en" defaultValue={tool?.description_en} rows={2} />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         <div className="space-y-2">
           <Label htmlFor="category_id">分类</Label>
           <Select name="category_id" defaultValue={tool?.category_id}>
@@ -62,6 +62,19 @@ export function ToolForm({
                   {cat.name_zh}
                 </SelectItem>
               ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="pricing">价格</Label>
+          <Select name="pricing" defaultValue={tool?.pricing ?? "freemium"}>
+            <SelectTrigger>
+              <SelectValue placeholder="选择价格" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="free">免费 Free</SelectItem>
+              <SelectItem value="freemium">免费+付费 Freemium</SelectItem>
+              <SelectItem value="paid">付费 Paid</SelectItem>
             </SelectContent>
           </Select>
         </div>

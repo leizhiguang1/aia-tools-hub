@@ -79,24 +79,24 @@ export async function getToolById(id: string) {
 
 export async function createTool(data: {
   id: string; name: string; description_zh: string; description_en: string;
-  url: string; icon: string; category_id: string;
+  url: string; icon: string; category_id: string; pricing: string;
   sort_order: number; is_published: number;
 }) {
   await db.execute({
-    sql: `INSERT INTO tools (id, name, description_zh, description_en, url, icon, category_id, sort_order, is_published)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    args: [data.id, data.name, data.description_zh, data.description_en, data.url, data.icon, data.category_id, data.sort_order, data.is_published],
+    sql: `INSERT INTO tools (id, name, description_zh, description_en, url, icon, category_id, pricing, sort_order, is_published)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    args: [data.id, data.name, data.description_zh, data.description_en, data.url, data.icon, data.category_id, data.pricing, data.sort_order, data.is_published],
   });
 }
 
 export async function updateTool(id: string, data: {
   name: string; description_zh: string; description_en: string;
-  url: string; icon: string; category_id: string;
+  url: string; icon: string; category_id: string; pricing: string;
   sort_order: number; is_published: number;
 }) {
   await db.execute({
-    sql: `UPDATE tools SET name = ?, description_zh = ?, description_en = ?, url = ?, icon = ?, category_id = ?, sort_order = ?, is_published = ?, updated_at = unixepoch() WHERE id = ?`,
-    args: [data.name, data.description_zh, data.description_en, data.url, data.icon, data.category_id, data.sort_order, data.is_published, id],
+    sql: `UPDATE tools SET name = ?, description_zh = ?, description_en = ?, url = ?, icon = ?, category_id = ?, pricing = ?, sort_order = ?, is_published = ?, updated_at = unixepoch() WHERE id = ?`,
+    args: [data.name, data.description_zh, data.description_en, data.url, data.icon, data.category_id, data.pricing, data.sort_order, data.is_published, id],
   });
 }
 

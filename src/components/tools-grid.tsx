@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { TagList } from "@/components/tag-list";
 import type { Tool, Category } from "@/types";
@@ -103,30 +101,52 @@ export function ToolsGrid({
   );
 }
 
+const pricingLabel: Record<string, { text: string; className: string }> = {
+  free: { text: "免费", className: "bg-green-50 text-green-600 ring-green-200" },
+  freemium: { text: "免费+付费", className: "bg-blue-50 text-blue-600 ring-blue-200" },
+  paid: { text: "付费", className: "bg-amber-50 text-amber-600 ring-amber-200" },
+};
+
 function ToolCard({ tool }: { tool: Tool }) {
+  const pricing = pricingLabel[tool.pricing] || pricingLabel.freemium;
   return (
-    <Card className="hover:shadow-md transition-shadow">
-      <CardContent className="p-5">
-        <div className="flex items-start gap-3 mb-3">
-          {tool.icon?.startsWith("http") ? (
-            <img src={tool.icon} alt={tool.name} className="w-8 h-8 object-contain" />
-          ) : (
-            <span className="text-3xl">{tool.icon}</span>
-          )}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="font-semibold text-base">{tool.name}</h3>
-              <TagList tags={tool.tag_list || []} max={2} size="xs" />
-            </div>
-          </div>
+    <a
+      href={tool.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative flex flex-col gap-3 rounded-xl bg-card p-4 text-sm text-card-foreground ring-1 ring-foreground/10 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:ring-foreground/20"
+    >
+      {/* Pricing pill — top-right */}
+      <span
+        className={cn(
+          "absolute top-3 right-3 text-[10px] font-medium px-2 py-0.5 rounded-full ring-1",
+          pricing.className
+        )}
+      >
+        {pricing.text}
+      </span>
+
+      {/* Icon + Name */}
+      <div className="flex items-center gap-3 pr-16">
+        {tool.icon?.startsWith("http") ? (
+          <img src={tool.icon} alt="" className="w-10 h-10 rounded-lg object-contain shrink-0" />
+        ) : (
+          <span className="text-4xl leading-none shrink-0">{tool.icon}</span>
+        )}
+        <h3 className="font-semibold text-base truncate">{tool.name}</h3>
+      </div>
+
+      {/* Description */}
+      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+        {tool.description_zh}
+      </p>
+
+      {/* Tags — bottom */}
+      {tool.tag_list && tool.tag_list.length > 0 && (
+        <div className="mt-auto pt-1">
+          <TagList tags={tool.tag_list} max={3} size="xs" />
         </div>
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-          {tool.description_zh}
-        </p>
-        <a href={tool.url} target="_blank" rel="noopener noreferrer" className={cn(buttonVariants({ variant: "outline", size: "sm" }), "w-full")}>
-            访问工具
-          </a>
-      </CardContent>
-    </Card>
+      )}
+    </a>
   );
 }
