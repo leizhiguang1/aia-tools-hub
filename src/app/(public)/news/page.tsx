@@ -1,8 +1,8 @@
 import { getPosts, getTagsForPosts } from "@/db/queries";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button-variants";
+import { TagList } from "@/components/tag-list";
 
 
 export default async function NewsPage({
@@ -57,16 +57,7 @@ export default async function NewsPage({
                       {post.excerpt_zh}
                     </p>
                     <div className="flex items-center gap-2">
-                      {post.tag_list?.map((tag) => (
-                        <Badge
-                          key={tag.id}
-                          variant="outline"
-                          className="text-xs"
-                          style={tag.color ? { backgroundColor: tag.color, color: "#fff", borderColor: tag.color } : undefined}
-                        >
-                          {tag.name_zh}
-                        </Badge>
-                      ))}
+                      <TagList tags={post.tag_list || []} max={3} size="xs" />
                     </div>
                   </div>
                 </div>

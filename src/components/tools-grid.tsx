@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { TagList } from "@/components/tag-list";
 import type { Tool, Category } from "@/types";
 
 export function ToolsGrid({
@@ -116,16 +116,7 @@ function ToolCard({ tool }: { tool: Tool }) {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h3 className="font-semibold text-base">{tool.name}</h3>
-              {tool.tag_list?.map((tag) => (
-                <Badge
-                  key={tag.id}
-                  variant="secondary"
-                  className="text-xs"
-                  style={tag.color ? { backgroundColor: tag.color, color: "#fff" } : undefined}
-                >
-                  {tag.name_zh}
-                </Badge>
-              ))}
+              <TagList tags={tool.tag_list || []} max={2} size="xs" />
             </div>
           </div>
         </div>

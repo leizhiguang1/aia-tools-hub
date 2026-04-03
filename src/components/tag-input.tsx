@@ -4,22 +4,9 @@ import { useState, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { TAG_COLORS, TAG_COLOR_NAMES, getTagColorStyle } from "@/lib/tag-colors";
 import { createTagInlineAction } from "@/lib/actions/tags";
 import type { Tag } from "@/types";
-
-const PRESET_COLORS = [
-  "#6366f1", // indigo
-  "#3b82f6", // blue
-  "#0ea5e9", // sky
-  "#10b981", // green
-  "#22c55e", // emerald
-  "#f59e0b", // amber
-  "#f97316", // orange
-  "#ef4444", // red
-  "#ec4899", // pink
-  "#8b5cf6", // purple
-  "#64748b", // slate
-];
 
 export function TagInput({
   allTags,
@@ -35,7 +22,7 @@ export function TagInput({
   const [showCreate, setShowCreate] = useState(false);
   const [newNameZh, setNewNameZh] = useState("");
   const [newNameEn, setNewNameEn] = useState("");
-  const [newColor, setNewColor] = useState(PRESET_COLORS[0]);
+  const [newColor, setNewColor] = useState("blue");
   const [creating, setCreating] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -66,7 +53,7 @@ export function TagInput({
       setSelected((prev) => new Set(prev).add(tag.id));
       setNewNameZh("");
       setNewNameEn("");
-      setNewColor(PRESET_COLORS[0]);
+      setNewColor("blue");
       setShowCreate(false);
     } finally {
       setCreating(false);
@@ -80,6 +67,7 @@ export function TagInput({
       <div className="flex flex-wrap gap-2 items-center">
         {tags.map((tag) => {
           const isSelected = selected.has(tag.id);
+          const style = getTagColorStyle(tag.color);
           return (
             <button
               key={tag.id}
@@ -88,15 +76,17 @@ export function TagInput({
               className="focus:outline-none"
             >
               <Badge
-                variant={isSelected ? "default" : "outline"}
-                className="cursor-pointer transition-colors"
-                style={
-                  isSelected && tag.color
-                    ? { backgroundColor: tag.color, borderColor: tag.color, color: "#fff" }
-                    : tag.color
-                    ? { borderColor: tag.color, color: tag.color }
-                    : undefined
-                }
+                variant="outline"
+                className={cn(
+                  "cursor-pointer transition-all",
+                  isSelected ? "ring-2 ring-offset-1 ring-offset-background" : "opacity-60 hover:opacity-100"
+                )}
+                style={{
+                  backgroundColor: style.backgroundColor,
+                  color: style.color,
+                  borderColor: style.borderColor,
+                  ...(isSelected ? { ringColor: style.borderColor } as Record<string, string> : {}),
+                }}
               >
                 {tag.name_zh}
                 {tag.name_en && <span className="ml-1 opacity-60 text-xs">({tag.name_en})</span>}
@@ -147,29 +137,33 @@ export function TagInput({
             />
           </div>
 
-          {/* Color picker - preset swatches */}
+          {/* Color picker - Notion-style named colors */}
           <div className="flex flex-wrap gap-1.5">
-            {PRESET_COLORS.map((color) => (
-              <button
-                key={color}
-                type="button"
-                onClick={() => setNewColor(color)}
-                className={cn(
-                  "w-6 h-6 rounded-full transition-all",
-                  newColor === color ? "ring-2 ring-offset-2 ring-offset-background ring-foreground scale-110" : "hover:scale-110"
-                )}
-                style={{ backgroundColor: color }}
-              />
-            ))}
+            {TAG_COLOR_NAMES.map((name) => {
+              const c = TAG_COLORS[name];
+              return (
+                <button
+                  key={name}
+                  type="button"
+                  onClick={() => setNewColor(name)}
+                  className={cn(
+                    "w-6 h-6 rounded-full transition-all border",
+                    newColor === name ? "ring-2 ring-offset-2 ring-offset-background ring-foreground scale-110" : "hover:scale-110"
+                  )}
+                  style={{ backgroundColor: c.bg, borderColor: c.ring }}
+                  title={name}
+                />
+              );
+            })}
           </div>
 
           {/* Preview + actions */}
           <div className="flex items-center gap-2">
             {newNameZh.trim() && (
               <Badge
-                variant="default"
+                variant="outline"
                 className="pointer-events-none"
-                style={{ backgroundColor: newColor, borderColor: newColor, color: "#fff" }}
+                style={getTagColorStyle(newColor)}
               >
                 {newNameZh.trim()}
                 {newNameEn.trim() && <span className="ml-1 opacity-60 text-xs">({newNameEn.trim()})</span>}

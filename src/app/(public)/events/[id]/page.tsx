@@ -2,8 +2,8 @@ import { getEventById, getTagsForEvent } from "@/db/queries";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button-variants";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { TagList } from "@/components/tag-list";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -53,16 +53,8 @@ export default async function EventDetailPage({
         )}
       </div>
 
-      <div className="flex gap-2 mb-6">
-        {tags.map((tag) => (
-          <Badge
-            key={tag.id}
-            variant="outline"
-            style={tag.color ? { backgroundColor: tag.color, color: "#fff", borderColor: tag.color } : undefined}
-          >
-            {tag.name_zh}
-          </Badge>
-        ))}
+      <div className="mb-6">
+        <TagList tags={tags} max={10} />
       </div>
 
       {event.external_url && (

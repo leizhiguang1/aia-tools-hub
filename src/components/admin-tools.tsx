@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { DeleteButton } from "@/components/admin-delete-button";
 import { ToolForm } from "@/components/tool-form";
 import { createToolAction, updateToolAction, deleteToolAction } from "@/lib/actions/tools";
+import { TagList } from "@/components/tag-list";
 import type { Tool, Category, Tag } from "@/types";
 
 interface AdminToolsProps {
@@ -96,17 +97,7 @@ export function AdminTools({ tools, tagRecord, categories, allTags }: AdminTools
               <TableCell className="font-medium">{tool.name}</TableCell>
               <TableCell>{tool.category_name_zh}</TableCell>
               <TableCell>
-                <div className="flex gap-1 flex-wrap">
-                  {(tagRecord[tool.id] || []).map((tag) => (
-                    <Badge
-                      key={tag.id}
-                      variant="secondary"
-                      style={tag.color ? { backgroundColor: tag.color, color: "#fff" } : undefined}
-                    >
-                      {tag.name_zh}
-                    </Badge>
-                  ))}
-                </div>
+                <TagList tags={tagRecord[tool.id] || []} max={2} size="xs" />
               </TableCell>
               <TableCell>{tool.sort_order}</TableCell>
               <TableCell>

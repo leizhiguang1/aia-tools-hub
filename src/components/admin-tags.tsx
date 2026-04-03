@@ -8,20 +8,25 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DeleteButton } from "@/components/admin-delete-button";
+import { cn } from "@/lib/utils";
+import { TAG_COLORS, TAG_COLOR_NAMES, getTagColorStyle } from "@/lib/tag-colors";
 import { createTagAction, updateTagAction, deleteTagAction } from "@/lib/actions/tags";
 import type { Tag } from "@/types";
 
 export function AdminTags({ tags }: { tags: Tag[] }) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Tag | null>(null);
+  const [selectedColor, setSelectedColor] = useState("blue");
 
   function openCreate() {
     setEditing(null);
+    setSelectedColor("blue");
     setOpen(true);
   }
 
   function openEdit(tag: Tag) {
     setEditing(tag);
+    setSelectedColor(tag.color || "default");
     setOpen(true);
   }
 
@@ -31,6 +36,7 @@ export function AdminTags({ tags }: { tags: Tag[] }) {
   }
 
   const formAction = async (formData: FormData) => {
+    formData.set("color", selectedColor);
     if (editing) {
       await updateTagAction(editing.id, formData);
     } else {
@@ -66,8 +72,27 @@ export function AdminTags({ tags }: { tags: Tag[] }) {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="color">颜色</Label>
-                <Input id="color" name="color" type="color" defaultValue={editing?.color || "#6366f1"} className="w-16 h-9 p-1" />
+                <Label>颜色</Label>
+                <div className="flex flex-wrap gap-1.5">
+                  {TAG_COLOR_NAMES.map((name) => {
+                    const c = TAG_COLORS[name];
+                    return (
+                      <button
+                        key={name}
+                        type="button"
+                        onClick={() => setSelectedColor(name)}
+                        className={cn(
+                          "w-7 h-7 rounded-md transition-all border text-[10px] font-medium",
+                          selectedColor === name ? "ring-2 ring-offset-1 ring-offset-background ring-foreground scale-110" : "hover:scale-105"
+                        )}
+                        style={{ backgroundColor: c.bg, borderColor: c.ring, color: c.text }}
+                        title={name}
+                      >
+                        {selectedColor === name ? "✓" : ""}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="sort_order">排序</Label>
@@ -84,37 +109,27 @@ export function AdminTags({ tags }: { tags: Tag[] }) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>预览</TableHead>
-            <TableHead>中文名称</TableHead>
-            <TableHead>English Name</TableHead>
+            <TableHead>标签</TableHead>
             <TableHead>Slug</TableHead>
-            <TableHead>颜色</TableHead>
-            <TableHead>排序</TableHead>
-            <TableHead>操作</TableHead>
+            <TableHead className="w-16 text-center">排序</TableHead>
+            <TableHead className="text-right">操作</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {tags.map((tag) => (
             <TableRow key={tag.id}>
               <TableCell>
-                <Badge style={tag.color ? { backgroundColor: tag.color, color: "#fff" } : undefined}>
-                  {tag.name_zh}
-                </Badge>
+                <div className="flex items-center gap-2">
+                  <Badge variant="outline" style={getTagColorStyle(tag.color)}>
+                    {tag.name_zh}
+                  </Badge>
+                  {tag.name_en && <span className="text-xs text-muted-foreground">{tag.name_en}</span>}
+                </div>
               </TableCell>
-              <TableCell>{tag.name_zh}</TableCell>
-              <TableCell>{tag.name_en}</TableCell>
-              <TableCell className="font-mono text-sm">{tag.slug}</TableCell>
-              <TableCell>
-                {tag.color && (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded" style={{ backgroundColor: tag.color }} />
-                    <span className="text-xs font-mono">{tag.color}</span>
-                  </div>
-                )}
-              </TableCell>
-              <TableCell>{tag.sort_order}</TableCell>
-              <TableCell>
-                <div className="flex gap-2">
+              <TableCell className="font-mono text-sm text-muted-foreground">{tag.slug}</TableCell>
+              <TableCell className="text-center">{tag.sort_order}</TableCell>
+              <TableCell className="text-right">
+                <div className="flex gap-2 justify-end">
                   <Button variant="outline" size="sm" onClick={() => openEdit(tag)}>编辑</Button>
                   <DeleteButton id={tag.id} action={deleteTagAction} />
                 </div>

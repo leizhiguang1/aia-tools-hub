@@ -33,7 +33,7 @@ export function AdminSidebar() {
       <nav className="flex flex-col gap-4">
         {sidebarGroups.map((group) => (
           <div key={group.label}>
-            <div className="px-3 mb-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <div className="px-3 mb-1.5 text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest">
               {group.label}
             </div>
             <div className="flex flex-col gap-0.5">
@@ -42,10 +42,10 @@ export function AdminSidebar() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "px-3 py-2 text-sm rounded-md transition-colors",
+                    "px-3 py-1.5 text-sm rounded-md transition-colors",
                     pathname === item.href
                       ? "bg-primary/10 text-primary font-medium"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      : "text-foreground/80 hover:bg-muted hover:text-foreground"
                   )}
                 >
                   {item.label}

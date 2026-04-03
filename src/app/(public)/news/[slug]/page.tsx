@@ -1,9 +1,9 @@
 import { getPostBySlug, getTagsForPost } from "@/db/queries";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { TagList } from "@/components/tag-list";
 
 
 export default async function PostDetailPage({
@@ -45,16 +45,8 @@ export default async function PostDetailPage({
 
       <h1 className="text-3xl font-bold mb-4">{post.title_zh}</h1>
 
-      <div className="flex gap-2 mb-8">
-        {tags.map((tag) => (
-          <Badge
-            key={tag.id}
-            variant="outline"
-            style={tag.color ? { backgroundColor: tag.color, color: "#fff", borderColor: tag.color } : undefined}
-          >
-            {tag.name_zh}
-          </Badge>
-        ))}
+      <div className="mb-8">
+        <TagList tags={tags} max={10} />
       </div>
 
       <div className="prose prose-neutral max-w-none">

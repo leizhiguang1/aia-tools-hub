@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { TagList } from "@/components/tag-list";
 import type { Event } from "@/types";
 
 function getEventStatus(event: Event): "upcoming" | "ongoing" | "past" {
@@ -88,16 +88,7 @@ export function EventsList({ events }: { events: Event[] }) {
                   >
                     {statusLabels[status]}
                   </span>
-                  {event.tag_list?.map((tag) => (
-                    <Badge
-                      key={tag.id}
-                      variant="outline"
-                      className="text-xs"
-                      style={tag.color ? { backgroundColor: tag.color, color: "#fff", borderColor: tag.color } : undefined}
-                    >
-                      {tag.name_zh}
-                    </Badge>
-                  ))}
+                  <TagList tags={event.tag_list || []} max={2} size="xs" />
                 </div>
                 <h3 className="font-semibold text-lg mb-1">
                   {event.title_zh}
