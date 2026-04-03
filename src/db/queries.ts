@@ -100,6 +100,19 @@ export async function updateTool(id: string, data: {
   });
 }
 
+export async function getToolsByIds(ids: string[]) {
+  if (ids.length === 0) return [];
+  const placeholders = ids.map(() => "?").join(",");
+  const result = await db.execute({
+    sql: `SELECT t.*, c.name_zh as category_name_zh, c.slug as category_slug
+          FROM tools t JOIN categories c ON t.category_id = c.id
+          WHERE t.id IN (${placeholders}) AND t.is_published = 1
+          ORDER BY c.sort_order ASC, t.sort_order ASC`,
+    args: ids,
+  });
+  return plainRows<Tool>(result.rows);
+}
+
 export async function deleteTool(id: string) {
   await db.execute({ sql: "DELETE FROM tools WHERE id = ?", args: [id] });
 }
