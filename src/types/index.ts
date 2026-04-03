@@ -18,6 +18,7 @@ export interface Tool {
   icon: string;
   category_id: string;
   pricing: "free" | "freemium" | "paid";
+  vote_count: number;
   sort_order: number;
   // joined from tag tables
   tag_list?: Tag[];

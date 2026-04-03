@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { TagList } from "@/components/tag-list";
+import { VoteButton } from "@/components/vote-button";
 import type { Tool, Category } from "@/types";
 
 export function ToolsGrid({
@@ -141,12 +142,15 @@ function ToolCard({ tool }: { tool: Tool }) {
         {tool.description_zh}
       </p>
 
-      {/* Tags — bottom */}
-      {tool.tag_list && tool.tag_list.length > 0 && (
-        <div className="mt-auto pt-1">
+      {/* Tags + Vote — bottom */}
+      <div className="mt-auto pt-1 flex items-center justify-between gap-2">
+        {tool.tag_list && tool.tag_list.length > 0 ? (
           <TagList tags={tool.tag_list} max={3} size="xs" />
-        </div>
-      )}
+        ) : (
+          <span />
+        )}
+        <VoteButton toolId={tool.id} initialCount={tool.vote_count ?? 0} />
+      </div>
     </a>
   );
 }

@@ -26,6 +26,12 @@
     "back": "Back to List",
     "share": "Share"
   },
+  "voting": {
+    "upvote": "Upvote",
+    "upvoted": "Upvoted",
+    "popular_tools": "Popular Tools",
+    "popular_tools_subtitle": "Most upvoted by the community"
+  },
   "common": {
     "loading": "Loading...",
     "no_results": "No content yet"

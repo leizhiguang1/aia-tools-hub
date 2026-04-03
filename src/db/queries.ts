@@ -117,6 +117,44 @@ export async function deleteTool(id: string) {
   await db.execute({ sql: "DELETE FROM tools WHERE id = ?", args: [id] });
 }
 
+export async function getPopularTools(limit = 10) {
+  const result = await db.execute({
+    sql: `SELECT t.*, c.name_zh as category_name_zh, c.name_en as category_name_en, c.slug as category_slug
+          FROM tools t JOIN categories c ON t.category_id = c.id
+          WHERE t.is_published = 1 AND t.vote_count > 0
+          ORDER BY t.vote_count DESC
+          LIMIT ?`,
+    args: [limit],
+  });
+  return plainRows<Tool>(result.rows);
+}
+
+export async function recordVote(id: string, toolId: string, voterHash: string): Promise<boolean> {
+  try {
+    await db.execute({
+      sql: "INSERT INTO votes (id, tool_id, voter_hash) VALUES (?, ?, ?)",
+      args: [id, toolId, voterHash],
+    });
+    await db.execute({
+      sql: "UPDATE tools SET vote_count = vote_count + 1 WHERE id = ?",
+      args: [toolId],
+    });
+    return true;
+  } catch (e: unknown) {
+    // UNIQUE constraint violation = already voted
+    if (e instanceof Error && e.message.includes("UNIQUE")) return false;
+    throw e;
+  }
+}
+
+export async function getToolVoteCount(toolId: string): Promise<number> {
+  const result = await db.execute({
+    sql: "SELECT vote_count FROM tools WHERE id = ?",
+    args: [toolId],
+  });
+  return (result.rows[0]?.vote_count as number) ?? 0;
+}
+
 // ============ Events ============
 
 export async function getEvents(status?: string) {

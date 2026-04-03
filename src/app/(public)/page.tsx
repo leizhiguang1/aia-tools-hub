@@ -1,15 +1,22 @@
-import { getTools, getCategories, getTagsForTools } from "@/db/queries";
+import { getTools, getCategories, getTagsForTools, getPopularTools } from "@/db/queries";
 import { ToolsGrid } from "@/components/tools-grid";
+import { PopularTools } from "@/components/popular-tools";
 import Link from "next/link";
 
 export default async function HomePage() {
-  const [tools, categories] = await Promise.all([
+  const [tools, categories, popularTools] = await Promise.all([
     getTools(),
     getCategories(),
+    getPopularTools(),
   ]);
 
-  const tagMap = await getTagsForTools(tools.map((t) => t.id));
+  const allToolIds = [...new Set([...tools.map((t) => t.id), ...popularTools.map((t) => t.id)])];
+  const tagMap = await getTagsForTools(allToolIds);
   const toolsWithTags = tools.map((tool) => ({
+    ...tool,
+    tag_list: tagMap.get(tool.id) || [],
+  }));
+  const popularWithTags = popularTools.map((tool) => ({
     ...tool,
     tag_list: tagMap.get(tool.id) || [],
   }));
@@ -38,6 +45,10 @@ export default async function HomePage() {
           打造你的 AI 团队清单 &rarr;
         </Link>
       </section>
+
+      {popularWithTags.length > 0 && (
+        <PopularTools tools={popularWithTags} />
+      )}
 
       <ToolsGrid tools={toolsWithTags} categories={categories} />
     </div>

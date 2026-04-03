@@ -26,6 +26,12 @@
     "back": "返回列表",
     "share": "分享"
   },
+  "voting": {
+    "upvote": "点赞",
+    "upvoted": "已点赞",
+    "popular_tools": "大家都在用",
+    "popular_tools_subtitle": "社区投票最多的工具"
+  },
   "common": {
     "loading": "加载中...",
     "no_results": "暂无内容"
