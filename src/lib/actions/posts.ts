@@ -3,7 +3,6 @@
 import { createId } from "@paralleldrive/cuid2";
 import { createPost, updatePost, deletePost, setPostTags } from "@/db/queries";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 function parseTagIds(formData: FormData): string[] {
   try {
@@ -32,7 +31,6 @@ export async function createPostAction(formData: FormData) {
   await setPostTags(id, parseTagIds(formData));
   revalidatePath("/news");
   revalidatePath("/admin/news");
-  redirect("/admin/news");
 }
 
 export async function updatePostAction(id: string, formData: FormData) {
@@ -52,7 +50,6 @@ export async function updatePostAction(id: string, formData: FormData) {
   await setPostTags(id, parseTagIds(formData));
   revalidatePath("/news");
   revalidatePath("/admin/news");
-  redirect("/admin/news");
 }
 
 export async function deletePostAction(id: string) {

@@ -1,6 +1,5 @@
 import { createClient } from "@libsql/client";
 import { createId } from "@paralleldrive/cuid2";
-import { hashSync } from "bcryptjs";
 
 async function seed() {
   const url = process.env.TURSO_DATABASE_URL;
@@ -15,16 +14,6 @@ async function seed() {
   });
 
   console.log("Seeding database...");
-
-  // ---- Admin ----
-  const adminEmail = process.env.ADMIN_EMAIL || "admin@example.com";
-  const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
-  const adminId = createId();
-  await db.execute({
-    sql: "INSERT OR IGNORE INTO admins (id, email, password_hash) VALUES (?, ?, ?)",
-    args: [adminId, adminEmail, hashSync(adminPassword, 10)],
-  });
-  console.log(`✓ Admin created: ${adminEmail}`);
 
   // ---- Categories ----
   const categories = [

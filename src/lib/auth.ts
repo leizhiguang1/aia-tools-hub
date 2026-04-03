@@ -1,27 +1,24 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { compareSync } from "bcryptjs";
-import { getAdminByEmail } from "@/db/queries";
+
+function getExpectedPassword(): string | undefined {
+  if (process.env.ADMIN_PASSWORD) return process.env.ADMIN_PASSWORD;
+  if (process.env.NODE_ENV === "development") return "admin123";
+  return undefined;
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
       credentials: {
-        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const email = credentials?.email as string;
-        const password = credentials?.password as string;
-        if (!email || !password) return null;
+        const password = credentials?.password as string | undefined;
+        const expected = getExpectedPassword();
+        if (!password || !expected || password !== expected) return null;
 
-        const admin = await getAdminByEmail(email);
-        if (!admin) return null;
-
-        const valid = compareSync(password, admin.password_hash as string);
-        if (!valid) return null;
-
-        return { id: admin.id as string, email: admin.email as string };
+        return { id: "admin", name: "Admin" };
       },
     }),
   ],

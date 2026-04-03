@@ -77,10 +77,3 @@ export interface Tag {
   sort_order: number;
   created_at: number;
 }
-
-export interface Admin {
-  id: string;
-  email: string;
-  password_hash: string;
-  created_at: number;
-}

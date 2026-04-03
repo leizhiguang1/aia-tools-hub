@@ -20,7 +20,7 @@ export function PostForm({
 }) {
 
   return (
-    <form action={action} className="space-y-4 max-w-2xl">
+    <form action={action} className="space-y-4">
       <div className="space-y-2">
         <Label htmlFor="title_zh">标题（中文）</Label>
         <Input id="title_zh" name="title_zh" defaultValue={post?.title_zh} required />

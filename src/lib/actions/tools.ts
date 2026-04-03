@@ -3,7 +3,6 @@
 import { createId } from "@paralleldrive/cuid2";
 import { createTool, updateTool, deleteTool, setToolTags } from "@/db/queries";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 function parseTagIds(formData: FormData): string[] {
   try {
@@ -29,7 +28,6 @@ export async function createToolAction(formData: FormData) {
   await setToolTags(id, parseTagIds(formData));
   revalidatePath("/");
   revalidatePath("/admin/tools");
-  redirect("/admin/tools");
 }
 
 export async function updateToolAction(id: string, formData: FormData) {
@@ -46,7 +44,6 @@ export async function updateToolAction(id: string, formData: FormData) {
   await setToolTags(id, parseTagIds(formData));
   revalidatePath("/");
   revalidatePath("/admin/tools");
-  redirect("/admin/tools");
 }
 
 export async function deleteToolAction(id: string) {

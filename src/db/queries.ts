@@ -1,6 +1,6 @@
 import type { Row } from "@libsql/client";
 import { db } from "./client";
-import type { Category, Tool, Event, Post, Admin, Tag } from "@/types";
+import type { Category, Tool, Event, Post, Tag } from "@/types";
 
 /** Convert libsql Row objects to plain objects so they can be passed to Client Components */
 function plainRows<T>(rows: Row[]): T[] {
@@ -339,11 +339,4 @@ export async function setPostTags(postId: string, tagIds: string[]) {
   for (const tagId of tagIds) {
     await db.execute({ sql: "INSERT INTO post_tags (post_id, tag_id) VALUES (?, ?)", args: [postId, tagId] });
   }
-}
-
-// ============ Admins ============
-
-export async function getAdminByEmail(email: string) {
-  const result = await db.execute({ sql: "SELECT * FROM admins WHERE email = ?", args: [email] });
-  return plainRow<Admin>(result.rows[0]);
 }

@@ -34,7 +34,7 @@ export default async function NewsPage({
               <CardContent className="p-5">
                 <div className="flex gap-6">
                   {post.cover_image && (
-                    <div className="w-48 h-32 flex-shrink-0 overflow-hidden rounded-md">
+                    <div className="w-48 h-32 shrink-0 overflow-hidden rounded-md">
                       <img
                         src={post.cover_image}
                         alt={post.title_zh}

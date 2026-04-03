@@ -3,7 +3,6 @@
 import { createId } from "@paralleldrive/cuid2";
 import { createEvent, updateEvent, deleteEvent, setEventTags } from "@/db/queries";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 function parseTagIds(formData: FormData): string[] {
   try {
@@ -34,7 +33,6 @@ export async function createEventAction(formData: FormData) {
   await setEventTags(id, parseTagIds(formData));
   revalidatePath("/events");
   revalidatePath("/admin/events");
-  redirect("/admin/events");
 }
 
 export async function updateEventAction(id: string, formData: FormData) {
@@ -56,7 +54,6 @@ export async function updateEventAction(id: string, formData: FormData) {
   await setEventTags(id, parseTagIds(formData));
   revalidatePath("/events");
   revalidatePath("/admin/events");
-  redirect("/admin/events");
 }
 
 export async function deleteEventAction(id: string) {

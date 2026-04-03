@@ -22,7 +22,7 @@ export function ToolForm({
   action: (formData: FormData) => Promise<void>;
 }) {
   return (
-    <form action={action} className="space-y-4 max-w-2xl">
+    <form action={action} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="name">工具名称</Label>
