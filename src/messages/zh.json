@@ -1,0 +1,33 @@
+{
+  "site_name": "我的 AI 工作栈",
+  "nav": {
+    "tools": "找工具",
+    "events": "看活动",
+    "news": "看新鲜事"
+  },
+  "tools": {
+    "title": "AI 工具集",
+    "all": "所有工具",
+    "visit": "访问工具",
+    "search_placeholder": "搜索工具..."
+  },
+  "events": {
+    "title": "活动与课程",
+    "all": "全部",
+    "upcoming": "即将开始",
+    "past": "已结束",
+    "online": "线上",
+    "register": "立即报名",
+    "details": "查看详情"
+  },
+  "news": {
+    "title": "新鲜事",
+    "read_more": "阅读更多",
+    "back": "返回列表",
+    "share": "分享"
+  },
+  "common": {
+    "loading": "加载中...",
+    "no_results": "暂无内容"
+  }
+}
