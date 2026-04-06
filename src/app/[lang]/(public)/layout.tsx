@@ -16,7 +16,7 @@ export default async function PublicLayout({
   return (
     <>
       <Navbar lang={lang} dict={dict} />
-      <main className="flex-1 container mx-auto px-4 py-8">{children}</main>
+      <main className="flex-1 container mx-auto px-4 py-6 sm:py-8">{children}</main>
       <Footer dict={dict} />
     </>
   );

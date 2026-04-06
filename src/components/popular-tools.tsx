@@ -38,7 +38,7 @@ export function PopularTools({ tools, dict }: { tools: Tool[]; dict: Dictionary 
 
   return (
     <section className="mb-12">
-      <div className="flex items-baseline gap-3 mb-5">
+      <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-5">
         <h2 className="text-xl font-bold">{dict.voting.popular_tools}</h2>
         <span className="text-sm text-muted-foreground">{dict.voting.popular_tools_subtitle}</span>
       </div>

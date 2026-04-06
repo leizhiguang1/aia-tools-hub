@@ -46,9 +46,9 @@ export default async function NewsPage({
           return (
             <Card key={post.id} className="hover:shadow-md transition-shadow">
               <CardContent className="p-5">
-                <div className="flex gap-6">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                   {post.cover_image && (
-                    <div className="w-48 h-32 shrink-0 overflow-hidden rounded-md">
+                    <div className="w-full sm:w-48 h-40 sm:h-32 shrink-0 overflow-hidden rounded-md">
                       <img
                         src={post.cover_image}
                         alt={post.title}

@@ -45,7 +45,7 @@ export default async function HomePage({
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative mb-16 text-center max-w-3xl mx-auto pt-8 pb-12">
+      <section className="relative mb-10 sm:mb-16 text-center max-w-3xl mx-auto pt-4 sm:pt-8 pb-8 sm:pb-12">
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-primary/3 to-transparent rounded-3xl" />
         <span className="inline-block text-sm font-medium text-primary/80 bg-primary/10 px-4 py-1.5 rounded-full mb-5">
           {dict.hero.badge}
@@ -56,14 +56,14 @@ export default async function HomePage({
         <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
           {dict.hero.subtitle}
         </p>
-        <div className="flex items-center justify-center gap-3 mt-4">
-          <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-4">
+          <span className="px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
             {dict.hero.benefit_earn}
           </span>
-          <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+          <span className="px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
             {dict.hero.benefit_calm}
           </span>
-          <span className="px-4 py-1.5 rounded-full text-sm font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+          <span className="px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
             {dict.hero.benefit_save}
           </span>
         </div>

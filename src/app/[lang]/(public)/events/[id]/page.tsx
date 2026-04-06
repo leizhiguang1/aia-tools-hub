@@ -47,7 +47,7 @@ export default async function EventDetailPage({
         </div>
       )}
 
-      <h1 className="text-3xl font-bold mb-3">{translated.title}</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold mb-3">{translated.title}</h1>
 
       {translated.location && (
         <p className="text-sm text-muted-foreground mb-4">{translated.location}</p>
@@ -58,7 +58,7 @@ export default async function EventDetailPage({
       </div>
 
       {translated.external_url && (
-        <a href={translated.external_url} target="_blank" rel="noopener noreferrer" className={cn(buttonVariants(), "mb-6")}>
+        <a href={translated.external_url} target="_blank" rel="noopener noreferrer" className={cn(buttonVariants(), "mb-6 inline-block")}>
           {dict.events.register}
         </a>
       )}
