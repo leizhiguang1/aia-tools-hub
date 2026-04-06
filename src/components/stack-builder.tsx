@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useRef } from "react";
 import { toPng } from "html-to-image";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { StackPreview } from "@/components/stack-preview";
 import type { Tool, Category } from "@/types";
@@ -36,7 +35,6 @@ export function StackBuilder({
 }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [activeCategory, setActiveCategory] = useState("all");
-  const [search, setSearch] = useState("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [generating, setGenerating] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -54,13 +52,7 @@ export function StackBuilder({
   }, []);
 
   const filtered = tools.filter((tool) => {
-    const matchCategory =
-      activeCategory === "all" || tool.category_slug === activeCategory;
-    const matchSearch =
-      !search ||
-      tool.name.toLowerCase().includes(search.toLowerCase()) ||
-      tool.description.toLowerCase().includes(search.toLowerCase());
-    return matchCategory && matchSearch;
+    return activeCategory === "all" || tool.category_slug === activeCategory;
   });
 
   const grouped = new Map<string, Tool[]>();
@@ -108,16 +100,6 @@ export function StackBuilder({
 
   return (
     <div className="pb-28">
-      {/* Search */}
-      <div className="mb-4">
-        <Input
-          placeholder={dict.tools.search_placeholder}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="max-w-sm"
-        />
-      </div>
-
       {/* Category Tabs */}
       <div className="flex flex-wrap gap-2 mb-8">
         <button
