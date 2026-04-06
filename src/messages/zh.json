@@ -2,9 +2,9 @@
   "site_name": "AI Agency 一人公司",
   "meta_description": "发现最好的AI工具，参加活动，阅读最新资讯",
   "nav": {
-    "tools": "找工具",
-    "events": "看活动",
-    "news": "看新鲜事"
+    "tools": "AI 工具",
+    "events": "AI 活动",
+    "news": "AI 趋势"
   },
   "hero": {
     "badge": "不用再乱收藏了没有用到，一次过整理给你",

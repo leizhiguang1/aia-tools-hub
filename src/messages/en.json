@@ -2,9 +2,9 @@
   "site_name": "AI Agency 一人公司",
   "meta_description": "Discover the best AI tools, join events, and read the latest news",
   "nav": {
-    "tools": "Tools",
-    "events": "Events",
-    "news": "News"
+    "tools": "AI Tools",
+    "events": "AI Events",
+    "news": "AI Trend"
   },
   "hero": {
     "badge": "Stop bookmarking and forgetting — we've organized them all for you",
