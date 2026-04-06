@@ -26,7 +26,8 @@ export default async function EventsPage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">{dict.events.title}</h1>
+      <h1 className="text-2xl font-bold mb-3">{dict.events.title}</h1>
+      <p className="text-muted-foreground mb-6 whitespace-pre-line">{dict.events.description}</p>
       <EventsList events={eventsWithTags} dict={dict} lang={lang} />
     </div>
   );

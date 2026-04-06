@@ -25,6 +25,7 @@
   },
   "events": {
     "title": "活动与课程",
+    "description": "时代变太快，AI正在重新定义赚钱的方式。\n学了这么多AI工具，是不是还没真正用起来？\n我们准备了不同的活动和课程，让你亲身体验：AI也能帮你轻松找到全世界的客户 🌍",
     "online": "线上",
     "register": "立即报名",
     "details": "查看详情",
@@ -58,8 +59,8 @@
     "generate": "生成图片",
     "generating": "生成中...",
     "generate_fail": "图片生成失败，请稍后再试",
-    "card_title_highlight": "",
-    "card_title": "我一人AI团队",
+    "card_title_highlight": "一人公司",
+    "card_title": "你的AI团队",
     "card_subtitle": "分享给你我精选AI工具，一起来赚美金",
     "card_footer_name": "我一人AI团队",
     "card_footer_scan": "扫码探索更多 AI 工具",

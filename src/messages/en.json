@@ -25,6 +25,7 @@
   },
   "events": {
     "title": "Events & Courses",
+    "description": "The world is changing fast — AI is redefining how we make money.\nYou've learned so many AI tools, but haven't truly put them to use yet?\nWe've prepared various events and courses so you can experience firsthand: AI can help you easily find clients worldwide 🌍",
     "online": "Online",
     "register": "Register Now",
     "details": "View Details",
@@ -58,8 +59,8 @@
     "generate": "Generate Image",
     "generating": "Generating...",
     "generate_fail": "Image generation failed, please try again",
-    "card_title_highlight": "",
-    "card_title": "My One-Person AI Team",
+    "card_title_highlight": "One-Person Co.",
+    "card_title": "Your AI Team",
     "card_subtitle": "Sharing my curated AI tools — let's earn together",
     "card_footer_name": "My One-Person AI Team",
     "card_footer_scan": "Scan to discover more AI tools",
