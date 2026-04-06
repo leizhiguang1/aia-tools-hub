@@ -240,7 +240,7 @@ export function StackBuilder({
                 marginBottom: "4px",
               }}
             >
-              <span style={{ color: "#6366f1" }}>{dict.stack.card_title_highlight}</span> {dict.stack.card_title}
+              {dict.stack.card_title_highlight && <><span style={{ color: "#6366f1" }}>{dict.stack.card_title_highlight}</span>{" "}</>}{dict.stack.card_title}
             </div>
             <div
               style={{
