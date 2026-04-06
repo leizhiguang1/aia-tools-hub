@@ -99,7 +99,7 @@ export function ToolForm({
         <Label htmlFor="is_published">发布</Label>
       </div>
 
-      <Button type="submit">{tool ? "保存修改" : "创建工具"}</Button>
+      <Button type="submit" size="lg" className="w-full text-base">{tool ? "保存修改" : "创建工具"}</Button>
 
       {tool && (
         <AdminTranslationFields

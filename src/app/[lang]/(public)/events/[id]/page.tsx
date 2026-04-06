@@ -49,20 +49,9 @@ export default async function EventDetailPage({
 
       <h1 className="text-3xl font-bold mb-3">{translated.title}</h1>
 
-      <div className="flex flex-wrap items-center gap-2 mb-4 text-sm text-muted-foreground">
-        <span>
-          {translated.date_start}
-          {translated.date_end && translated.date_end !== translated.date_start
-            ? ` ~ ${translated.date_end}`
-            : ""}
-        </span>
-        {translated.location && (
-          <>
-            <span>·</span>
-            <span>{translated.location}</span>
-          </>
-        )}
-      </div>
+      {translated.location && (
+        <p className="text-sm text-muted-foreground mb-4">{translated.location}</p>
+      )}
 
       <div className="mb-6">
         <TagList tags={tags} max={10} />

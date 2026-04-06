@@ -179,17 +179,12 @@ export async function getToolVoteCount(toolId: string): Promise<number> {
 
 // ============ Events ============
 
-export async function getEvents(status?: string): Promise<Event[]> {
-  const now = new Date().toISOString().split("T")[0];
-  let query = supabase.from("events").select("*").eq("is_published", true);
-
-  if (status === "upcoming") {
-    query = query.gt("date_start", now);
-  } else if (status === "past") {
-    query = query.or(`date_end.lt.${now},and(date_end.is.null,date_start.lt.${now})`);
-  }
-
-  const { data, error } = await query.order("date_start", { ascending: false });
+export async function getEvents(): Promise<Event[]> {
+  const { data, error } = await supabase
+    .from("events")
+    .select("*")
+    .eq("is_published", true)
+    .order("created_at", { ascending: false });
   if (error) throw error;
   return data as Event[];
 }
@@ -198,7 +193,7 @@ export async function getAllEvents(): Promise<Event[]> {
   const { data, error } = await supabase
     .from("events")
     .select("*")
-    .order("date_start", { ascending: false });
+    .order("created_at", { ascending: false });
   if (error) throw error;
   return data as Event[];
 }
@@ -215,16 +210,16 @@ export async function getEventById(id: string): Promise<Event | null> {
 
 export async function createEvent(data: {
   id: string; title: string; description: string;
-  content: string; cover_image: string; date_start: string; date_end: string;
+  content: string; cover_image: string;
   location: string; external_url: string; is_published: boolean;
 }) {
-  const { error } = await supabase.from("events").insert(data);
+  const { error } = await supabase.from("events").insert({ ...data, date_start: "", date_end: "" });
   if (error) throw error;
 }
 
 export async function updateEvent(id: string, data: {
   title: string; description: string;
-  content: string; cover_image: string; date_start: string; date_end: string;
+  content: string; cover_image: string;
   location: string; external_url: string; is_published: boolean;
 }) {
   const { error } = await supabase.from("events").update(data).eq("id", id);

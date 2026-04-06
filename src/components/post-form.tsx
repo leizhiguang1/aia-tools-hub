@@ -72,7 +72,7 @@ export function PostForm({
         <Label htmlFor="is_published">发布</Label>
       </div>
 
-      <Button type="submit">{post ? "保存修改" : "创建文章"}</Button>
+      <Button type="submit" size="lg" className="w-full text-base">{post ? "保存修改" : "创建文章"}</Button>
 
       {post && (
         <AdminTranslationFields

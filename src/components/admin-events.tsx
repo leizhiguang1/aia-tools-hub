@@ -75,7 +75,6 @@ export function AdminEvents({ events, tagRecord, allTags, translationsRecord }: 
         <TableHeader>
           <TableRow>
             <TableHead>标题</TableHead>
-            <TableHead>日期</TableHead>
             <TableHead>地点</TableHead>
             <TableHead>状态</TableHead>
             <TableHead>操作</TableHead>
@@ -85,7 +84,6 @@ export function AdminEvents({ events, tagRecord, allTags, translationsRecord }: 
           {events.map((event) => (
             <TableRow key={event.id}>
               <TableCell className="font-medium">{event.title}</TableCell>
-              <TableCell>{event.date_start}</TableCell>
               <TableCell>{event.location}</TableCell>
               <TableCell>
                 <Badge variant={event.is_published ? "default" : "outline"}>

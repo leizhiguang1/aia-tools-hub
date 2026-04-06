@@ -25,10 +25,6 @@
   },
   "events": {
     "title": "活动与课程",
-    "all": "全部",
-    "upcoming": "即将开始",
-    "ongoing": "进行中",
-    "past": "已结束",
     "online": "线上",
     "register": "立即报名",
     "details": "查看详情",

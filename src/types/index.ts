@@ -32,8 +32,6 @@ export interface Event {
   description: string;
   content: string;
   cover_image: string;
-  date_start: string;
-  date_end: string;
   location: string;
   external_url: string;
   is_published: boolean;

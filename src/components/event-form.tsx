@@ -43,17 +43,6 @@ export function EventForm({
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="date_start">开始日期</Label>
-          <Input id="date_start" name="date_start" type="date" defaultValue={event?.date_start} required />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="date_end">结束日期</Label>
-          <Input id="date_end" name="date_end" type="date" defaultValue={event?.date_end} />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
           <Label htmlFor="location">地点</Label>
           <Input id="location" name="location" defaultValue={event?.location} placeholder="线上 / 地点" />
         </div>
@@ -84,7 +73,7 @@ export function EventForm({
         <Label htmlFor="is_published">发布</Label>
       </div>
 
-      <Button type="submit">{event ? "保存修改" : "创建活动"}</Button>
+      <Button type="submit" size="lg" className="w-full text-base">{event ? "保存修改" : "创建活动"}</Button>
 
       {event && (
         <AdminTranslationFields
