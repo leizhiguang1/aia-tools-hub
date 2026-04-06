@@ -35,7 +35,7 @@ export async function createTagInlineAction(data: {
   });
   revalidatePath("/");
   revalidatePath("/admin/tags");
-  return { id, name: data.name, slug, color: data.color, sort_order: 0, created_at: Math.floor(Date.now() / 1000) };
+  return { id, name: data.name, slug, color: data.color, sort_order: 0, created_at: new Date().toISOString() };
 }
 
 export async function updateTagAction(id: string, formData: FormData) {

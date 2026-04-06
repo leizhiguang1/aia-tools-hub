@@ -16,7 +16,7 @@ export default async function PostDetailPage({
   if (!post) notFound();
 
   const tags = await getTagsForPost(post.id);
-  const date = new Date(post.published_at * 1000).toLocaleDateString("zh-CN");
+  const date = new Date(Number(post.published_at) * 1000).toLocaleDateString("zh-CN");
 
   return (
     <article className="max-w-3xl mx-auto">

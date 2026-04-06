@@ -8,7 +8,7 @@ export default async function AdminEventsPage() {
   ]);
   const tagMap = await getTagsForEvents(events.map((e) => e.id));
 
-  const tagRecord: Record<string, { id: string; name: string; slug: string; color: string; sort_order: number; created_at: number }[]> = {};
+  const tagRecord: Record<string, { id: string; name: string; slug: string; color: string; sort_order: number; created_at: string }[]> = {};
   for (const [key, value] of tagMap) {
     tagRecord[key] = value;
   }

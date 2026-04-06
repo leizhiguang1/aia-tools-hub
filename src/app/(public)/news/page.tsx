@@ -25,7 +25,7 @@ export default async function NewsPage({
 
       <div className="space-y-6">
         {posts.map((post) => {
-          const date = new Date(post.published_at * 1000).toLocaleDateString(
+          const date = new Date(Number(post.published_at) * 1000).toLocaleDateString(
             "zh-CN"
           );
 
