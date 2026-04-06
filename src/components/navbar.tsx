@@ -16,7 +16,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: Dictionary }) {
   const navItems = [
     { href: `/${lang}`, label: dict.nav.tools },
     { href: `/${lang}/events`, label: dict.nav.events },
-    { href: `/${lang}/news`, label: dict.nav.news },
   ];
 
   function isActive(href: string) {

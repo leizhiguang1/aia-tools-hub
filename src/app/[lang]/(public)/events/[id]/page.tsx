@@ -58,9 +58,19 @@ export default async function EventDetailPage({
       </div>
 
       {translated.external_url && (
-        <a href={translated.external_url} target="_blank" rel="noopener noreferrer" className={cn(buttonVariants(), "mb-6 inline-block")}>
-          {dict.events.register}
-        </a>
+        <div className="mb-8 rounded-xl border-2 border-primary/20 bg-primary/5 p-5 text-center">
+          <a
+            href={translated.external_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "text-base px-8 py-5 font-semibold shadow-md hover:shadow-lg transition-shadow"
+            )}
+          >
+            {dict.events.register} &rarr;
+          </a>
+        </div>
       )}
 
       {(() => {
