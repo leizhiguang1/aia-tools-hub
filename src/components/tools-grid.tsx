@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { TagList } from "@/components/tag-list";
 import { VoteButton } from "@/components/vote-button";
+import { ExternalLink } from "lucide-react";
 import type { Tool, Category } from "@/types";
 
 export function ToolsGrid({
@@ -142,14 +143,26 @@ function ToolCard({ tool }: { tool: Tool }) {
         {tool.description}
       </p>
 
-      {/* Tags + Vote — bottom */}
+      {/* Tags */}
+      {tool.tag_list && tool.tag_list.length > 0 && (
+        <TagList tags={tool.tag_list} max={3} size="xs" />
+      )}
+
+      {/* Vote + Visit — bottom */}
       <div className="mt-auto pt-1 flex items-center justify-between gap-2">
-        {tool.tag_list && tool.tag_list.length > 0 ? (
-          <TagList tags={tool.tag_list} max={3} size="xs" />
-        ) : (
-          <span />
-        )}
         <VoteButton toolId={tool.id} initialCount={tool.vote_count ?? 0} />
+        <span
+          role="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            window.open(tool.url, "_blank", "noopener,noreferrer");
+          }}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors cursor-pointer"
+        >
+          访问
+          <ExternalLink className="w-3.5 h-3.5" />
+        </span>
       </div>
     </a>
   );

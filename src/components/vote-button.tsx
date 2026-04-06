@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowBigUp } from "lucide-react";
+import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const STORAGE_KEY = "voted_tools";
@@ -74,14 +74,17 @@ export function VoteButton({
       onClick={handleVote}
       disabled={voted || loading}
       className={cn(
-        "inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-colors",
+        "inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all",
         voted
-          ? "bg-primary/10 text-primary cursor-default"
-          : "bg-muted/50 text-muted-foreground hover:bg-primary/10 hover:text-primary"
+          ? "bg-rose-50 text-rose-500 cursor-default"
+          : "bg-muted/50 text-muted-foreground hover:bg-rose-50 hover:text-rose-500"
       )}
     >
-      <ArrowBigUp
-        className={cn("w-4 h-4", voted && "fill-primary")}
+      <Heart
+        className={cn(
+          "w-4 h-4 transition-all",
+          voted ? "fill-rose-500 text-rose-500 scale-110" : ""
+        )}
       />
       <span>{count}</span>
     </button>
