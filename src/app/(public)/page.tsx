@@ -4,7 +4,7 @@ import { PopularTools } from "@/components/popular-tools";
 import Link from "next/link";
 
 export default async function HomePage() {
-  const [tools, categories, popularTools] = await Promise.all([
+  const [tools, categories, { tools: popularTools }] = await Promise.all([
     getTools(),
     getCategories(),
     getPopularTools(),

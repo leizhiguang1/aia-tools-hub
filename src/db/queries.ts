@@ -128,16 +128,23 @@ export async function deleteTool(id: string) {
   if (error) throw error;
 }
 
-export async function getPopularTools(limit = 10): Promise<Tool[]> {
-  const { data, error } = await supabase
-    .from("tools")
-    .select("*, categories!inner(name, slug, sort_order)")
-    .eq("is_published", true)
-    .gt("vote_count", 0)
-    .order("vote_count", { ascending: false })
-    .limit(limit);
+export async function getPopularTools(limit = 5): Promise<{ tools: Tool[]; totalVotes: number }> {
+  const [{ data, error }, { count, error: countError }] = await Promise.all([
+    supabase
+      .from("tools")
+      .select("*, categories!inner(name, slug, sort_order)")
+      .eq("is_published", true)
+      .gt("vote_count", 0)
+      .order("vote_count", { ascending: false })
+      .order("name", { ascending: true })
+      .limit(limit),
+    supabase
+      .from("votes")
+      .select("*", { count: "exact", head: true }),
+  ]);
   if (error) throw error;
-  return flattenToolCategories(data);
+  if (countError) throw countError;
+  return { tools: flattenToolCategories(data), totalVotes: count ?? 0 };
 }
 
 export async function recordVote(id: string, toolId: string, voterHash: string): Promise<boolean> {
