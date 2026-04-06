@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { TagInput } from "@/components/tag-input";
+import { RichTextEditor } from "@/components/rich-text-editor";
+import { ImageUpload } from "@/components/image-upload";
 import { AdminTranslationFields } from "@/components/admin-translation-fields";
 import type { Event, Tag } from "@/types";
 
@@ -35,8 +37,8 @@ export function EventForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="content">详细内容（Markdown）</Label>
-        <Textarea id="content" name="content" defaultValue={event?.content} rows={8} />
+        <Label>详细内容</Label>
+        <RichTextEditor name="content" initialContent={event?.content || ""} />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -62,8 +64,8 @@ export function EventForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="cover_image">封面图片 URL</Label>
-        <Input id="cover_image" name="cover_image" defaultValue={event?.cover_image} />
+        <Label>封面图片</Label>
+        <ImageUpload name="cover_image" defaultValue={event?.cover_image || ""} folder="cover-images" hint="建议尺寸: 1200 x 675 px (16:9)" />
       </div>
 
       <div className="space-y-2">
@@ -91,7 +93,7 @@ export function EventForm({
           fields={[
             { name: "title", label: "标题 Title", type: "input" },
             { name: "description", label: "简介 Description", type: "textarea" },
-            { name: "content", label: "内容 Content", type: "textarea" },
+            { name: "content", label: "内容 Content", type: "richtext" },
           ]}
           existingTranslations={existingTranslations}
         />

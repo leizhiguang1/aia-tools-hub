@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { RichTextEditor } from "@/components/rich-text-editor";
 import { cn } from "@/lib/utils";
 import { locales, defaultLocale, localeNames, type Locale } from "@/lib/i18n";
 import { saveTranslationsAction } from "@/lib/actions/translations";
@@ -12,7 +13,7 @@ import { saveTranslationsAction } from "@/lib/actions/translations";
 interface TranslationField {
   name: string;
   label: string;
-  type: "input" | "textarea";
+  type: "input" | "textarea" | "richtext";
 }
 
 interface TranslationFieldsProps {
@@ -79,7 +80,13 @@ export function AdminTranslationFields({
                   <Label htmlFor={`${locale}.${field.name}`} className="text-xs">
                     {field.label}
                   </Label>
-                  {field.type === "textarea" ? (
+                  {field.type === "richtext" ? (
+                    <RichTextEditor
+                      name={`${locale}.${field.name}`}
+                      initialContent={existingTranslations[locale]?.[field.name] || ""}
+                      placeholder={`${localeNames[locale as Locale]} - ${field.label}`}
+                    />
+                  ) : field.type === "textarea" ? (
                     <Textarea
                       id={`${locale}.${field.name}`}
                       name={`${locale}.${field.name}`}

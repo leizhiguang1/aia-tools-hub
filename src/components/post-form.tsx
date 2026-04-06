@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { TagInput } from "@/components/tag-input";
+import { RichTextEditor } from "@/components/rich-text-editor";
+import { ImageUpload } from "@/components/image-upload";
 import { AdminTranslationFields } from "@/components/admin-translation-fields";
 import type { Post, Tag } from "@/types";
 
@@ -40,19 +42,18 @@ export function PostForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="content">内容（Markdown）</Label>
-        <Textarea id="content" name="content" defaultValue={post?.content} rows={12} />
+        <Label>内容</Label>
+        <RichTextEditor name="content" initialContent={post?.content || ""} />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="author">作者</Label>
-          <Input id="author" name="author" defaultValue={post?.author || "FunnelDuo"} />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="cover_image">封面图片 URL</Label>
-          <Input id="cover_image" name="cover_image" defaultValue={post?.cover_image} />
-        </div>
+      <div className="space-y-2">
+        <Label htmlFor="author">作者</Label>
+        <Input id="author" name="author" defaultValue={post?.author || "FunnelDuo"} />
+      </div>
+
+      <div className="space-y-2">
+        <Label>封面图片</Label>
+        <ImageUpload name="cover_image" defaultValue={post?.cover_image || ""} folder="cover-images" hint="建议尺寸: 1200 x 675 px (16:9)" />
       </div>
 
       <div className="space-y-2">
@@ -80,7 +81,7 @@ export function PostForm({
           fields={[
             { name: "title", label: "标题 Title", type: "input" },
             { name: "excerpt", label: "摘要 Excerpt", type: "textarea" },
-            { name: "content", label: "内容 Content", type: "textarea" },
+            { name: "content", label: "内容 Content", type: "richtext" },
           ]}
           existingTranslations={existingTranslations}
         />

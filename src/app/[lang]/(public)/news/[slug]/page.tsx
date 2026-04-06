@@ -7,6 +7,7 @@ import { TagList } from "@/components/tag-list";
 import { getDictionary } from "@/lib/dictionaries";
 import { type Locale, localePath, dateLocaleMap } from "@/lib/i18n";
 import { applyTranslations } from "@/lib/translate";
+import { isHtmlContent, sanitizeContent } from "@/lib/content";
 
 export default async function PostDetailPage({
   params,
@@ -26,7 +27,8 @@ export default async function PostDetailPage({
 
   const translated = applyTranslations(post, trans, ["title", "content", "excerpt"]);
   const dateFmt = dateLocaleMap[lang as Locale] || "zh-CN";
-  const date = new Date(Number(translated.published_at) * 1000).toLocaleDateString(dateFmt);
+  const ts = Number(translated.published_at);
+  const date = new Date(isNaN(ts) ? translated.published_at : ts * 1000).toLocaleDateString(dateFmt);
 
   return (
     <article className="max-w-3xl mx-auto">
@@ -59,11 +61,18 @@ export default async function PostDetailPage({
         <TagList tags={tags} max={10} />
       </div>
 
-      <div className="prose prose-neutral max-w-none">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {translated.content}
-        </ReactMarkdown>
-      </div>
+      {isHtmlContent(translated.content) ? (
+        <div
+          className="prose prose-neutral max-w-none"
+          dangerouslySetInnerHTML={{ __html: sanitizeContent(translated.content) }}
+        />
+      ) : (
+        <div className="prose prose-neutral max-w-none">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {translated.content}
+          </ReactMarkdown>
+        </div>
+      )}
     </article>
   );
 }

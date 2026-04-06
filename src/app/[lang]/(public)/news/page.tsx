@@ -40,7 +40,8 @@ export default async function NewsPage({
 
       <div className="space-y-6">
         {posts.map((post) => {
-          const date = new Date(Number(post.published_at) * 1000).toLocaleDateString(dateFmt);
+          const ts = Number(post.published_at);
+          const date = new Date(isNaN(ts) ? post.published_at : ts * 1000).toLocaleDateString(dateFmt);
 
           return (
             <Card key={post.id} className="hover:shadow-md transition-shadow">

@@ -9,6 +9,7 @@ import remarkGfm from "remark-gfm";
 import { getDictionary } from "@/lib/dictionaries";
 import { type Locale, localePath } from "@/lib/i18n";
 import { applyTranslations } from "@/lib/translate";
+import { isHtmlContent, sanitizeContent } from "@/lib/content";
 
 export default async function EventDetailPage({
   params,
@@ -73,11 +74,21 @@ export default async function EventDetailPage({
         </a>
       )}
 
-      <div className="prose prose-neutral max-w-none">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {translated.content || translated.description}
-        </ReactMarkdown>
-      </div>
+      {(() => {
+        const content = translated.content || translated.description;
+        return isHtmlContent(content) ? (
+          <div
+            className="prose prose-neutral max-w-none"
+            dangerouslySetInnerHTML={{ __html: sanitizeContent(content) }}
+          />
+        ) : (
+          <div className="prose prose-neutral max-w-none">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {content}
+            </ReactMarkdown>
+          </div>
+        );
+      })()}
     </div>
   );
 }
