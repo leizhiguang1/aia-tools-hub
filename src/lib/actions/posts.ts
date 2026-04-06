@@ -25,7 +25,8 @@ export async function createPostAction(formData: FormData) {
     is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setPostTags(id, parseTagIds(formData));
-  revalidatePath("/news");
+  revalidatePath("/zh/news");
+  revalidatePath("/en/news");
   revalidatePath("/admin/news");
 }
 
@@ -40,12 +41,14 @@ export async function updatePostAction(id: string, formData: FormData) {
     is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setPostTags(id, parseTagIds(formData));
-  revalidatePath("/news");
+  revalidatePath("/zh/news");
+  revalidatePath("/en/news");
   revalidatePath("/admin/news");
 }
 
 export async function deletePostAction(id: string) {
   await deletePost(id);
-  revalidatePath("/news");
+  revalidatePath("/zh/news");
+  revalidatePath("/en/news");
   revalidatePath("/admin/news");
 }

@@ -1,13 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { Dictionary } from "@/lib/dictionaries";
 
 export function StackPreview({
   imageUrl,
   onClose,
+  dict,
 }: {
   imageUrl: string;
   onClose: () => void;
+  dict: Dictionary;
 }) {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -20,7 +23,7 @@ export function StackPreview({
       <div className="relative max-w-md w-full bg-card rounded-2xl shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b">
-          <h3 className="font-semibold text-lg">你的 AI 团队清单</h3>
+          <h3 className="font-semibold text-lg">{dict.stack.preview_title}</h3>
           <button
             onClick={onClose}
             className="text-muted-foreground hover:text-foreground text-2xl leading-none"
@@ -33,7 +36,7 @@ export function StackPreview({
         <div className="p-4">
           <img
             src={imageUrl}
-            alt="我的 AI 团队清单"
+            alt={dict.stack.preview_alt}
             className="w-full rounded-lg"
           />
         </div>
@@ -42,7 +45,7 @@ export function StackPreview({
         <div className="p-4 pt-0 space-y-3">
           {isMobile ? (
             <p className="text-center text-sm text-muted-foreground">
-              长按图片保存到相册，分享到朋友圈或小红书
+              {dict.stack.preview_mobile_hint}
             </p>
           ) : (
             <a
@@ -50,14 +53,14 @@ export function StackPreview({
               download="my-ai-stack-2026.png"
               className="block w-full text-center py-2.5 px-4 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
             >
-              下载图片
+              {dict.stack.preview_download}
             </a>
           )}
           <button
             onClick={onClose}
             className="block w-full text-center py-2.5 px-4 border rounded-lg text-muted-foreground hover:bg-muted transition-colors"
           >
-            重新选择
+            {dict.stack.preview_reselect}
           </button>
         </div>
       </div>

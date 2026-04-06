@@ -14,9 +14,10 @@ interface AdminNewsProps {
   posts: Post[];
   tagRecord: Record<string, Tag[]>;
   allTags: Tag[];
+  translationsRecord: Record<string, Record<string, Record<string, string>>>;
 }
 
-export function AdminNews({ posts, tagRecord, allTags }: AdminNewsProps) {
+export function AdminNews({ posts, tagRecord, allTags, translationsRecord }: AdminNewsProps) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Post | null>(null);
   const [editingTagIds, setEditingTagIds] = useState<string[]>([]);
@@ -65,6 +66,7 @@ export function AdminNews({ posts, tagRecord, allTags }: AdminNewsProps) {
             allTags={allTags}
             selectedTagIds={editingTagIds}
             action={formAction}
+            existingTranslations={editing ? translationsRecord[editing.id] || {} : {}}
           />
         </DialogContent>
       </Dialog>

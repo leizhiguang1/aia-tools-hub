@@ -1,5 +1,5 @@
 import { supabase } from "./client";
-import type { Category, Tool, Event, Post, Tag } from "@/types";
+import type { Category, Tool, Event, Post, Tag, Translation } from "@/types";
 
 // ============ Categories ============
 
@@ -450,6 +450,95 @@ export async function setPostTags(postId: string, tagIds: string[]) {
       .insert(tagIds.map((tagId) => ({ post_id: postId, tag_id: tagId })));
     if (error) throw error;
   }
+}
+
+// ============ Translations ============
+
+export async function getTranslations(
+  entityType: string,
+  entityId: string
+): Promise<Translation[]> {
+  const { data, error } = await supabase
+    .from("translations")
+    .select("*")
+    .eq("entity_type", entityType)
+    .eq("entity_id", entityId);
+  if (error) {
+    if (error.code === "PGRST205") return []; // table not created yet
+    throw error;
+  }
+  return data as Translation[];
+}
+
+export async function getTranslationsForLocale(
+  entityType: string,
+  entityId: string,
+  locale: string
+): Promise<Record<string, string>> {
+  if (locale === "zh") return {};
+  const { data, error } = await supabase
+    .from("translations")
+    .select("field, value")
+    .eq("entity_type", entityType)
+    .eq("entity_id", entityId)
+    .eq("locale", locale);
+  if (error) {
+    if (error.code === "PGRST205") return {}; // table not created yet
+    throw error;
+  }
+  return Object.fromEntries((data ?? []).map((r) => [r.field, r.value]));
+}
+
+export async function getBulkTranslations(
+  entityType: string,
+  entityIds: string[],
+  locale: string
+): Promise<Map<string, Record<string, string>>> {
+  const map = new Map<string, Record<string, string>>();
+  if (entityIds.length === 0 || locale === "zh") return map;
+  const { data, error } = await supabase
+    .from("translations")
+    .select("entity_id, field, value")
+    .eq("entity_type", entityType)
+    .eq("locale", locale)
+    .in("entity_id", entityIds);
+  if (error) {
+    if (error.code === "PGRST205") return map; // table not created yet
+    throw error;
+  }
+  for (const row of data ?? []) {
+    if (!map.has(row.entity_id)) map.set(row.entity_id, {});
+    map.get(row.entity_id)![row.field] = row.value;
+  }
+  return map;
+}
+
+export async function upsertTranslation(data: {
+  entity_type: string;
+  entity_id: string;
+  locale: string;
+  field: string;
+  value: string;
+}) {
+  const { error } = await supabase
+    .from("translations")
+    .upsert(
+      { ...data, updated_at: new Date().toISOString() },
+      { onConflict: "entity_type,entity_id,locale,field" }
+    );
+  if (error) throw error;
+}
+
+export async function deleteTranslationsForEntity(
+  entityType: string,
+  entityId: string
+) {
+  const { error } = await supabase
+    .from("translations")
+    .delete()
+    .eq("entity_type", entityType)
+    .eq("entity_id", entityId);
+  if (error) throw error;
 }
 
 // ---- Helper ----

@@ -11,7 +11,8 @@ export async function createCategoryAction(formData: FormData) {
     slug: formData.get("slug") as string,
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
   });
-  revalidatePath("/");
+  revalidatePath("/zh");
+  revalidatePath("/en");
   revalidatePath("/admin/categories");
 }
 
@@ -21,12 +22,14 @@ export async function updateCategoryAction(id: string, formData: FormData) {
     slug: formData.get("slug") as string,
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
   });
-  revalidatePath("/");
+  revalidatePath("/zh");
+  revalidatePath("/en");
   revalidatePath("/admin/categories");
 }
 
 export async function deleteCategoryAction(id: string) {
   await deleteCategory(id);
-  revalidatePath("/");
+  revalidatePath("/zh");
+  revalidatePath("/en");
   revalidatePath("/admin/categories");
 }

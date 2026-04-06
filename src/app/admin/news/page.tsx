@@ -1,5 +1,6 @@
-import { getAllPosts, getTagsForPosts, getTags } from "@/db/queries";
+import { getAllPosts, getTagsForPosts, getTags, getTranslations } from "@/db/queries";
 import { AdminNews } from "@/components/admin-news";
+import { defaultLocale } from "@/lib/i18n";
 
 export default async function AdminNewsPage() {
   const [posts, allTags] = await Promise.all([
@@ -13,11 +14,26 @@ export default async function AdminNewsPage() {
     tagRecord[key] = value;
   }
 
+  const translationsRecord: Record<string, Record<string, Record<string, string>>> = {};
+  for (const post of posts) {
+    const trans = await getTranslations("post", post.id);
+    const byLocale: Record<string, Record<string, string>> = {};
+    for (const t of trans) {
+      if (t.locale === defaultLocale) continue;
+      if (!byLocale[t.locale]) byLocale[t.locale] = {};
+      byLocale[t.locale][t.field] = t.value;
+    }
+    if (Object.keys(byLocale).length > 0) {
+      translationsRecord[post.id] = byLocale;
+    }
+  }
+
   return (
     <AdminNews
       posts={posts}
       tagRecord={tagRecord}
       allTags={allTags}
+      translationsRecord={translationsRecord}
     />
   );
 }

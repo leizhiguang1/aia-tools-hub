@@ -12,7 +12,8 @@ export async function createTagAction(formData: FormData) {
     color: (formData.get("color") as string) || "",
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
   });
-  revalidatePath("/");
+  revalidatePath("/zh");
+  revalidatePath("/en");
   revalidatePath("/admin/tags");
 }
 
@@ -33,7 +34,8 @@ export async function createTagInlineAction(data: {
     color: data.color,
     sort_order: 0,
   });
-  revalidatePath("/");
+  revalidatePath("/zh");
+  revalidatePath("/en");
   revalidatePath("/admin/tags");
   return { id, name: data.name, slug, color: data.color, sort_order: 0, created_at: new Date().toISOString() };
 }
@@ -45,12 +47,14 @@ export async function updateTagAction(id: string, formData: FormData) {
     color: (formData.get("color") as string) || "",
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
   });
-  revalidatePath("/");
+  revalidatePath("/zh");
+  revalidatePath("/en");
   revalidatePath("/admin/tags");
 }
 
 export async function deleteTagAction(id: string) {
   await deleteTag(id);
-  revalidatePath("/");
+  revalidatePath("/zh");
+  revalidatePath("/en");
   revalidatePath("/admin/tags");
 }

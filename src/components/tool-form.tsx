@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TagInput } from "@/components/tag-input";
 import { IconPicker } from "@/components/icon-picker";
+import { AdminTranslationFields } from "@/components/admin-translation-fields";
 import type { Tool, Category, Tag } from "@/types";
 
 export function ToolForm({
@@ -15,12 +16,14 @@ export function ToolForm({
   allTags,
   selectedTagIds = [],
   action,
+  existingTranslations = {},
 }: {
   tool?: Tool | null;
   categories: Category[];
   allTags: Tag[];
   selectedTagIds?: string[];
   action: (formData: FormData) => Promise<void>;
+  existingTranslations?: Record<string, Record<string, string>>;
 }) {
   return (
     <form action={action} className="space-y-4">
@@ -97,6 +100,18 @@ export function ToolForm({
       </div>
 
       <Button type="submit">{tool ? "保存修改" : "创建工具"}</Button>
+
+      {tool && (
+        <AdminTranslationFields
+          entityType="tool"
+          entityId={tool.id}
+          fields={[
+            { name: "name", label: "名称 Name", type: "input" },
+            { name: "description", label: "描述 Description", type: "textarea" },
+          ]}
+          existingTranslations={existingTranslations}
+        />
+      )}
     </form>
   );
 }

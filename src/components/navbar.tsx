@@ -1,30 +1,44 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import type { Dictionary } from "@/lib/dictionaries";
 
-const navItems = [
-  { href: "/", label: "找工具" },
-  { href: "/events", label: "看活动" },
-  { href: "/news", label: "看新鲜事" },
-];
-
-export function Navbar() {
+export function Navbar({ lang, dict }: { lang: string; dict: Dictionary }) {
   const pathname = usePathname();
+
+  const navItems = [
+    { href: `/${lang}`, label: dict.nav.tools },
+    { href: `/${lang}/events`, label: dict.nav.events },
+    { href: `/${lang}/news`, label: dict.nav.news },
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-14 items-center px-4">
-        <Link href="/" className="font-bold text-lg">
-          我的 AI 工作栈
+        <Link
+          href={`/${lang}`}
+          className="font-bold text-lg flex items-center gap-2 shrink-0"
+        >
+          <Image
+            src="/images/brand-logo.png"
+            alt={dict.site_name}
+            width={32}
+            height={32}
+            className="rounded-lg size-8"
+            priority
+          />
+          <span className="leading-tight">{dict.site_name}</span>
         </Link>
         <nav className="flex-1 flex items-center justify-center gap-1">
           {navItems.map((item) => {
-            const normalizedPathname = pathname.replace(/\/+$/, "") || "/";
+            const normalizedPathname = pathname.replace(/\/+$/, "") || `/${lang}`;
             const isActive =
-              item.href === "/"
-                ? normalizedPathname === "/"
+              item.href === `/${lang}`
+                ? normalizedPathname === `/${lang}`
                 : normalizedPathname.startsWith(item.href);
             return (
               <Link
@@ -42,6 +56,7 @@ export function Navbar() {
             );
           })}
         </nav>
+        <LanguageSwitcher currentLocale={lang} />
       </div>
     </header>
   );

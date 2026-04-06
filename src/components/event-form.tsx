@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { TagInput } from "@/components/tag-input";
+import { AdminTranslationFields } from "@/components/admin-translation-fields";
 import type { Event, Tag } from "@/types";
 
 export function EventForm({
@@ -12,11 +13,13 @@ export function EventForm({
   allTags,
   selectedTagIds = [],
   action,
+  existingTranslations = {},
 }: {
   event?: Event | null;
   allTags: Tag[];
   selectedTagIds?: string[];
   action: (formData: FormData) => Promise<void>;
+  existingTranslations?: Record<string, Record<string, string>>;
 }) {
 
   return (
@@ -80,6 +83,19 @@ export function EventForm({
       </div>
 
       <Button type="submit">{event ? "保存修改" : "创建活动"}</Button>
+
+      {event && (
+        <AdminTranslationFields
+          entityType="event"
+          entityId={event.id}
+          fields={[
+            { name: "title", label: "标题 Title", type: "input" },
+            { name: "description", label: "简介 Description", type: "textarea" },
+            { name: "content", label: "内容 Content", type: "textarea" },
+          ]}
+          existingTranslations={existingTranslations}
+        />
+      )}
     </form>
   );
 }

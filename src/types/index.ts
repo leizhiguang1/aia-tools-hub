@@ -65,3 +65,14 @@ export interface Tag {
   sort_order: number;
   created_at: string;
 }
+
+export interface Translation {
+  id: string;
+  entity_type: string;
+  entity_id: string;
+  locale: string;
+  field: string;
+  value: string;
+  created_at: string;
+  updated_at: string;
+}

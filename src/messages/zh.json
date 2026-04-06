@@ -1,36 +1,80 @@
 {
-  "site_name": "我的 AI 工作栈",
+  "site_name": "AI Agency 一人公司",
+  "meta_description": "发现最好的AI工具，参加活动，阅读最新资讯",
   "nav": {
     "tools": "找工具",
     "events": "看活动",
     "news": "看新鲜事"
   },
+  "hero": {
+    "badge": "不用再乱收藏了没有用到，一次过整理给你",
+    "title": "一人公司 你的AI团队",
+    "subtitle": "一套我们团队内部每天用，让你更快完成工作的AI工具",
+    "benefit_earn": "💰 多赚",
+    "benefit_calm": "😌 少焦虑",
+    "benefit_save": "🏷️ 省钱",
+    "description": "在这个AI时代，可以不用很厉害，但至少帮你熟悉摸一遍这些AI工具，以后要用的时候可以在这里找到。我们结合了不同的AI工具搭配你的工作场景和流程，配好给你的工具。",
+    "cta": "点击打造你的 AI 团队清单"
+  },
   "tools": {
     "title": "AI 工具集",
     "all": "所有工具",
-    "visit": "访问工具",
-    "search_placeholder": "搜索工具..."
+    "visit": "访问",
+    "search_placeholder": "搜索工具...",
+    "no_tools": "暂无工具"
   },
   "events": {
     "title": "活动与课程",
     "all": "全部",
     "upcoming": "即将开始",
+    "ongoing": "进行中",
     "past": "已结束",
     "online": "线上",
     "register": "立即报名",
-    "details": "查看详情"
+    "details": "查看详情",
+    "back": "返回活动列表",
+    "no_events": "暂无活动"
   },
   "news": {
     "title": "新鲜事",
     "read_more": "阅读更多",
     "back": "返回列表",
-    "share": "分享"
+    "share": "分享",
+    "prev_page": "上一页",
+    "next_page": "下一页",
+    "no_articles": "暂无文章"
   },
   "voting": {
     "upvote": "点赞",
     "upvoted": "已点赞",
-    "popular_tools": "大家都在用",
+    "popular_tools": "🏆 排行榜",
     "popular_tools_subtitle": "社区投票最多的工具"
+  },
+  "stack": {
+    "back": "返回工具列表",
+    "title": "打造你的 AI 团队清单",
+    "subtitle": "选择 3-12 个你最爱的 AI 工具，生成专属分享图片",
+    "selected_count": "已选",
+    "of": "/",
+    "tools_unit": "个工具",
+    "min_hint": "至少选 {min} 个",
+    "clear": "清空",
+    "generate": "生成图片",
+    "generating": "生成中...",
+    "generate_fail": "图片生成失败，请稍后再试",
+    "card_title_highlight": "一人公司",
+    "card_title": "你的AI团队",
+    "card_subtitle": "{count} 个精选 AI 工具，助我一人成团队",
+    "card_footer_name": "我的 AI 工作栈",
+    "card_footer_scan": "扫码探索更多 AI 工具",
+    "preview_title": "你的 AI 团队清单",
+    "preview_alt": "我的 AI 团队清单",
+    "preview_mobile_hint": "长按图片保存到相册，分享到朋友圈或小红书",
+    "preview_download": "下载图片",
+    "preview_reselect": "重新选择"
+  },
+  "footer": {
+    "copyright": "FunnelDuo. All rights reserved."
   },
   "common": {
     "loading": "加载中...",

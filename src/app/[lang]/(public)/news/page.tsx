@@ -1,33 +1,46 @@
-import { getPosts, getTagsForPosts } from "@/db/queries";
+import { getPosts, getTagsForPosts, getBulkTranslations } from "@/db/queries";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { TagList } from "@/components/tag-list";
-
+import { getDictionary } from "@/lib/dictionaries";
+import { type Locale, localePath, dateLocaleMap } from "@/lib/i18n";
+import { applyBulkTranslations } from "@/lib/translate";
 
 export default async function NewsPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ lang: string }>;
   searchParams: Promise<{ page?: string }>;
 }) {
+  const { lang } = await params;
   const { page: pageStr } = await searchParams;
+  const dict = await getDictionary(lang as Locale);
+
   const page = Math.max(1, parseInt(pageStr || "1", 10));
   const { posts: rawPosts, totalPages } = await getPosts(page, 10);
-  const tagMap = await getTagsForPosts(rawPosts.map((p) => p.id));
-  const posts = rawPosts.map((post) => ({
+
+  const [tagMap, postTransMap] = await Promise.all([
+    getTagsForPosts(rawPosts.map((p) => p.id)),
+    getBulkTranslations("post", rawPosts.map((p) => p.id), lang),
+  ]);
+
+  const translatedPosts = applyBulkTranslations(rawPosts, postTransMap, ["title", "content", "excerpt"]);
+  const posts = translatedPosts.map((post) => ({
     ...post,
     tag_list: tagMap.get(post.id) || [],
   }));
 
+  const dateFmt = dateLocaleMap[lang as Locale] || "zh-CN";
+
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">新鲜事</h1>
+      <h1 className="text-2xl font-bold mb-6">{dict.news.title}</h1>
 
       <div className="space-y-6">
         {posts.map((post) => {
-          const date = new Date(Number(post.published_at) * 1000).toLocaleDateString(
-            "zh-CN"
-          );
+          const date = new Date(Number(post.published_at) * 1000).toLocaleDateString(dateFmt);
 
           return (
             <Card key={post.id} className="hover:shadow-md transition-shadow">
@@ -48,7 +61,7 @@ export default async function NewsPage({
                       <span>·</span>
                       <span>{post.author}</span>
                     </div>
-                    <Link href={`/news/${post.slug}`}>
+                    <Link href={localePath(lang, `/news/${post.slug}`)}>
                       <h2 className="text-lg font-semibold hover:underline mb-2">
                         {post.title}
                       </h2>
@@ -68,20 +81,20 @@ export default async function NewsPage({
       </div>
 
       {posts.length === 0 && (
-        <p className="text-center text-muted-foreground py-12">暂无文章</p>
+        <p className="text-center text-muted-foreground py-12">{dict.news.no_articles}</p>
       )}
 
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex justify-center gap-2 mt-8">
           {page > 1 && (
-            <Link href={`/news?page=${page - 1}`} className={buttonVariants({ variant: "outline", size: "sm" })}>上一页</Link>
+            <Link href={localePath(lang, `/news?page=${page - 1}`)} className={buttonVariants({ variant: "outline", size: "sm" })}>{dict.news.prev_page}</Link>
           )}
           <span className="flex items-center px-3 text-sm text-muted-foreground">
             {page} / {totalPages}
           </span>
           {page < totalPages && (
-            <Link href={`/news?page=${page + 1}`} className={buttonVariants({ variant: "outline", size: "sm" })}>下一页</Link>
+            <Link href={localePath(lang, `/news?page=${page + 1}`)} className={buttonVariants({ variant: "outline", size: "sm" })}>{dict.news.next_page}</Link>
           )}
         </div>
       )}

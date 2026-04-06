@@ -6,7 +6,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { TagList } from "@/components/tag-list";
+import { localePath } from "@/lib/i18n";
 import type { Event } from "@/types";
+import type { Dictionary } from "@/lib/dictionaries";
 
 function getEventStatus(event: Event): "upcoming" | "ongoing" | "past" {
   const now = new Date().toISOString().split("T")[0];
@@ -16,26 +18,34 @@ function getEventStatus(event: Event): "upcoming" | "ongoing" | "past" {
   return "past";
 }
 
-const statusLabels = {
-  upcoming: "即将开始",
-  ongoing: "进行中",
-  past: "已结束",
-};
-
 const statusColors = {
   upcoming: "bg-green-100 text-green-800",
   ongoing: "bg-blue-100 text-blue-800",
   past: "bg-gray-100 text-gray-600",
 };
 
-const filters = [
-  { value: "all", label: "全部" },
-  { value: "upcoming", label: "即将开始" },
-  { value: "past", label: "已结束" },
-];
-
-export function EventsList({ events }: { events: Event[] }) {
+export function EventsList({
+  events,
+  dict,
+  lang,
+}: {
+  events: Event[];
+  dict: Dictionary;
+  lang: string;
+}) {
   const [filter, setFilter] = useState("all");
+
+  const statusLabels: Record<string, string> = {
+    upcoming: dict.events.upcoming,
+    ongoing: dict.events.ongoing,
+    past: dict.events.past,
+  };
+
+  const filters = [
+    { value: "all", label: dict.events.all },
+    { value: "upcoming", label: dict.events.upcoming },
+    { value: "past", label: dict.events.past },
+  ];
 
   const filtered = events.filter((event) => {
     if (filter === "all") return true;
@@ -104,7 +114,7 @@ export function EventsList({ events }: { events: Event[] }) {
                   {event.description}
                 </p>
                 <div className="flex gap-2">
-                  <Link href={`/events/${event.id}`} className={buttonVariants({ variant: "outline", size: "sm" })}>查看详情</Link>
+                  <Link href={localePath(lang, `/events/${event.id}`)} className={buttonVariants({ variant: "outline", size: "sm" })}>{dict.events.details}</Link>
                   {event.external_url && (
                     <a
                       href={event.external_url}
@@ -112,7 +122,7 @@ export function EventsList({ events }: { events: Event[] }) {
                       rel="noopener noreferrer"
                       className={buttonVariants({ size: "sm" })}
                     >
-                      立即报名
+                      {dict.events.register}
                     </a>
                   )}
                 </div>
@@ -123,7 +133,7 @@ export function EventsList({ events }: { events: Event[] }) {
       </div>
 
       {filtered.length === 0 && (
-        <p className="text-center text-muted-foreground py-12">暂无活动</p>
+        <p className="text-center text-muted-foreground py-12">{dict.events.no_events}</p>
       )}
     </div>
   );

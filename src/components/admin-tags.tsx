@@ -10,10 +10,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { DeleteButton } from "@/components/admin-delete-button";
 import { cn } from "@/lib/utils";
 import { TAG_COLORS, TAG_COLOR_NAMES, getTagColorStyle } from "@/lib/tag-colors";
+import { AdminTranslationFields } from "@/components/admin-translation-fields";
 import { createTagAction, updateTagAction, deleteTagAction } from "@/lib/actions/tags";
 import type { Tag } from "@/types";
 
-export function AdminTags({ tags }: { tags: Tag[] }) {
+export function AdminTags({
+  tags,
+  translationsRecord = {},
+}: {
+  tags: Tag[];
+  translationsRecord?: Record<string, Record<string, Record<string, string>>>;
+}) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Tag | null>(null);
   const [selectedColor, setSelectedColor] = useState("blue");
@@ -98,6 +105,15 @@ export function AdminTags({ tags }: { tags: Tag[] }) {
             <div className="flex justify-end">
               <Button type="submit">{editing ? "保存修改" : "添加"}</Button>
             </div>
+
+            {editing && (
+              <AdminTranslationFields
+                entityType="tag"
+                entityId={editing.id}
+                fields={[{ name: "name", label: "名称 Name", type: "input" }]}
+                existingTranslations={translationsRecord[editing.id] || {}}
+              />
+            )}
           </form>
         </DialogContent>
       </Dialog>

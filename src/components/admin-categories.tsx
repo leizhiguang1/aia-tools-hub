@@ -7,10 +7,17 @@ import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DeleteButton } from "@/components/admin-delete-button";
+import { AdminTranslationFields } from "@/components/admin-translation-fields";
 import { createCategoryAction, updateCategoryAction, deleteCategoryAction } from "@/lib/actions/categories";
 import type { Category } from "@/types";
 
-export function AdminCategories({ categories }: { categories: Category[] }) {
+export function AdminCategories({
+  categories,
+  translationsRecord = {},
+}: {
+  categories: Category[];
+  translationsRecord?: Record<string, Record<string, Record<string, string>>>;
+}) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Category | null>(null);
 
@@ -66,6 +73,15 @@ export function AdminCategories({ categories }: { categories: Category[] }) {
             <div className="flex justify-end">
               <Button type="submit">{editing ? "保存修改" : "添加"}</Button>
             </div>
+
+            {editing && (
+              <AdminTranslationFields
+                entityType="category"
+                entityId={editing.id}
+                fields={[{ name: "name", label: "名称 Name", type: "input" }]}
+                existingTranslations={translationsRecord[editing.id] || {}}
+              />
+            )}
           </form>
         </DialogContent>
       </Dialog>

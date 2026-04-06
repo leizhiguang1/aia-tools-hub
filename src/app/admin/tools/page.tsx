@@ -1,5 +1,6 @@
-import { getAllTools, getTagsForTools, getCategories, getTags } from "@/db/queries";
+import { getAllTools, getTagsForTools, getCategories, getTags, getTranslations } from "@/db/queries";
 import { AdminTools } from "@/components/admin-tools";
+import { locales, defaultLocale } from "@/lib/i18n";
 
 export default async function AdminToolsPage() {
   const [tools, categories, allTags] = await Promise.all([
@@ -15,12 +16,28 @@ export default async function AdminToolsPage() {
     tagRecord[key] = value;
   }
 
+  // Fetch translations for all tools
+  const translationsRecord: Record<string, Record<string, Record<string, string>>> = {};
+  for (const tool of tools) {
+    const trans = await getTranslations("tool", tool.id);
+    const byLocale: Record<string, Record<string, string>> = {};
+    for (const t of trans) {
+      if (t.locale === defaultLocale) continue;
+      if (!byLocale[t.locale]) byLocale[t.locale] = {};
+      byLocale[t.locale][t.field] = t.value;
+    }
+    if (Object.keys(byLocale).length > 0) {
+      translationsRecord[tool.id] = byLocale;
+    }
+  }
+
   return (
     <AdminTools
       tools={tools}
       tagRecord={tagRecord}
       categories={categories}
       allTags={allTags}
+      translationsRecord={translationsRecord}
     />
   );
 }

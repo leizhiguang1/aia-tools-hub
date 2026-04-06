@@ -7,13 +7,18 @@ import { TagList } from "@/components/tag-list";
 import { VoteButton } from "@/components/vote-button";
 import { ExternalLink } from "lucide-react";
 import type { Tool, Category } from "@/types";
+import type { Dictionary } from "@/lib/dictionaries";
 
 export function ToolsGrid({
   tools,
   categories,
+  dict,
+  lang,
 }: {
   tools: Tool[];
   categories: Category[];
+  dict: Dictionary;
+  lang: string;
 }) {
   const [activeCategory, setActiveCategory] = useState("all");
   const [search, setSearch] = useState("");
@@ -41,7 +46,7 @@ export function ToolsGrid({
       {/* Search */}
       <div className="mb-4">
         <Input
-          placeholder="搜索工具..."
+          placeholder={dict.tools.search_placeholder}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="max-w-sm"
@@ -59,7 +64,7 @@ export function ToolsGrid({
               : "bg-background text-muted-foreground hover:bg-muted"
           )}
         >
-          所有工具
+          {dict.tools.all}
         </button>
         {categories.map((cat) => (
           <button
@@ -89,7 +94,7 @@ export function ToolsGrid({
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {categoryTools.map((tool) => (
-                <ToolCard key={tool.id} tool={tool} />
+                <ToolCard key={tool.id} tool={tool} dict={dict} />
               ))}
             </div>
           </section>
@@ -97,13 +102,13 @@ export function ToolsGrid({
       })}
 
       {filtered.length === 0 && (
-        <p className="text-center text-muted-foreground py-12">暂无工具</p>
+        <p className="text-center text-muted-foreground py-12">{dict.tools.no_tools}</p>
       )}
     </div>
   );
 }
 
-function ToolCard({ tool }: { tool: Tool }) {
+function ToolCard({ tool, dict }: { tool: Tool; dict: Dictionary }) {
   return (
     <a
       href={tool.url}
@@ -143,7 +148,7 @@ function ToolCard({ tool }: { tool: Tool }) {
           }}
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors cursor-pointer"
         >
-          访问
+          {dict.tools.visit}
           <ExternalLink className="w-3.5 h-3.5" />
         </span>
       </div>

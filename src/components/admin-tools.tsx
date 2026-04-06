@@ -16,9 +16,10 @@ interface AdminToolsProps {
   tagRecord: Record<string, Tag[]>;
   categories: Category[];
   allTags: Tag[];
+  translationsRecord: Record<string, Record<string, Record<string, string>>>;
 }
 
-export function AdminTools({ tools, tagRecord, categories, allTags }: AdminToolsProps) {
+export function AdminTools({ tools, tagRecord, categories, allTags, translationsRecord }: AdminToolsProps) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Tool | null>(null);
   const [editingTagIds, setEditingTagIds] = useState<string[]>([]);
@@ -68,6 +69,7 @@ export function AdminTools({ tools, tagRecord, categories, allTags }: AdminTools
             allTags={allTags}
             selectedTagIds={editingTagIds}
             action={formAction}
+            existingTranslations={editing ? translationsRecord[editing.id] || {} : {}}
           />
         </DialogContent>
       </Dialog>

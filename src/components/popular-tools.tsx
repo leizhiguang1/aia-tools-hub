@@ -3,6 +3,7 @@
 import { VoteButton } from "@/components/vote-button";
 import { Trophy } from "lucide-react";
 import type { Tool } from "@/types";
+import type { Dictionary } from "@/lib/dictionaries";
 
 const RANK_STYLES = [
   "bg-gradient-to-r from-amber-50 to-amber-100/50 dark:from-amber-950/30 dark:to-amber-900/10 ring-amber-300/40",
@@ -30,7 +31,7 @@ function RankBadge({ rank }: { rank: number }) {
   );
 }
 
-export function PopularTools({ tools }: { tools: Tool[] }) {
+export function PopularTools({ tools, dict }: { tools: Tool[]; dict: Dictionary }) {
   if (tools.length === 0) return null;
   const top5 = tools.slice(0, 5);
   const [champion, ...rest] = top5;
@@ -38,8 +39,8 @@ export function PopularTools({ tools }: { tools: Tool[] }) {
   return (
     <section className="mb-12">
       <div className="flex items-baseline gap-3 mb-5">
-        <h2 className="text-xl font-bold">🏆 排行榜</h2>
-        <span className="text-sm text-muted-foreground">社区投票最多的工具</span>
+        <h2 className="text-xl font-bold">{dict.voting.popular_tools}</h2>
+        <span className="text-sm text-muted-foreground">{dict.voting.popular_tools_subtitle}</span>
       </div>
 
       {/* Champion card */}

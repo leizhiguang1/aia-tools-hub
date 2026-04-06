@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { TagInput } from "@/components/tag-input";
+import { AdminTranslationFields } from "@/components/admin-translation-fields";
 import type { Post, Tag } from "@/types";
 
 export function PostForm({
@@ -12,11 +13,13 @@ export function PostForm({
   allTags,
   selectedTagIds = [],
   action,
+  existingTranslations = {},
 }: {
   post?: Post | null;
   allTags: Tag[];
   selectedTagIds?: string[];
   action: (formData: FormData) => Promise<void>;
+  existingTranslations?: Record<string, Record<string, string>>;
 }) {
 
   return (
@@ -69,6 +72,19 @@ export function PostForm({
       </div>
 
       <Button type="submit">{post ? "保存修改" : "创建文章"}</Button>
+
+      {post && (
+        <AdminTranslationFields
+          entityType="post"
+          entityId={post.id}
+          fields={[
+            { name: "title", label: "标题 Title", type: "input" },
+            { name: "excerpt", label: "摘要 Excerpt", type: "textarea" },
+            { name: "content", label: "内容 Content", type: "textarea" },
+          ]}
+          existingTranslations={existingTranslations}
+        />
+      )}
     </form>
   );
 }

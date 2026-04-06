@@ -26,7 +26,8 @@ export async function createToolAction(formData: FormData) {
     is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setToolTags(id, parseTagIds(formData));
-  revalidatePath("/");
+  revalidatePath("/zh");
+  revalidatePath("/en");
   revalidatePath("/admin/tools");
 }
 
@@ -42,12 +43,14 @@ export async function updateToolAction(id: string, formData: FormData) {
     is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setToolTags(id, parseTagIds(formData));
-  revalidatePath("/");
+  revalidatePath("/zh");
+  revalidatePath("/en");
   revalidatePath("/admin/tools");
 }
 
 export async function deleteToolAction(id: string) {
   await deleteTool(id);
-  revalidatePath("/");
+  revalidatePath("/zh");
+  revalidatePath("/en");
   revalidatePath("/admin/tools");
 }

@@ -14,9 +14,10 @@ interface AdminEventsProps {
   events: Event[];
   tagRecord: Record<string, Tag[]>;
   allTags: Tag[];
+  translationsRecord: Record<string, Record<string, Record<string, string>>>;
 }
 
-export function AdminEvents({ events, tagRecord, allTags }: AdminEventsProps) {
+export function AdminEvents({ events, tagRecord, allTags, translationsRecord }: AdminEventsProps) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Event | null>(null);
   const [editingTagIds, setEditingTagIds] = useState<string[]>([]);
@@ -65,6 +66,7 @@ export function AdminEvents({ events, tagRecord, allTags }: AdminEventsProps) {
             allTags={allTags}
             selectedTagIds={editingTagIds}
             action={formAction}
+            existingTranslations={editing ? translationsRecord[editing.id] || {} : {}}
           />
         </DialogContent>
       </Dialog>

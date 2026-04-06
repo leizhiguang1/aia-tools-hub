@@ -27,7 +27,8 @@ export async function createEventAction(formData: FormData) {
     is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setEventTags(id, parseTagIds(formData));
-  revalidatePath("/events");
+  revalidatePath("/zh/events");
+  revalidatePath("/en/events");
   revalidatePath("/admin/events");
 }
 
@@ -44,12 +45,14 @@ export async function updateEventAction(id: string, formData: FormData) {
     is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setEventTags(id, parseTagIds(formData));
-  revalidatePath("/events");
+  revalidatePath("/zh/events");
+  revalidatePath("/en/events");
   revalidatePath("/admin/events");
 }
 
 export async function deleteEventAction(id: string) {
   await deleteEvent(id);
-  revalidatePath("/events");
+  revalidatePath("/zh/events");
+  revalidatePath("/en/events");
   revalidatePath("/admin/events");
 }

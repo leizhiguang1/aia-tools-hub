@@ -1,36 +1,80 @@
 {
-  "site_name": "My AI Toolkit",
+  "site_name": "AI Agency 一人公司",
+  "meta_description": "Discover the best AI tools, join events, and read the latest news",
   "nav": {
     "tools": "Tools",
     "events": "Events",
     "news": "News"
   },
+  "hero": {
+    "badge": "Stop bookmarking and forgetting — we've organized them all for you",
+    "title": "One-Person Company, Your AI Team",
+    "subtitle": "A set of AI tools our team uses daily to get work done faster",
+    "benefit_earn": "💰 Earn More",
+    "benefit_calm": "😌 Less Stress",
+    "benefit_save": "🏷️ Save Money",
+    "description": "In the AI era, you don't need to be an expert — just get familiar with these AI tools so you can find what you need when you need it. We've matched different AI tools to your work scenarios and workflows.",
+    "cta": "Build Your AI Team List"
+  },
   "tools": {
     "title": "AI Tools",
     "all": "All Tools",
-    "visit": "Visit Tool",
-    "search_placeholder": "Search tools..."
+    "visit": "Visit",
+    "search_placeholder": "Search tools...",
+    "no_tools": "No tools yet"
   },
   "events": {
     "title": "Events & Courses",
     "all": "All",
     "upcoming": "Upcoming",
+    "ongoing": "Ongoing",
     "past": "Past",
     "online": "Online",
     "register": "Register Now",
-    "details": "View Details"
+    "details": "View Details",
+    "back": "Back to events",
+    "no_events": "No events yet"
   },
   "news": {
     "title": "News",
     "read_more": "Read More",
-    "back": "Back to List",
-    "share": "Share"
+    "back": "Back to list",
+    "share": "Share",
+    "prev_page": "Previous",
+    "next_page": "Next",
+    "no_articles": "No articles yet"
   },
   "voting": {
     "upvote": "Upvote",
     "upvoted": "Upvoted",
-    "popular_tools": "Popular Tools",
+    "popular_tools": "🏆 Leaderboard",
     "popular_tools_subtitle": "Most upvoted by the community"
+  },
+  "stack": {
+    "back": "Back to tools",
+    "title": "Build Your AI Team List",
+    "subtitle": "Select 3-12 of your favorite AI tools and generate a shareable image",
+    "selected_count": "Selected",
+    "of": "/",
+    "tools_unit": "tools",
+    "min_hint": "Select at least {min}",
+    "clear": "Clear",
+    "generate": "Generate Image",
+    "generating": "Generating...",
+    "generate_fail": "Image generation failed, please try again",
+    "card_title_highlight": "One-Person Co.",
+    "card_title": "Your AI Team",
+    "card_subtitle": "{count} curated AI tools, powering a one-person team",
+    "card_footer_name": "My AI Toolkit",
+    "card_footer_scan": "Scan to discover more AI tools",
+    "preview_title": "Your AI Team List",
+    "preview_alt": "My AI Team List",
+    "preview_mobile_hint": "Long press to save the image and share",
+    "preview_download": "Download Image",
+    "preview_reselect": "Reselect"
+  },
+  "footer": {
+    "copyright": "FunnelDuo. All rights reserved."
   },
   "common": {
     "loading": "Loading...",

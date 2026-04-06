@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { StackPreview } from "@/components/stack-preview";
 import type { Tool, Category } from "@/types";
+import type { Dictionary } from "@/lib/dictionaries";
 
 const MAX_TOOLS = 16;
 const MIN_TOOLS = 3;
@@ -27,9 +28,11 @@ const CATEGORY_COLORS = [
 export function StackBuilder({
   tools,
   categories,
+  dict,
 }: {
   tools: Tool[];
   categories: Category[];
+  dict: Dictionary;
 }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [activeCategory, setActiveCategory] = useState("all");
@@ -71,7 +74,7 @@ export function StackBuilder({
   const selectedTools = tools.filter((t) => selected.has(t.id));
   const selectedGrouped = new Map<string, Tool[]>();
   for (const tool of selectedTools) {
-    const key = tool.category_name || "其他";
+    const key = tool.category_name || "other";
     if (!selectedGrouped.has(key)) selectedGrouped.set(key, []);
     selectedGrouped.get(key)!.push(tool);
   }
@@ -80,9 +83,6 @@ export function StackBuilder({
     if (selected.size < MIN_TOOLS || !cardRef.current) return;
     setGenerating(true);
     try {
-      // Run toPng twice — first call warms up image/font caches so the
-      // second call captures a fully-rendered card (fixes missing QR on
-      // some browsers).
       await toPng(cardRef.current, {
         pixelRatio: 2,
         cacheBust: true,
@@ -96,7 +96,7 @@ export function StackBuilder({
       setImageUrl(dataUrl);
     } catch (err) {
       console.error(err);
-      alert("图片生成失败，请稍后再试");
+      alert(dict.stack.generate_fail);
     } finally {
       setGenerating(false);
     }
@@ -111,7 +111,7 @@ export function StackBuilder({
       {/* Search */}
       <div className="mb-4">
         <Input
-          placeholder="搜索工具..."
+          placeholder={dict.tools.search_placeholder}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="max-w-sm"
@@ -129,7 +129,7 @@ export function StackBuilder({
               : "bg-background text-muted-foreground hover:bg-muted"
           )}
         >
-          所有工具
+          {dict.tools.all}
         </button>
         {categories.map((cat) => (
           <button
@@ -214,7 +214,7 @@ export function StackBuilder({
       })}
 
       {filtered.length === 0 && (
-        <p className="text-center text-muted-foreground py-12">暂无工具</p>
+        <p className="text-center text-muted-foreground py-12">{dict.tools.no_tools}</p>
       )}
 
       {/* Hidden Card for Image Generation */}
@@ -240,7 +240,7 @@ export function StackBuilder({
                 marginBottom: "4px",
               }}
             >
-              <span style={{ color: "#6366f1" }}>一人公司</span> 你的AI团队
+              <span style={{ color: "#6366f1" }}>{dict.stack.card_title_highlight}</span> {dict.stack.card_title}
             </div>
             <div
               style={{
@@ -249,7 +249,7 @@ export function StackBuilder({
                 marginTop: "8px",
               }}
             >
-              {selectedTools.length} 个精选 AI 工具，助我一人成团队
+              {dict.stack.card_subtitle.replace("{count}", String(selectedTools.length))}
             </div>
           </div>
 
@@ -359,10 +359,10 @@ export function StackBuilder({
                   marginBottom: "2px",
                 }}
               >
-                我的 AI 工作栈
+                {dict.stack.card_footer_name}
               </div>
               <div style={{ fontSize: "11px", color: "#94a3b8" }}>
-                扫码探索更多 AI 工具
+                {dict.stack.card_footer_scan}
               </div>
             </div>
             <img
@@ -380,12 +380,12 @@ export function StackBuilder({
       <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur border-t shadow-lg z-40">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
           <div className="text-sm text-muted-foreground">
-            已选{" "}
-            <span className="font-bold text-foreground">{selected.size}</span> /{" "}
-            {MAX_TOOLS} 个工具
+            {dict.stack.selected_count}{" "}
+            <span className="font-bold text-foreground">{selected.size}</span> {dict.stack.of}{" "}
+            {MAX_TOOLS} {dict.stack.tools_unit}
             {selected.size < MIN_TOOLS && selected.size > 0 && (
               <span className="ml-2 text-amber-500">
-                （至少选 {MIN_TOOLS} 个）
+                ({dict.stack.min_hint.replace("{min}", String(MIN_TOOLS))})
               </span>
             )}
           </div>
@@ -395,7 +395,7 @@ export function StackBuilder({
                 onClick={() => setSelected(new Set())}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
-                清空
+                {dict.stack.clear}
               </button>
             )}
             <button
@@ -408,7 +408,7 @@ export function StackBuilder({
                   : "bg-muted text-muted-foreground cursor-not-allowed"
               )}
             >
-              {generating ? "生成中..." : "生成图片"}
+              {generating ? dict.stack.generating : dict.stack.generate}
             </button>
           </div>
         </div>
@@ -416,7 +416,7 @@ export function StackBuilder({
 
       {/* Preview Modal */}
       {imageUrl && (
-        <StackPreview imageUrl={imageUrl} onClose={handleClosePreview} />
+        <StackPreview imageUrl={imageUrl} onClose={handleClosePreview} dict={dict} />
       )}
     </div>
   );
