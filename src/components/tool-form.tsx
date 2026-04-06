@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TagInput } from "@/components/tag-input";
+import { IconPicker } from "@/components/icon-picker";
 import type { Tool, Category, Tag } from "@/types";
 
 export function ToolForm({
@@ -29,8 +30,8 @@ export function ToolForm({
           <Input id="name" name="name" defaultValue={tool?.name} required />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="icon">图标 (emoji 或 URL)</Label>
-          <Input id="icon" name="icon" defaultValue={tool?.icon} />
+          <Label>图标</Label>
+          <IconPicker defaultValue={tool?.icon ?? ""} />
         </div>
       </div>
 
