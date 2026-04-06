@@ -27,12 +27,12 @@ export function Navbar({ lang, dict }: { lang: string; dict: Dictionary }) {
           <Image
             src="/images/brand-logo.png"
             alt={dict.site_name}
-            width={32}
-            height={32}
-            className="rounded-lg size-8"
+            width={1024}
+            height={214}
+            className="h-9 w-auto"
+            unoptimized
             priority
           />
-          <span className="leading-tight">{dict.site_name}</span>
         </Link>
         <nav className="flex-1 flex items-center justify-center gap-1">
           {navItems.map((item) => {

@@ -13,13 +13,13 @@
     "benefit_earn": "💰 多赚",
     "benefit_calm": "😌 少焦虑",
     "benefit_save": "🏷️ 省钱",
-    "description": "在这个AI时代，可以不用很厉害，但至少帮你熟悉摸一遍这些AI工具，以后要用的时候可以在这里找到。我们结合了不同的AI工具搭配你的工作场景和流程，配好给你的工具。",
+    "description": "在这个AI时代，可以不用很厉害，但至少帮你熟悉摸一遍这些AI工具，我们结合了不同的AI工具搭配你的工作场景和流程，让你少走弯路，更快找到适合你的那一套AI。我们会持续更新，记得把这个网站先收藏好 👀",
     "cta": "点击打造你的 AI 团队清单"
   },
   "tools": {
     "title": "AI 工具集",
     "all": "所有工具",
-    "visit": "马上使用",
+    "visit": "点击链接",
     "search_placeholder": "搜索工具...",
     "no_tools": "暂无工具"
   },
@@ -43,8 +43,8 @@
   "voting": {
     "upvote": "点赞",
     "upvoted": "已点赞",
-    "popular_tools": "🏆 排行榜",
-    "popular_tools_subtitle": "社区投票最多的工具"
+    "popular_tools": "🏆 大家都在用的 AI 工具榜",
+    "popular_tools_subtitle": "每个AI都试一试，喜欢的就点击爱心收藏起来，也顺便看看大家最近都在用什么 AI 神器"
   },
   "stack": {
     "back": "返回工具列表",

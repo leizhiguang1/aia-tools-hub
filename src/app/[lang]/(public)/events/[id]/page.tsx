@@ -78,6 +78,19 @@ export default async function EventDetailPage({
           </div>
         );
       })()}
+
+      {translated.external_url && (
+        <div className="mt-12 mb-8 text-center">
+          <a
+            href={translated.external_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(buttonVariants({ size: "lg" }), "w-full max-w-md text-lg py-6")}
+          >
+            {dict.events.register} &rarr;
+          </a>
+        </div>
+      )}
     </div>
   );
 }

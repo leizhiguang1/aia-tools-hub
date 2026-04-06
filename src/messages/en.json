@@ -19,7 +19,7 @@
   "tools": {
     "title": "AI Tools",
     "all": "All Tools",
-    "visit": "Try Now",
+    "visit": "Explore Now",
     "search_placeholder": "Search tools...",
     "no_tools": "No tools yet"
   },
@@ -43,8 +43,8 @@
   "voting": {
     "upvote": "Upvote",
     "upvoted": "Upvoted",
-    "popular_tools": "🏆 Leaderboard",
-    "popular_tools_subtitle": "Most upvoted by the community"
+    "popular_tools": "🏆 Popular AI Tools",
+    "popular_tools_subtitle": "Try each one, heart the ones you love, and see what AI tools everyone's using"
   },
   "stack": {
     "back": "Back to tools",

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { TagList } from "@/components/tag-list";
 import { VoteButton } from "@/components/vote-button";
@@ -21,16 +20,9 @@ export function ToolsGrid({
   lang: string;
 }) {
   const [activeCategory, setActiveCategory] = useState("all");
-  const [search, setSearch] = useState("");
 
   const filtered = tools.filter((tool) => {
-    const matchCategory =
-      activeCategory === "all" || tool.category_slug === activeCategory;
-    const matchSearch =
-      !search ||
-      tool.name.toLowerCase().includes(search.toLowerCase()) ||
-      tool.description.toLowerCase().includes(search.toLowerCase());
-    return matchCategory && matchSearch;
+    return activeCategory === "all" || tool.category_slug === activeCategory;
   });
 
   // Group tools by category for display
@@ -43,16 +35,6 @@ export function ToolsGrid({
 
   return (
     <div>
-      {/* Search */}
-      <div className="mb-4">
-        <Input
-          placeholder={dict.tools.search_placeholder}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="max-w-sm"
-        />
-      </div>
-
       {/* Category Tabs */}
       <div className="flex flex-wrap gap-2 mb-8">
         <button
