@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -34,11 +34,17 @@ export function AdminTranslationFields({
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  const formRef = React.useRef<HTMLDivElement>(null);
+
+  async function handleSave() {
+    if (!formRef.current) return;
     setSaving(true);
     setSaved(false);
-    const formData = new FormData(e.currentTarget);
+    const inputs = formRef.current.querySelectorAll<
+      HTMLInputElement | HTMLTextAreaElement
+    >("input[name], textarea[name]");
+    const formData = new FormData();
+    inputs.forEach((el) => formData.append(el.name, el.value));
     await saveTranslationsAction(entityType, entityId, formData);
     setSaving(false);
     setSaved(true);
@@ -68,7 +74,7 @@ export function AdminTranslationFields({
         ))}
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <div ref={formRef}>
         {nonDefaultLocales.map((locale) => (
           <div
             key={locale}
@@ -109,14 +115,14 @@ export function AdminTranslationFields({
         ))}
 
         <div className="flex items-center gap-2 mt-3">
-          <Button type="submit" size="sm" variant="outline" disabled={saving}>
+          <Button type="button" size="sm" variant="outline" disabled={saving} onClick={handleSave}>
             {saving ? "保存中..." : "保存翻译"}
           </Button>
           {saved && (
             <span className="text-xs text-green-600">已保存 ✓</span>
           )}
         </div>
-      </form>
+      </div>
     </div>
   );
 }
