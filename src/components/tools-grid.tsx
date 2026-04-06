@@ -103,14 +103,7 @@ export function ToolsGrid({
   );
 }
 
-const pricingLabel: Record<string, { text: string; className: string }> = {
-  free: { text: "免费", className: "bg-green-50 text-green-600 ring-green-200" },
-  freemium: { text: "免费+付费", className: "bg-blue-50 text-blue-600 ring-blue-200" },
-  paid: { text: "付费", className: "bg-amber-50 text-amber-600 ring-amber-200" },
-};
-
 function ToolCard({ tool }: { tool: Tool }) {
-  const pricing = pricingLabel[tool.pricing] || pricingLabel.freemium;
   return (
     <a
       href={tool.url}
@@ -118,18 +111,8 @@ function ToolCard({ tool }: { tool: Tool }) {
       rel="noopener noreferrer"
       className="group relative flex flex-col gap-3 rounded-xl bg-card p-4 text-sm text-card-foreground ring-1 ring-foreground/10 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:ring-foreground/20"
     >
-      {/* Pricing pill — top-right */}
-      <span
-        className={cn(
-          "absolute top-3 right-3 text-[10px] font-medium px-2 py-0.5 rounded-full ring-1",
-          pricing.className
-        )}
-      >
-        {pricing.text}
-      </span>
-
       {/* Icon + Name */}
-      <div className="flex items-center gap-3 pr-16">
+      <div className="flex items-center gap-3">
         {tool.icon?.startsWith("http") ? (
           <img src={tool.icon} alt="" className="w-10 h-10 rounded-lg object-contain shrink-0" />
         ) : (
@@ -138,15 +121,15 @@ function ToolCard({ tool }: { tool: Tool }) {
         <h3 className="font-semibold text-base truncate">{tool.name}</h3>
       </div>
 
-      {/* Description */}
-      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-        {tool.description}
-      </p>
-
       {/* Tags */}
       {tool.tag_list && tool.tag_list.length > 0 && (
         <TagList tags={tool.tag_list} max={3} size="xs" />
       )}
+
+      {/* Description */}
+      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+        {tool.description}
+      </p>
 
       {/* Vote + Visit — bottom */}
       <div className="mt-auto pt-1 flex items-center justify-between gap-2">
