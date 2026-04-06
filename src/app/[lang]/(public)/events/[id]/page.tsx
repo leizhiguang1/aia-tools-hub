@@ -65,7 +65,7 @@ export default async function EventDetailPage({
             rel="noopener noreferrer"
             className={cn(
               buttonVariants({ size: "lg" }),
-              "text-base px-8 py-5 font-semibold shadow-md hover:shadow-lg transition-shadow"
+              "relative text-base px-8 py-5 font-semibold shadow-md hover:shadow-lg transition-all hover:scale-105 animate-pulse"
             )}
           >
             {dict.events.register} &rarr;
@@ -95,7 +95,10 @@ export default async function EventDetailPage({
             href={translated.external_url}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(buttonVariants({ size: "lg" }), "w-full max-w-md text-lg py-6")}
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "w-full max-w-md text-lg py-6 animate-bounce hover:animate-none hover:scale-105 transition-transform shadow-lg hover:shadow-xl"
+            )}
           >
             {dict.events.register} &rarr;
           </a>
