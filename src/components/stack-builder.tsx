@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef } from "react";
 import { toPng } from "html-to-image";
-import QRCode from "qrcode";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { SHARE_QR_URL } from "@/lib/config";
 import { StackPreview } from "@/components/stack-preview";
 import type { Tool, Category } from "@/types";
 
@@ -39,15 +37,6 @@ export function StackBuilder({
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [generating, setGenerating] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
-  const [qrDataUrl, setQrDataUrl] = useState<string>("");
-
-  useEffect(() => {
-    QRCode.toDataURL(SHARE_QR_URL, {
-      width: 144,
-      margin: 1,
-      color: { dark: "#1e293b", light: "#ffffff" },
-    }).then(setQrDataUrl);
-  }, []);
 
   const toggleTool = useCallback((id: string) => {
     setSelected((prev) => {
@@ -67,7 +56,7 @@ export function StackBuilder({
     const matchSearch =
       !search ||
       tool.name.toLowerCase().includes(search.toLowerCase()) ||
-      tool.description_zh.toLowerCase().includes(search.toLowerCase());
+      tool.description.toLowerCase().includes(search.toLowerCase());
     return matchCategory && matchSearch;
   });
 
@@ -82,7 +71,7 @@ export function StackBuilder({
   const selectedTools = tools.filter((t) => selected.has(t.id));
   const selectedGrouped = new Map<string, Tool[]>();
   for (const tool of selectedTools) {
-    const key = tool.category_name_zh || "其他";
+    const key = tool.category_name || "其他";
     if (!selectedGrouped.has(key)) selectedGrouped.set(key, []);
     selectedGrouped.get(key)!.push(tool);
   }
@@ -91,6 +80,14 @@ export function StackBuilder({
     if (selected.size < MIN_TOOLS || !cardRef.current) return;
     setGenerating(true);
     try {
+      // Run toPng twice — first call warms up image/font caches so the
+      // second call captures a fully-rendered card (fixes missing QR on
+      // some browsers).
+      await toPng(cardRef.current, {
+        pixelRatio: 2,
+        cacheBust: true,
+        skipFonts: true,
+      });
       const dataUrl = await toPng(cardRef.current, {
         pixelRatio: 2,
         cacheBust: true,
@@ -145,7 +142,7 @@ export function StackBuilder({
                 : "bg-background text-muted-foreground hover:bg-muted"
             )}
           >
-            {cat.name_zh}
+            {cat.name}
           </button>
         ))}
       </div>
@@ -157,7 +154,7 @@ export function StackBuilder({
           <section key={slug} className="mb-10">
             {activeCategory === "all" && (
               <h2 className="text-lg font-semibold mb-4 border-l-4 border-primary pl-3">
-                {category?.name_zh || slug}
+                {category?.name || slug}
               </h2>
             )}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -221,7 +218,7 @@ export function StackBuilder({
       )}
 
       {/* Hidden Card for Image Generation */}
-      <div style={{ position: "absolute", left: "-9999px", top: 0 }}>
+      <div style={{ position: "fixed", left: 0, top: 0, zIndex: -1, opacity: 0, pointerEvents: "none" }}>
         <div
           ref={cardRef}
           style={{
@@ -368,15 +365,13 @@ export function StackBuilder({
                 扫码探索更多 AI 工具
               </div>
             </div>
-            {qrDataUrl && (
-              <img
-                src={qrDataUrl}
-                alt="QR"
-                width={72}
-                height={72}
-                style={{ borderRadius: "8px" }}
-              />
-            )}
+            <img
+              src="/images/qr-share.png"
+              alt="QR"
+              width={72}
+              height={72}
+              style={{ borderRadius: "8px" }}
+            />
           </div>
         </div>
       </div>

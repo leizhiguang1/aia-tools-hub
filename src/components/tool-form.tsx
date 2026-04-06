@@ -40,13 +40,8 @@ export function ToolForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="description_zh">描述（中文）</Label>
-        <Textarea id="description_zh" name="description_zh" defaultValue={tool?.description_zh} rows={2} />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="description_en">描述（英文）</Label>
-        <Textarea id="description_en" name="description_en" defaultValue={tool?.description_en} rows={2} />
+        <Label htmlFor="description">描述</Label>
+        <Textarea id="description" name="description" defaultValue={tool?.description} rows={2} />
       </div>
 
       <div className="grid grid-cols-3 gap-4">
@@ -59,7 +54,7 @@ export function ToolForm({
             <SelectContent>
               {categories.map((cat) => (
                 <SelectItem key={cat.id} value={cat.id}>
-                  {cat.name_zh}
+                  {cat.name}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -94,7 +89,7 @@ export function ToolForm({
           type="checkbox"
           id="is_published"
           name="is_published"
-          defaultChecked={tool?.is_published !== 0}
+          defaultChecked={tool?.is_published !== false}
           className="rounded"
         />
         <Label htmlFor="is_published">发布</Label>

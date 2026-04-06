@@ -59,12 +59,8 @@ export function AdminTags({ tags }: { tags: Tag[] }) {
           </DialogHeader>
           <form action={formAction} className="space-y-4" key={editing?.id ?? "new"}>
             <div className="space-y-2">
-              <Label htmlFor="name_zh">中文名称</Label>
-              <Input id="name_zh" name="name_zh" required defaultValue={editing?.name_zh} placeholder="主要用" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="name_en">English Name</Label>
-              <Input id="name_en" name="name_en" defaultValue={editing?.name_en} placeholder="Primary" />
+              <Label htmlFor="name">名称</Label>
+              <Input id="name" name="name" required defaultValue={editing?.name} placeholder="主要用" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="slug">Slug</Label>
@@ -121,9 +117,8 @@ export function AdminTags({ tags }: { tags: Tag[] }) {
               <TableCell>
                 <div className="flex items-center gap-2">
                   <Badge variant="outline" style={getTagColorStyle(tag.color)}>
-                    {tag.name_zh}
+                    {tag.name}
                   </Badge>
-                  {tag.name_en && <span className="text-xs text-muted-foreground">{tag.name_en}</span>}
                 </div>
               </TableCell>
               <TableCell className="font-mono text-sm text-muted-foreground">{tag.slug}</TableCell>

@@ -37,7 +37,7 @@ export default async function NewsPage({
                     <div className="w-48 h-32 shrink-0 overflow-hidden rounded-md">
                       <img
                         src={post.cover_image}
-                        alt={post.title_zh}
+                        alt={post.title}
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -50,11 +50,11 @@ export default async function NewsPage({
                     </div>
                     <Link href={`/news/${post.slug}`}>
                       <h2 className="text-lg font-semibold hover:underline mb-2">
-                        {post.title_zh}
+                        {post.title}
                       </h2>
                     </Link>
                     <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
-                      {post.excerpt_zh}
+                      {post.excerpt}
                     </p>
                     <div className="flex items-center gap-2">
                       <TagList tags={post.tag_list || []} max={3} size="xs" />

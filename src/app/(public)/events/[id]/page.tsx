@@ -30,13 +30,13 @@ export default async function EventDetailPage({
         <div className="aspect-video overflow-hidden rounded-lg mb-6">
           <img
             src={event.cover_image}
-            alt={event.title_zh}
+            alt={event.title}
             className="w-full h-full object-cover"
           />
         </div>
       )}
 
-      <h1 className="text-3xl font-bold mb-3">{event.title_zh}</h1>
+      <h1 className="text-3xl font-bold mb-3">{event.title}</h1>
 
       <div className="flex flex-wrap items-center gap-2 mb-4 text-sm text-muted-foreground">
         <span>
@@ -65,7 +65,7 @@ export default async function EventDetailPage({
 
       <div className="prose prose-neutral max-w-none">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {event.content_zh || event.description_zh}
+          {event.content || event.description}
         </ReactMarkdown>
       </div>
     </div>

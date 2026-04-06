@@ -73,7 +73,7 @@ export function EventsList({ events }: { events: Event[] }) {
                 <div className="aspect-video overflow-hidden rounded-t-lg">
                   <img
                     src={event.cover_image}
-                    alt={event.title_zh}
+                    alt={event.title}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -91,7 +91,7 @@ export function EventsList({ events }: { events: Event[] }) {
                   <TagList tags={event.tag_list || []} max={2} size="xs" />
                 </div>
                 <h3 className="font-semibold text-lg mb-1">
-                  {event.title_zh}
+                  {event.title}
                 </h3>
                 <p className="text-sm text-muted-foreground mb-2">
                   {event.date_start}
@@ -101,7 +101,7 @@ export function EventsList({ events }: { events: Event[] }) {
                   {event.location && ` · ${event.location}`}
                 </p>
                 <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                  {event.description_zh}
+                  {event.description}
                 </p>
                 <div className="flex gap-2">
                   <Link href={`/events/${event.id}`} className={buttonVariants({ variant: "outline", size: "sm" })}>查看详情</Link>

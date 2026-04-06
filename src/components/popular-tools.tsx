@@ -29,7 +29,7 @@ export function PopularTools({ tools }: { tools: Tool[] }) {
               <h3 className="font-semibold text-sm truncate">{tool.name}</h3>
             </div>
             <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
-              {tool.description_zh}
+              {tool.description}
             </p>
             <div className="mt-auto pt-1">
               <VoteButton toolId={tool.id} initialCount={tool.vote_count ?? 0} />

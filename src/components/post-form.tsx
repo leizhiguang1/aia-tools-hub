@@ -22,13 +22,8 @@ export function PostForm({
   return (
     <form action={action} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="title_zh">标题（中文）</Label>
-        <Input id="title_zh" name="title_zh" defaultValue={post?.title_zh} required />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="title_en">标题（英文）</Label>
-        <Input id="title_en" name="title_en" defaultValue={post?.title_en} />
+        <Label htmlFor="title">标题</Label>
+        <Input id="title" name="title" defaultValue={post?.title} required />
       </div>
 
       <div className="space-y-2">
@@ -37,23 +32,13 @@ export function PostForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="excerpt_zh">摘要（中文）</Label>
-        <Textarea id="excerpt_zh" name="excerpt_zh" defaultValue={post?.excerpt_zh} rows={2} />
+        <Label htmlFor="excerpt">摘要</Label>
+        <Textarea id="excerpt" name="excerpt" defaultValue={post?.excerpt} rows={2} />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="excerpt_en">摘要（英文）</Label>
-        <Textarea id="excerpt_en" name="excerpt_en" defaultValue={post?.excerpt_en} rows={2} />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="content_zh">内容（中文 Markdown）</Label>
-        <Textarea id="content_zh" name="content_zh" defaultValue={post?.content_zh} rows={12} />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="content_en">内容（英文 Markdown）</Label>
-        <Textarea id="content_en" name="content_en" defaultValue={post?.content_en} rows={12} />
+        <Label htmlFor="content">内容（Markdown）</Label>
+        <Textarea id="content" name="content" defaultValue={post?.content} rows={12} />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -77,7 +62,7 @@ export function PostForm({
           type="checkbox"
           id="is_published"
           name="is_published"
-          defaultChecked={post?.is_published !== 0}
+          defaultChecked={post?.is_published !== false}
           className="rounded"
         />
         <Label htmlFor="is_published">发布</Label>

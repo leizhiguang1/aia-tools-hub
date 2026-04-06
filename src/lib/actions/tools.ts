@@ -17,14 +17,13 @@ export async function createToolAction(formData: FormData) {
   await createTool({
     id,
     name: formData.get("name") as string,
-    description_zh: formData.get("description_zh") as string,
-    description_en: (formData.get("description_en") as string) || "",
+    description: (formData.get("description") as string) || "",
     url: formData.get("url") as string,
     icon: (formData.get("icon") as string) || "",
     category_id: formData.get("category_id") as string,
     pricing: (formData.get("pricing") as string) || "freemium",
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
-    is_published: formData.get("is_published") === "on" ? 1 : 0,
+    is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setToolTags(id, parseTagIds(formData));
   revalidatePath("/");
@@ -34,14 +33,13 @@ export async function createToolAction(formData: FormData) {
 export async function updateToolAction(id: string, formData: FormData) {
   await updateTool(id, {
     name: formData.get("name") as string,
-    description_zh: formData.get("description_zh") as string,
-    description_en: (formData.get("description_en") as string) || "",
+    description: (formData.get("description") as string) || "",
     url: formData.get("url") as string,
     icon: (formData.get("icon") as string) || "",
     category_id: formData.get("category_id") as string,
     pricing: (formData.get("pricing") as string) || "freemium",
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
-    is_published: formData.get("is_published") === "on" ? 1 : 0,
+    is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setToolTags(id, parseTagIds(formData));
   revalidatePath("/");

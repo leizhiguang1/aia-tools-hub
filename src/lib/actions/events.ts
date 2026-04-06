@@ -16,19 +16,15 @@ export async function createEventAction(formData: FormData) {
   const id = createId();
   await createEvent({
     id,
-    title_zh: formData.get("title_zh") as string,
-    title_en: (formData.get("title_en") as string) || "",
-    description_zh: formData.get("description_zh") as string,
-    description_en: (formData.get("description_en") as string) || "",
-    content_zh: (formData.get("content_zh") as string) || "",
-    content_en: (formData.get("content_en") as string) || "",
+    title: formData.get("title") as string,
+    description: (formData.get("description") as string) || "",
+    content: (formData.get("content") as string) || "",
     cover_image: (formData.get("cover_image") as string) || "",
     date_start: formData.get("date_start") as string,
     date_end: (formData.get("date_end") as string) || "",
     location: (formData.get("location") as string) || "",
-
     external_url: (formData.get("external_url") as string) || "",
-    is_published: formData.get("is_published") === "on" ? 1 : 0,
+    is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setEventTags(id, parseTagIds(formData));
   revalidatePath("/events");
@@ -37,19 +33,15 @@ export async function createEventAction(formData: FormData) {
 
 export async function updateEventAction(id: string, formData: FormData) {
   await updateEvent(id, {
-    title_zh: formData.get("title_zh") as string,
-    title_en: (formData.get("title_en") as string) || "",
-    description_zh: formData.get("description_zh") as string,
-    description_en: (formData.get("description_en") as string) || "",
-    content_zh: (formData.get("content_zh") as string) || "",
-    content_en: (formData.get("content_en") as string) || "",
+    title: formData.get("title") as string,
+    description: (formData.get("description") as string) || "",
+    content: (formData.get("content") as string) || "",
     cover_image: (formData.get("cover_image") as string) || "",
     date_start: formData.get("date_start") as string,
     date_end: (formData.get("date_end") as string) || "",
     location: (formData.get("location") as string) || "",
-
     external_url: (formData.get("external_url") as string) || "",
-    is_published: formData.get("is_published") === "on" ? 1 : 0,
+    is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setEventTags(id, parseTagIds(formData));
   revalidatePath("/events");

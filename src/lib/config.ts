@@ -1,2 +1,1 @@
-/** Change this URL to update the QR code on the "Build Your Stack" share image. */
-export const SHARE_QR_URL = "https://aia-tools-hub.vercel.app/";
+/** To regenerate the QR code: npx qrcode -o public/images/qr-share.png -w 144 --margin 1 --dark "#1e293b" --light "#ffffff" "https://aia-tools-hub.vercel.app/" */

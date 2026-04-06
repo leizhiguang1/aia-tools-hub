@@ -20,8 +20,7 @@ export function TagInput({
   const [tags, setTags] = useState<Tag[]>(allTags);
   const [selected, setSelected] = useState<Set<string>>(new Set(selectedTagIds));
   const [showCreate, setShowCreate] = useState(false);
-  const [newNameZh, setNewNameZh] = useState("");
-  const [newNameEn, setNewNameEn] = useState("");
+  const [newName, setNewName] = useState("");
   const [newColor, setNewColor] = useState("blue");
   const [creating, setCreating] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -39,20 +38,18 @@ export function TagInput({
   }
 
   async function handleCreate() {
-    const trimmed = newNameZh.trim();
+    const trimmed = newName.trim();
     if (!trimmed || creating) return;
 
     setCreating(true);
     try {
       const tag = await createTagInlineAction({
-        name_zh: trimmed,
-        name_en: newNameEn.trim(),
+        name: trimmed,
         color: newColor,
       });
       setTags((prev) => [...prev, tag as Tag]);
       setSelected((prev) => new Set(prev).add(tag.id));
-      setNewNameZh("");
-      setNewNameEn("");
+      setNewName("");
       setNewColor("blue");
       setShowCreate(false);
     } finally {
@@ -88,8 +85,7 @@ export function TagInput({
                   ...(isSelected ? { ringColor: style.borderColor } as Record<string, string> : {}),
                 }}
               >
-                {tag.name_zh}
-                {tag.name_en && <span className="ml-1 opacity-60 text-xs">({tag.name_en})</span>}
+                {tag.name}
               </Badge>
             </button>
           );
@@ -116,19 +112,9 @@ export function TagInput({
           <div className="space-y-1.5">
             <Input
               ref={inputRef}
-              placeholder="标签名称（中文）"
-              value={newNameZh}
-              onChange={(e) => setNewNameZh(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") { e.preventDefault(); handleCreate(); }
-                if (e.key === "Escape") setShowCreate(false);
-              }}
-              className="h-8 text-sm"
-            />
-            <Input
-              placeholder="English name (optional)"
-              value={newNameEn}
-              onChange={(e) => setNewNameEn(e.target.value)}
+              placeholder="标签名称"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") { e.preventDefault(); handleCreate(); }
                 if (e.key === "Escape") setShowCreate(false);
@@ -159,14 +145,13 @@ export function TagInput({
 
           {/* Preview + actions */}
           <div className="flex items-center gap-2">
-            {newNameZh.trim() && (
+            {newName.trim() && (
               <Badge
                 variant="outline"
                 className="pointer-events-none"
                 style={getTagColorStyle(newColor)}
               >
-                {newNameZh.trim()}
-                {newNameEn.trim() && <span className="ml-1 opacity-60 text-xs">({newNameEn.trim()})</span>}
+                {newName.trim()}
               </Badge>
             )}
             <div className="flex-1" />
@@ -180,7 +165,7 @@ export function TagInput({
             <button
               type="button"
               onClick={handleCreate}
-              disabled={!newNameZh.trim() || creating}
+              disabled={!newName.trim() || creating}
               className="text-xs font-medium text-primary hover:text-primary/80 disabled:opacity-50"
             >
               {creating ? "创建中..." : "创建"}

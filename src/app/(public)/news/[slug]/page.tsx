@@ -31,7 +31,7 @@ export default async function PostDetailPage({
         <div className="aspect-video overflow-hidden rounded-lg mb-6">
           <img
             src={post.cover_image}
-            alt={post.title_zh}
+            alt={post.title}
             className="w-full h-full object-cover"
           />
         </div>
@@ -43,7 +43,7 @@ export default async function PostDetailPage({
         <span>{post.author}</span>
       </div>
 
-      <h1 className="text-3xl font-bold mb-4">{post.title_zh}</h1>
+      <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
 
       <div className="mb-8">
         <TagList tags={tags} max={10} />
@@ -51,7 +51,7 @@ export default async function PostDetailPage({
 
       <div className="prose prose-neutral max-w-none">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {post.content_zh}
+          {post.content}
         </ReactMarkdown>
       </div>
     </article>

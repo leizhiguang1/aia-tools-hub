@@ -95,7 +95,7 @@ export function AdminTools({ tools, tagRecord, categories, allTags }: AdminTools
                 )}
               </TableCell>
               <TableCell className="font-medium">{tool.name}</TableCell>
-              <TableCell>{tool.category_name_zh}</TableCell>
+              <TableCell>{tool.category_name}</TableCell>
               <TableCell>
                 <TagList tags={tagRecord[tool.id] || []} max={2} size="xs" />
               </TableCell>

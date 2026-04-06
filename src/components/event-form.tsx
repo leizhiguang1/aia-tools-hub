@@ -22,33 +22,18 @@ export function EventForm({
   return (
     <form action={action} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="title_zh">标题（中文）</Label>
-        <Input id="title_zh" name="title_zh" defaultValue={event?.title_zh} required />
+        <Label htmlFor="title">标题</Label>
+        <Input id="title" name="title" defaultValue={event?.title} required />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="title_en">标题（英文）</Label>
-        <Input id="title_en" name="title_en" defaultValue={event?.title_en} />
+        <Label htmlFor="description">简介</Label>
+        <Textarea id="description" name="description" defaultValue={event?.description} rows={2} />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="description_zh">简介（中文）</Label>
-        <Textarea id="description_zh" name="description_zh" defaultValue={event?.description_zh} rows={2} />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="description_en">简介（英文）</Label>
-        <Textarea id="description_en" name="description_en" defaultValue={event?.description_en} rows={2} />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="content_zh">详细内容（中文 Markdown）</Label>
-        <Textarea id="content_zh" name="content_zh" defaultValue={event?.content_zh} rows={8} />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="content_en">详细内容（英文 Markdown）</Label>
-        <Textarea id="content_en" name="content_en" defaultValue={event?.content_en} rows={8} />
+        <Label htmlFor="content">详细内容（Markdown）</Label>
+        <Textarea id="content" name="content" defaultValue={event?.content} rows={8} />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -88,7 +73,7 @@ export function EventForm({
           type="checkbox"
           id="is_published"
           name="is_published"
-          defaultChecked={event?.is_published !== 0}
+          defaultChecked={event?.is_published !== false}
           className="rounded"
         />
         <Label htmlFor="is_published">发布</Label>

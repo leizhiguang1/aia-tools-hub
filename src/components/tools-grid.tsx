@@ -23,7 +23,7 @@ export function ToolsGrid({
     const matchSearch =
       !search ||
       tool.name.toLowerCase().includes(search.toLowerCase()) ||
-      tool.description_zh.toLowerCase().includes(search.toLowerCase());
+      tool.description.toLowerCase().includes(search.toLowerCase());
     return matchCategory && matchSearch;
   });
 
@@ -71,7 +71,7 @@ export function ToolsGrid({
                 : "bg-background text-muted-foreground hover:bg-muted"
             )}
           >
-            {cat.name_zh}
+            {cat.name}
           </button>
         ))}
       </div>
@@ -83,7 +83,7 @@ export function ToolsGrid({
           <section key={slug} className="mb-10">
             {activeCategory === "all" && (
               <h2 className="text-lg font-semibold mb-4 border-l-4 border-primary pl-3">
-                {category?.name_zh || slug}
+                {category?.name || slug}
               </h2>
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -139,7 +139,7 @@ function ToolCard({ tool }: { tool: Tool }) {
 
       {/* Description */}
       <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-        {tool.description_zh}
+        {tool.description}
       </p>
 
       {/* Tags + Vote — bottom */}

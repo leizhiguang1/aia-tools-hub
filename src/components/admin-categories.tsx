@@ -52,12 +52,8 @@ export function AdminCategories({ categories }: { categories: Category[] }) {
           </DialogHeader>
           <form action={formAction} className="space-y-4" key={editing?.id ?? "new"}>
             <div className="space-y-2">
-              <Label htmlFor="name_zh">中文名称</Label>
-              <Input id="name_zh" name="name_zh" required defaultValue={editing?.name_zh} placeholder="日常基建与模型" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="name_en">English Name</Label>
-              <Input id="name_en" name="name_en" defaultValue={editing?.name_en} placeholder="Daily Models" />
+              <Label htmlFor="name">名称</Label>
+              <Input id="name" name="name" required defaultValue={editing?.name} placeholder="日常基建与模型" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="slug">Slug</Label>
@@ -77,8 +73,7 @@ export function AdminCategories({ categories }: { categories: Category[] }) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>中文名称</TableHead>
-            <TableHead>English Name</TableHead>
+            <TableHead>名称</TableHead>
             <TableHead>Slug</TableHead>
             <TableHead>排序</TableHead>
             <TableHead>操作</TableHead>
@@ -87,8 +82,7 @@ export function AdminCategories({ categories }: { categories: Category[] }) {
         <TableBody>
           {categories.map((cat) => (
             <TableRow key={cat.id}>
-              <TableCell>{cat.name_zh}</TableCell>
-              <TableCell>{cat.name_en}</TableCell>
+              <TableCell>{cat.name}</TableCell>
               <TableCell className="font-mono text-sm">{cat.slug}</TableCell>
               <TableCell>{cat.sort_order}</TableCell>
               <TableCell>

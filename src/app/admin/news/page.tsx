@@ -8,7 +8,7 @@ export default async function AdminNewsPage() {
   ]);
   const tagMap = await getTagsForPosts(posts.map((p) => p.id));
 
-  const tagRecord: Record<string, { id: string; name_zh: string; name_en: string; slug: string; color: string; sort_order: number; created_at: number }[]> = {};
+  const tagRecord: Record<string, { id: string; name: string; slug: string; color: string; sort_order: number; created_at: number }[]> = {};
   for (const [key, value] of tagMap) {
     tagRecord[key] = value;
   }

@@ -7,8 +7,7 @@ import { revalidatePath } from "next/cache";
 export async function createCategoryAction(formData: FormData) {
   await createCategory({
     id: createId(),
-    name_zh: formData.get("name_zh") as string,
-    name_en: (formData.get("name_en") as string) || "",
+    name: formData.get("name") as string,
     slug: formData.get("slug") as string,
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
   });
@@ -18,8 +17,7 @@ export async function createCategoryAction(formData: FormData) {
 
 export async function updateCategoryAction(id: string, formData: FormData) {
   await updateCategory(id, {
-    name_zh: formData.get("name_zh") as string,
-    name_en: (formData.get("name_en") as string) || "",
+    name: formData.get("name") as string,
     slug: formData.get("slug") as string,
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
   });

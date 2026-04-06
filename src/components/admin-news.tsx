@@ -82,7 +82,7 @@ export function AdminNews({ posts, tagRecord, allTags }: AdminNewsProps) {
         <TableBody>
           {posts.map((post) => (
             <TableRow key={post.id}>
-              <TableCell className="font-medium">{post.title_zh}</TableCell>
+              <TableCell className="font-medium">{post.title}</TableCell>
               <TableCell className="font-mono text-sm">{post.slug}</TableCell>
               <TableCell>{post.author}</TableCell>
               <TableCell>

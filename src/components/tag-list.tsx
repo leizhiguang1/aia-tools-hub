@@ -41,7 +41,7 @@ export function TagList({
           className={badgeClass}
           style={getTagColorStyle(tag.color)}
         >
-          {tag.name_zh}
+          {tag.name}
         </Badge>
       ))}
       {rest.length > 0 && (
@@ -67,7 +67,7 @@ export function TagList({
                     className={badgeClass}
                     style={getTagColorStyle(tag.color)}
                   >
-                    {tag.name_zh}
+                    {tag.name}
                   </Badge>
                 ))}
               </div>

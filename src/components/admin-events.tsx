@@ -82,7 +82,7 @@ export function AdminEvents({ events, tagRecord, allTags }: AdminEventsProps) {
         <TableBody>
           {events.map((event) => (
             <TableRow key={event.id}>
-              <TableCell className="font-medium">{event.title_zh}</TableCell>
+              <TableCell className="font-medium">{event.title}</TableCell>
               <TableCell>{event.date_start}</TableCell>
               <TableCell>{event.location}</TableCell>
               <TableCell>
