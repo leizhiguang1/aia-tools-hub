@@ -8,14 +8,8 @@ function detectLocale(request: NextRequest): string {
   const cookieLocale = request.cookies.get("locale")?.value;
   if (cookieLocale && isValidLocale(cookieLocale)) return cookieLocale;
 
-  // 2. Check Accept-Language header
-  const acceptLang = request.headers.get("Accept-Language");
-  if (acceptLang) {
-    for (const locale of locales) {
-      if (acceptLang.includes(locale)) return locale;
-    }
-  }
-
+  // 2. Default to Chinese (or whatever defaultLocale is) for all new visitors
+  // Ignoring Accept-Language header to enforce the default language.
   return defaultLocale;
 }
 
