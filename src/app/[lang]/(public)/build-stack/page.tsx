@@ -23,7 +23,7 @@ export default async function BuildStackPage({
     getBulkTranslations("category", categories.map((c) => c.id), lang),
   ]);
 
-  const translatedTools = applyBulkTranslations(tools, toolTransMap, ["name", "description"]);
+  const translatedTools = applyBulkTranslations(tools, toolTransMap, ["name", "description", "url"]);
   const translatedCategories = applyBulkTranslations(categories, catTransMap, ["name"]);
 
   return (

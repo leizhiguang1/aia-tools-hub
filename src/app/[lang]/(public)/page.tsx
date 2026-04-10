@@ -29,9 +29,9 @@ export default async function HomePage({
     getBulkTranslations("category", categories.map((c) => c.id), lang),
   ]);
 
-  const translatedTools = applyBulkTranslations(tools, toolTransMap, ["name", "description"]);
+  const translatedTools = applyBulkTranslations(tools, toolTransMap, ["name", "description", "url"]);
   const translatedCategories = applyBulkTranslations(categories, catTransMap, ["name"]);
-  const translatedPopular = applyBulkTranslations(popularTools, toolTransMap, ["name", "description"]);
+  const translatedPopular = applyBulkTranslations(popularTools, toolTransMap, ["name", "description", "url"]);
 
   const toolsWithTags = translatedTools.map((tool) => ({
     ...tool,

@@ -40,7 +40,22 @@ export function ToolForm({
 
       <div className="space-y-2">
         <Label htmlFor="url">链接 URL</Label>
-        <Input id="url" name="url" type="url" defaultValue={tool?.url} required />
+        <div className="flex gap-3 items-center">
+          <Input id="url" name="url" type="url" defaultValue={tool?.url} required className="flex-1" />
+          {tool?.url && (
+            <div className="group relative shrink-0">
+              <img 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(tool.url)}`} 
+                alt="QR" 
+                className="w-10 h-10 border rounded-md cursor-pointer bg-white" 
+              />
+              <div className="absolute z-10 hidden group-hover:block top-12 right-0 p-2 bg-white border rounded-lg shadow-xl">
+                <img src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(tool.url)}`} className="w-32 h-32" alt="Enlarged QR" />
+                <p className="text-xs text-center text-muted-foreground mt-2">右键保存<br/>Right Click to Save</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="space-y-2">
@@ -108,6 +123,7 @@ export function ToolForm({
           fields={[
             { name: "name", label: "名称 Name", type: "input" },
             { name: "description", label: "描述 Description", type: "textarea" },
+            { name: "url", label: "链接网址 URL", type: "input" },
           ]}
           existingTranslations={existingTranslations}
         />
