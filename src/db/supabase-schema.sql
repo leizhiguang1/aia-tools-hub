@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS tags CASCADE;
 DROP TABLE IF EXISTS events CASCADE;
 DROP TABLE IF EXISTS posts CASCADE;
 DROP TABLE IF EXISTS admins CASCADE;
+DROP TABLE IF EXISTS leads CASCADE;
 
 -- Categories
 CREATE TABLE categories (
@@ -114,3 +115,11 @@ BEGIN
   UPDATE tools SET vote_count = vote_count + 1 WHERE id = tool_id_param;
 END;
 $$ LANGUAGE plpgsql;
+
+-- Leads
+CREATE TABLE leads (
+  id TEXT PRIMARY KEY,
+  email TEXT NOT NULL,
+  whatsapp TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);

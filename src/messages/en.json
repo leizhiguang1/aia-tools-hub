@@ -68,7 +68,12 @@
     "preview_alt": "My AI Team List",
     "preview_mobile_hint": "Long press to save the image and share",
     "preview_download": "Download Image",
-    "preview_reselect": "Reselect"
+    "preview_reselect": "Reselect",
+    "form_title": "Where should we send you the image?",
+    "form_email": "Your Email Address",
+    "form_whatsapp": "Your WhatsApp Number",
+    "form_submit": "Unlock Image Download",
+    "form_processing": "Processing..."
   },
   "footer": {
     "copyright": "FunnelDuo. All rights reserved."

@@ -68,7 +68,12 @@
     "preview_alt": "我的 AI 团队清单",
     "preview_mobile_hint": "长按图片保存到相册，分享到朋友圈或小红书",
     "preview_download": "下载图片",
-    "preview_reselect": "重新选择"
+    "preview_reselect": "重新选择",
+    "form_title": "我们要将图片发送到哪里？",
+    "form_email": "您的电子邮箱",
+    "form_whatsapp": "您的 WhatsApp 号码",
+    "form_submit": "解锁并下载图片",
+    "form_processing": "处理中..."
   },
   "footer": {
     "copyright": "FunnelDuo. All rights reserved."

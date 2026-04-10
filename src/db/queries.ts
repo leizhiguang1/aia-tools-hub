@@ -551,3 +551,10 @@ function flattenToolCategories(data: ToolWithCategory[]): (Tool & { _cat_sort?: 
     _cat_sort: cat.sort_order,
   })) as (Tool & { _cat_sort?: number })[];
 }
+
+// ============ Leads ============
+
+export async function createLead(data: { id: string; email: string; whatsapp: string }) {
+  const { error } = await supabase.from("leads").insert(data);
+  if (error) throw error;
+}
