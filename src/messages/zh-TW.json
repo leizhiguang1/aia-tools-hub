@@ -1,0 +1,85 @@
+{
+  "site_name": "AI Agency 一人公司",
+  "meta_description": "探索最好的AI工具，參加活動，閱讀最新資訊",
+  "nav": {
+    "tools": "AI 工具",
+    "events": "AI 活動",
+    "news": "AI 趨勢"
+  },
+  "hero": {
+    "badge": "不用再亂收藏了沒有用到，一次幫你整理好",
+    "title": "一人公司 你的AI團隊",
+    "subtitle": "一套我們團隊內部每天用，讓你更快完成工作的AI工具",
+    "benefit_earn": "💰 多賺",
+    "benefit_calm": "😌 少焦慮",
+    "benefit_save": "🏷️ 省錢",
+    "description": "在這個AI時代，可以不用很厲害，但至少幫你熟悉摸一遍這些AI工具，我們結合了不同的AI工具搭配你的工作場景和流程，讓你少走彎路，更快找到適合你的那一套AI。我們會持續更新，記得把這個網站先收藏好 👀",
+    "cta": "點擊打造你的 AI 團隊清單"
+  },
+  "tools": {
+    "title": "AI 工具集",
+    "all": "所有工具",
+    "visit": "前往連結",
+    "search_placeholder": "搜尋工具...",
+    "no_tools": "暫無工具"
+  },
+  "events": {
+    "title": "活動與課程",
+    "description": "時代變太快，AI正在重新定義賺錢的方式。\n學了這麼多AI工具，是不是還沒真正用起來？\n我們準備了不同的活動和課程，讓你親身體驗：AI也能幫你輕鬆找到全世界的客戶 🌍",
+    "online": "線上",
+    "register": "立即報名",
+    "details": "查看詳情",
+    "back": "返回活動列表",
+    "no_events": "暫無活動"
+  },
+  "news": {
+    "title": "新鮮事",
+    "read_more": "閱讀更多",
+    "back": "返回列表",
+    "share": "分享",
+    "prev_page": "上一頁",
+    "next_page": "下一頁",
+    "no_articles": "暫無文章"
+  },
+  "voting": {
+    "upvote": "按讚",
+    "upvoted": "已按讚",
+    "popular_tools": "🏆 大家都在用的 AI 工具榜",
+    "popular_tools_subtitle": "每個AI都試一試，喜歡的就點擊愛心收藏起來，也順便看看大家最近都在用什麼 AI 神器"
+  },
+  "stack": {
+    "back": "返回工具列表",
+    "title": "打造你的 AI 團隊清單",
+    "subtitle": "選擇 3-12 個你最愛的 AI 工具，產生專屬分享圖片",
+    "selected_count": "已選",
+    "of": "/",
+    "tools_unit": "個工具",
+    "min_hint": "至少選 {min} 個",
+    "clear": "清空",
+    "generate": "產生圖片",
+    "generating": "產生中...",
+    "generate_fail": "圖片產生失敗，請稍後再試",
+    "card_title_highlight": "一人公司",
+    "card_title": "你的AI團隊",
+    "card_subtitle": "分享給你我精選AI工具，一起來賺美金",
+    "card_footer_name": "我一人AI團隊",
+    "card_footer_scan": "掃碼探索更多 AI 工具",
+    "preview_title": "你的 AI 團隊清單",
+    "preview_alt": "我的 AI 團隊清單",
+    "preview_mobile_hint": "長按圖片儲存到相簿，分享到社群平台",
+    "preview_download": "下載圖片",
+    "preview_reselect": "重新選擇",
+    "form_title": "我們要將圖片傳送到哪裡？",
+    "form_email": "您的電子信箱",
+    "form_whatsapp": "您的 WhatsApp 號碼",
+    "form_submit": "解鎖並下載圖片",
+    "form_processing": "處理中..."
+  },
+  "footer": {
+    "copyright": "FunnelDuo. All rights reserved."
+  },
+  "common": {
+    "loading": "載入中...",
+    "no_results": "暫無內容"
+  }
+}

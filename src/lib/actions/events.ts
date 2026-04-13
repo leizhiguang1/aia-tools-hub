@@ -3,6 +3,7 @@
 import { createId } from "@paralleldrive/cuid2";
 import { createEvent, updateEvent, deleteEvent, setEventTags } from "@/db/queries";
 import { revalidatePath } from "next/cache";
+import { locales } from "@/lib/i18n";
 
 function parseTagIds(formData: FormData): string[] {
   try {
@@ -10,6 +11,11 @@ function parseTagIds(formData: FormData): string[] {
   } catch {
     return [];
   }
+}
+
+function revalidateAll() {
+  for (const locale of locales) revalidatePath(`/${locale}/events`);
+  revalidatePath("/admin/events");
 }
 
 export async function createEventAction(formData: FormData) {
@@ -25,9 +31,7 @@ export async function createEventAction(formData: FormData) {
     is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setEventTags(id, parseTagIds(formData));
-  revalidatePath("/zh/events");
-  revalidatePath("/en/events");
-  revalidatePath("/admin/events");
+  revalidateAll();
 }
 
 export async function updateEventAction(id: string, formData: FormData) {
@@ -41,14 +45,10 @@ export async function updateEventAction(id: string, formData: FormData) {
     is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setEventTags(id, parseTagIds(formData));
-  revalidatePath("/zh/events");
-  revalidatePath("/en/events");
-  revalidatePath("/admin/events");
+  revalidateAll();
 }
 
 export async function deleteEventAction(id: string) {
   await deleteEvent(id);
-  revalidatePath("/zh/events");
-  revalidatePath("/en/events");
-  revalidatePath("/admin/events");
+  revalidateAll();
 }

@@ -7,10 +7,12 @@ export function StackPreview({
   imageUrl,
   onClose,
   dict,
+  lang,
 }: {
   imageUrl: string;
   onClose: () => void;
   dict: Dictionary;
+  lang: string;
 }) {
   const [isMobile, setIsMobile] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -29,7 +31,7 @@ export function StackPreview({
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, whatsapp }),
+        body: JSON.stringify({ email, whatsapp, locale: lang }),
       });
       if (res.ok) {
         setIsSubmitted(true);

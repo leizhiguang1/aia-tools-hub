@@ -3,6 +3,12 @@
 import { createId } from "@paralleldrive/cuid2";
 import { createCategory, updateCategory, deleteCategory } from "@/db/queries";
 import { revalidatePath } from "next/cache";
+import { locales } from "@/lib/i18n";
+
+function revalidateAll() {
+  for (const locale of locales) revalidatePath(`/${locale}`);
+  revalidatePath("/admin/categories");
+}
 
 export async function createCategoryAction(formData: FormData) {
   await createCategory({
@@ -11,9 +17,7 @@ export async function createCategoryAction(formData: FormData) {
     slug: formData.get("slug") as string,
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
   });
-  revalidatePath("/zh");
-  revalidatePath("/en");
-  revalidatePath("/admin/categories");
+  revalidateAll();
 }
 
 export async function updateCategoryAction(id: string, formData: FormData) {
@@ -22,14 +26,10 @@ export async function updateCategoryAction(id: string, formData: FormData) {
     slug: formData.get("slug") as string,
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
   });
-  revalidatePath("/zh");
-  revalidatePath("/en");
-  revalidatePath("/admin/categories");
+  revalidateAll();
 }
 
 export async function deleteCategoryAction(id: string) {
   await deleteCategory(id);
-  revalidatePath("/zh");
-  revalidatePath("/en");
-  revalidatePath("/admin/categories");
+  revalidateAll();
 }

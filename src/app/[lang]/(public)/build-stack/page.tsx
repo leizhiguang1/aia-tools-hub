@@ -45,7 +45,7 @@ export default async function BuildStackPage({
         </p>
       </section>
 
-      <StackBuilder tools={translatedTools} categories={translatedCategories} dict={dict} />
+      <StackBuilder tools={translatedTools} categories={translatedCategories} dict={dict} lang={lang} />
     </div>
   );
 }

@@ -5,7 +5,7 @@ import { createId } from "@paralleldrive/cuid2";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { email, whatsapp } = body;
+    const { email, whatsapp, locale } = body;
 
     // We can allow either email or whatsapp, or require both. The user didn't specify exactly,
     // but typically at least one or both are required. Let's require them to be present in the body.
@@ -30,6 +30,7 @@ export async function POST(req: Request) {
       id,
       email: email || "",
       whatsapp: cleanWhatsapp,
+      locale: locale || "",
     });
 
     return NextResponse.json({ success: true, id }, { status: 201 });

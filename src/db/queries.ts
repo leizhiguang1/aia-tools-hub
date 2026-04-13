@@ -470,7 +470,7 @@ export async function getTranslationsForLocale(
   entityId: string,
   locale: string
 ): Promise<Record<string, string>> {
-  if (locale === "zh") return {};
+  if (locale === "zh-MY") return {};
   const { data, error } = await supabase
     .from("translations")
     .select("field, value")
@@ -490,7 +490,7 @@ export async function getBulkTranslations(
   locale: string
 ): Promise<Map<string, Record<string, string>>> {
   const map = new Map<string, Record<string, string>>();
-  if (entityIds.length === 0 || locale === "zh") return map;
+  if (entityIds.length === 0 || locale === "zh-MY") return map;
   const { data, error } = await supabase
     .from("translations")
     .select("entity_id, field, value")
@@ -554,7 +554,7 @@ function flattenToolCategories(data: ToolWithCategory[]): (Tool & { _cat_sort?: 
 
 // ============ Leads ============
 
-export async function createLead(data: { id: string; email: string; whatsapp: string }) {
+export async function createLead(data: { id: string; email: string; whatsapp: string; locale: string }) {
   const { error } = await supabase.from("leads").insert(data);
   if (error) throw error;
 }

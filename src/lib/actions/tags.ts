@@ -3,6 +3,12 @@
 import { createId } from "@paralleldrive/cuid2";
 import { createTag, updateTag, deleteTag } from "@/db/queries";
 import { revalidatePath } from "next/cache";
+import { locales } from "@/lib/i18n";
+
+function revalidateAll() {
+  for (const locale of locales) revalidatePath(`/${locale}`);
+  revalidatePath("/admin/tags");
+}
 
 export async function createTagAction(formData: FormData) {
   await createTag({
@@ -12,9 +18,7 @@ export async function createTagAction(formData: FormData) {
     color: (formData.get("color") as string) || "",
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
   });
-  revalidatePath("/zh");
-  revalidatePath("/en");
-  revalidatePath("/admin/tags");
+  revalidateAll();
 }
 
 /** Create a tag inline (from TagInput component) and return the created tag */
@@ -34,9 +38,7 @@ export async function createTagInlineAction(data: {
     color: data.color,
     sort_order: 0,
   });
-  revalidatePath("/zh");
-  revalidatePath("/en");
-  revalidatePath("/admin/tags");
+  revalidateAll();
   return { id, name: data.name, slug, color: data.color, sort_order: 0, created_at: new Date().toISOString() };
 }
 
@@ -47,14 +49,10 @@ export async function updateTagAction(id: string, formData: FormData) {
     color: (formData.get("color") as string) || "",
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
   });
-  revalidatePath("/zh");
-  revalidatePath("/en");
-  revalidatePath("/admin/tags");
+  revalidateAll();
 }
 
 export async function deleteTagAction(id: string) {
   await deleteTag(id);
-  revalidatePath("/zh");
-  revalidatePath("/en");
-  revalidatePath("/admin/tags");
+  revalidateAll();
 }

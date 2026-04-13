@@ -57,7 +57,7 @@ export function AdminSidebar() {
       </nav>
       <div className="mt-auto pt-4 border-t">
         <Link
-          href="/zh"
+          href="/zh-MY"
           className="text-sm text-muted-foreground hover:text-foreground"
         >
           &larr; 返回前台

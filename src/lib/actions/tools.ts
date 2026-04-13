@@ -3,6 +3,7 @@
 import { createId } from "@paralleldrive/cuid2";
 import { createTool, updateTool, deleteTool, setToolTags } from "@/db/queries";
 import { revalidatePath } from "next/cache";
+import { locales } from "@/lib/i18n";
 
 function parseTagIds(formData: FormData): string[] {
   try {
@@ -10,6 +11,11 @@ function parseTagIds(formData: FormData): string[] {
   } catch {
     return [];
   }
+}
+
+function revalidateAll() {
+  for (const locale of locales) revalidatePath(`/${locale}`);
+  revalidatePath("/admin/tools");
 }
 
 export async function createToolAction(formData: FormData) {
@@ -26,9 +32,7 @@ export async function createToolAction(formData: FormData) {
     is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setToolTags(id, parseTagIds(formData));
-  revalidatePath("/zh");
-  revalidatePath("/en");
-  revalidatePath("/admin/tools");
+  revalidateAll();
 }
 
 export async function updateToolAction(id: string, formData: FormData) {
@@ -43,14 +47,10 @@ export async function updateToolAction(id: string, formData: FormData) {
     is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setToolTags(id, parseTagIds(formData));
-  revalidatePath("/zh");
-  revalidatePath("/en");
-  revalidatePath("/admin/tools");
+  revalidateAll();
 }
 
 export async function deleteToolAction(id: string) {
   await deleteTool(id);
-  revalidatePath("/zh");
-  revalidatePath("/en");
-  revalidatePath("/admin/tools");
+  revalidateAll();
 }

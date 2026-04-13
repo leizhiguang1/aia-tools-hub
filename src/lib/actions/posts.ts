@@ -3,6 +3,7 @@
 import { createId } from "@paralleldrive/cuid2";
 import { createPost, updatePost, deletePost, setPostTags } from "@/db/queries";
 import { revalidatePath } from "next/cache";
+import { locales } from "@/lib/i18n";
 
 function parseTagIds(formData: FormData): string[] {
   try {
@@ -10,6 +11,11 @@ function parseTagIds(formData: FormData): string[] {
   } catch {
     return [];
   }
+}
+
+function revalidateAll() {
+  for (const locale of locales) revalidatePath(`/${locale}/news`);
+  revalidatePath("/admin/news");
 }
 
 export async function createPostAction(formData: FormData) {
@@ -25,9 +31,7 @@ export async function createPostAction(formData: FormData) {
     is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setPostTags(id, parseTagIds(formData));
-  revalidatePath("/zh/news");
-  revalidatePath("/en/news");
-  revalidatePath("/admin/news");
+  revalidateAll();
 }
 
 export async function updatePostAction(id: string, formData: FormData) {
@@ -41,14 +45,10 @@ export async function updatePostAction(id: string, formData: FormData) {
     is_published: formData.get("is_published") === "on" ? true : false,
   });
   await setPostTags(id, parseTagIds(formData));
-  revalidatePath("/zh/news");
-  revalidatePath("/en/news");
-  revalidatePath("/admin/news");
+  revalidateAll();
 }
 
 export async function deletePostAction(id: string) {
   await deletePost(id);
-  revalidatePath("/zh/news");
-  revalidatePath("/en/news");
-  revalidatePath("/admin/news");
+  revalidateAll();
 }

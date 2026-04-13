@@ -28,10 +28,12 @@ export function StackBuilder({
   tools,
   categories,
   dict,
+  lang,
 }: {
   tools: Tool[];
   categories: Category[];
   dict: Dictionary;
+  lang: string;
 }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [activeCategory, setActiveCategory] = useState("all");
@@ -348,7 +350,7 @@ export function StackBuilder({
               </div>
             </div>
             <img
-              src="/images/qr-share.png"
+              src={`/images/qr-${lang}.png`}
               alt="QR"
               width={72}
               height={72}
@@ -398,7 +400,7 @@ export function StackBuilder({
 
       {/* Preview Modal */}
       {imageUrl && (
-        <StackPreview imageUrl={imageUrl} onClose={handleClosePreview} dict={dict} />
+        <StackPreview imageUrl={imageUrl} onClose={handleClosePreview} dict={dict} lang={lang} />
       )}
     </div>
   );

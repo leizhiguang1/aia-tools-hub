@@ -1,0 +1,85 @@
+{
+  "site_name": "AI Agency",
+  "meta_description": "Temui alat AI terbaik, sertai acara, dan baca berita terkini",
+  "nav": {
+    "tools": "Alat AI",
+    "events": "Acara AI",
+    "news": "Trend AI"
+  },
+  "hero": {
+    "badge": "Tak perlu lagi bookmark bersepah — kami susun semua untuk anda",
+    "title": "Syarikat Seorang, Pasukan AI Anda",
+    "subtitle": "Set alat AI yang pasukan kami guna setiap hari untuk siapkan kerja lebih cepat",
+    "benefit_earn": "💰 Lebih Untung",
+    "benefit_calm": "😌 Kurang Stress",
+    "benefit_save": "🏷️ Jimat Wang",
+    "description": "Dalam era AI ini, tak perlu jadi pakar — cukup sekadar kenal alat-alat AI ini supaya anda boleh guna bila perlu. Kami padankan pelbagai alat AI dengan senario dan aliran kerja anda, supaya anda kurang tersasar dan cepat jumpa set AI yang sesuai.",
+    "cta": "Bina Senarai Pasukan AI Anda"
+  },
+  "tools": {
+    "title": "Koleksi Alat AI",
+    "all": "Semua Alat",
+    "visit": "Terokai Sekarang",
+    "search_placeholder": "Cari alat...",
+    "no_tools": "Tiada alat lagi"
+  },
+  "events": {
+    "title": "Acara & Kursus",
+    "description": "Dunia berubah pantas — AI sedang mentakrifkan semula cara kita menjana pendapatan.\nDah belajar banyak alat AI, tapi belum benar-benar guna lagi?\nKami sediakan pelbagai acara dan kursus supaya anda boleh alami sendiri: AI boleh bantu anda cari pelanggan di seluruh dunia 🌍",
+    "online": "Dalam Talian",
+    "register": "Daftar Sekarang",
+    "details": "Lihat Butiran",
+    "back": "Kembali ke senarai acara",
+    "no_events": "Tiada acara lagi"
+  },
+  "news": {
+    "title": "Berita Terkini",
+    "read_more": "Baca Lagi",
+    "back": "Kembali ke senarai",
+    "share": "Kongsi",
+    "prev_page": "Sebelumnya",
+    "next_page": "Seterusnya",
+    "no_articles": "Tiada artikel lagi"
+  },
+  "voting": {
+    "upvote": "Undi",
+    "upvoted": "Telah Diundi",
+    "popular_tools": "🏆 Alat AI Popular",
+    "popular_tools_subtitle": "Cuba setiap satu, tekan hati untuk yang anda suka, dan lihat alat AI apa yang semua orang sedang guna"
+  },
+  "stack": {
+    "back": "Kembali ke alat",
+    "title": "Bina Senarai Pasukan AI Anda",
+    "subtitle": "Pilih 3-12 alat AI kegemaran anda dan hasilkan imej untuk dikongsi",
+    "selected_count": "Dipilih",
+    "of": "/",
+    "tools_unit": "alat",
+    "min_hint": "Pilih sekurang-kurangnya {min}",
+    "clear": "Kosongkan",
+    "generate": "Hasilkan Imej",
+    "generating": "Menghasilkan...",
+    "generate_fail": "Gagal menghasilkan imej, sila cuba lagi",
+    "card_title_highlight": "Syarikat Seorang",
+    "card_title": "Pasukan AI Anda",
+    "card_subtitle": "Berkongsi alat AI pilihan saya — jom jana pendapatan bersama",
+    "card_footer_name": "Pasukan AI Seorang Saya",
+    "card_footer_scan": "Imbas untuk terokai lebih banyak alat AI",
+    "preview_title": "Senarai Pasukan AI Anda",
+    "preview_alt": "Senarai Pasukan AI Saya",
+    "preview_mobile_hint": "Tekan lama untuk simpan imej dan kongsi",
+    "preview_download": "Muat Turun Imej",
+    "preview_reselect": "Pilih Semula",
+    "form_title": "Ke mana kami harus hantar imej ini?",
+    "form_email": "Alamat E-mel Anda",
+    "form_whatsapp": "Nombor WhatsApp Anda",
+    "form_submit": "Buka Kunci & Muat Turun Imej",
+    "form_processing": "Memproses..."
+  },
+  "footer": {
+    "copyright": "FunnelDuo. Hak cipta terpelihara."
+  },
+  "common": {
+    "loading": "Memuatkan...",
+    "no_results": "Tiada kandungan lagi"
+  }
+}
