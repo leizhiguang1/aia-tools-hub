@@ -11,7 +11,7 @@ export function localePath(lang: string, path: string) {
 }
 
 export const localeNames: Record<Locale, string> = {
-  "zh-MY": "中文 (马来西亚)",
+  "zh-MY": "中文",
   ms: "Bahasa Melayu",
   en: "English",
   "zh-TW": "中文 (台灣)",

@@ -75,6 +75,19 @@
     "form_submit": "解锁并下载图片",
     "form_processing": "处理中..."
   },
+  "lead_popup": {
+    "title": "别错过下一个 AI 大趋势",
+    "description": "最新 AI 资讯、新工具推荐、实战玩法 —— 第一时间送到你的邮箱和 WhatsApp。我们绝不发垃圾信息。",
+    "email_placeholder": "你的电子邮箱",
+    "whatsapp_placeholder": "你的 WhatsApp 号码",
+    "submit": "好，立即订阅",
+    "processing": "订阅中...",
+    "dismiss": "下次再说",
+    "success_title": "订阅成功",
+    "success_description": "AI 世界有任何大动作，我们会第一时间通知你。",
+    "close": "关闭",
+    "fab_label": "AI 每周精选"
+  },
   "footer": {
     "copyright": "FunnelDuo. All rights reserved."
   },

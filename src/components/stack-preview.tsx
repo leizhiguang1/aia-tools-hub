@@ -31,7 +31,7 @@ export function StackPreview({
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, whatsapp, locale: lang }),
+        body: JSON.stringify({ email, whatsapp, locale: lang, source: "image_download" }),
       });
       if (res.ok) {
         setIsSubmitted(true);

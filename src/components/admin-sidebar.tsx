@@ -20,6 +20,12 @@ const sidebarGroups = [
       { href: "/admin/tags", label: "标签管理" },
     ],
   },
+  {
+    label: "营销",
+    items: [
+      { href: "/admin/leads", label: "Lead 管理" },
+    ],
+  },
 ];
 
 export function AdminSidebar() {

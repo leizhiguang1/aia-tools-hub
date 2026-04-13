@@ -27,8 +27,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     authorized({ auth, request }) {
-      const isAdmin = request.nextUrl.pathname.startsWith("/admin");
-      const isLogin = request.nextUrl.pathname === "/admin/login";
+      const { pathname } = request.nextUrl;
+      const isAdmin = pathname.startsWith("/admin");
+      const isLogin = pathname === "/admin/login";
+      // Block every /admin/* route (pages, nested routes, any future admin APIs)
+      // except the login page itself. NextAuth will redirect unauthenticated
+      // requests to the configured signIn page.
       if (isAdmin && !isLogin && !auth) return false;
       return true;
     },

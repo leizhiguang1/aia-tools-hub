@@ -18,9 +18,15 @@ function detectLocale(request: NextRequest): string {
 export const proxy = auth((request) => {
   const { pathname } = request.nextUrl;
 
+  // Expose the current pathname to server layouts via a request header so
+  // they can make auth-aware rendering decisions without client hydration.
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-pathname", pathname);
+  const passthrough = () => NextResponse.next({ request: { headers: requestHeaders } });
+
   // Files served from /public (avoid locale redirect e.g. /logo.png -> /en/logo.png)
   if (/\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml|json|webmanifest)$/i.test(pathname)) {
-    return NextResponse.next();
+    return passthrough();
   }
 
   // Admin, API, and static routes — already handled by auth or don't need locale
@@ -31,13 +37,13 @@ export const proxy = auth((request) => {
     pathname.startsWith("/images") ||
     pathname === "/favicon.ico"
   ) {
-    return NextResponse.next();
+    return passthrough();
   }
 
   // Check if locale is already in the path
   const firstSegment = pathname.split("/")[1];
   if (isValidLocale(firstSegment)) {
-    return NextResponse.next();
+    return passthrough();
   }
 
   // Redirect to detected locale

@@ -75,6 +75,19 @@
     "form_submit": "Unlock Image Download",
     "form_processing": "Processing..."
   },
+  "lead_popup": {
+    "title": "Never miss an AI breakthrough",
+    "description": "Fresh AI news, new tool drops, and real-world playbooks — straight to your inbox and WhatsApp. No spam, ever.",
+    "email_placeholder": "Your email address",
+    "whatsapp_placeholder": "Your WhatsApp number",
+    "submit": "Yes, keep me posted",
+    "processing": "Subscribing...",
+    "dismiss": "Maybe later",
+    "success_title": "You're in!",
+    "success_description": "You'll be the first to know when something big drops in the AI world.",
+    "close": "Close",
+    "fab_label": "Get AI News"
+  },
   "footer": {
     "copyright": "FunnelDuo. All rights reserved."
   },

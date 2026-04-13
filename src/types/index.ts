@@ -64,6 +64,15 @@ export interface Tag {
   created_at: string;
 }
 
+export interface Lead {
+  id: string;
+  email: string;
+  whatsapp: string;
+  locale: string;
+  source: string;
+  created_at: string;
+}
+
 export interface Translation {
   id: string;
   entity_type: string;

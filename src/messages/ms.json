@@ -19,7 +19,7 @@
   "tools": {
     "title": "Koleksi Alat AI",
     "all": "Semua Alat",
-    "visit": "Terokai Sekarang",
+    "visit": "Cuba Sekarang",
     "search_placeholder": "Cari alat...",
     "no_tools": "Tiada alat lagi"
   },
@@ -74,6 +74,19 @@
     "form_whatsapp": "Nombor WhatsApp Anda",
     "form_submit": "Buka Kunci & Muat Turun Imej",
     "form_processing": "Memproses..."
+  },
+  "lead_popup": {
+    "title": "Jangan ketinggalan trend AI terbaharu",
+    "description": "Berita AI terkini, alat baharu dan tip praktikal — terus ke e-mel dan WhatsApp anda. Kami janji tiada spam.",
+    "email_placeholder": "Alamat e-mel anda",
+    "whatsapp_placeholder": "Nombor WhatsApp anda",
+    "submit": "Ya, saya nak langgan",
+    "processing": "Sedang melanggan...",
+    "dismiss": "Nanti sahaja",
+    "success_title": "Berjaya dilanggan",
+    "success_description": "Apa sahaja yang besar berlaku dalam dunia AI, anda akan tahu dahulu.",
+    "close": "Tutup",
+    "fab_label": "Berita AI Terkini"
   },
   "footer": {
     "copyright": "FunnelDuo. Hak cipta terpelihara."

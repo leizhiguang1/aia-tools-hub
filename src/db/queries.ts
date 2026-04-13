@@ -1,5 +1,5 @@
 import { supabase } from "./client";
-import type { Category, Tool, Event, Post, Tag, Translation } from "@/types";
+import type { Category, Tool, Event, Post, Tag, Translation, Lead } from "@/types";
 
 // ============ Categories ============
 
@@ -554,7 +554,22 @@ function flattenToolCategories(data: ToolWithCategory[]): (Tool & { _cat_sort?: 
 
 // ============ Leads ============
 
-export async function createLead(data: { id: string; email: string; whatsapp: string; locale: string }) {
+export async function createLead(data: {
+  id: string;
+  email: string;
+  whatsapp: string;
+  locale: string;
+  source: string;
+}) {
   const { error } = await supabase.from("leads").insert(data);
   if (error) throw error;
+}
+
+export async function getAllLeads(): Promise<Lead[]> {
+  const { data, error } = await supabase
+    .from("leads")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data as Lead[];
 }

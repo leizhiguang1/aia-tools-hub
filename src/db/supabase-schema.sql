@@ -121,5 +121,16 @@ CREATE TABLE leads (
   id TEXT PRIMARY KEY,
   email TEXT NOT NULL,
   whatsapp TEXT NOT NULL,
+  locale TEXT NOT NULL DEFAULT '',
+  source TEXT NOT NULL DEFAULT '',
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+CREATE INDEX IF NOT EXISTS idx_leads_locale ON leads(locale);
+CREATE INDEX IF NOT EXISTS idx_leads_source ON leads(source);
+
+-- Migration for existing installs:
+-- ALTER TABLE leads ADD COLUMN IF NOT EXISTS locale TEXT NOT NULL DEFAULT '';
+-- ALTER TABLE leads ADD COLUMN IF NOT EXISTS source TEXT NOT NULL DEFAULT '';
+-- CREATE INDEX IF NOT EXISTS idx_leads_locale ON leads(locale);
+-- CREATE INDEX IF NOT EXISTS idx_leads_source ON leads(source);
