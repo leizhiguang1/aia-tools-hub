@@ -3,7 +3,7 @@
 import { useState, useCallback, useRef } from "react";
 import { toPng } from "html-to-image";
 import { cn } from "@/lib/utils";
-import { StackPreview } from "@/components/stack-preview";
+import { StackPreview } from "@/features/public/components/stack-preview";
 import type { Tool, Category } from "@/types";
 import type { Dictionary } from "@/lib/dictionaries";
 

@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { DeleteButton } from "@/components/admin-delete-button";
-import { PostForm } from "@/components/post-form";
-import { createPostAction, updatePostAction, deletePostAction } from "@/lib/actions/posts";
+import { DeleteButton } from "@/features/admin/components/delete-button";
+import { PostForm } from "@/features/admin/components/post-form";
+import { createPostAction, updatePostAction, deletePostAction } from "@/features/admin/actions/posts";
 import type { Post, Tag } from "@/types";
 
 interface AdminNewsProps {
@@ -15,9 +15,10 @@ interface AdminNewsProps {
   tagRecord: Record<string, Tag[]>;
   allTags: Tag[];
   translationsRecord: Record<string, Record<string, Record<string, string>>>;
+  currentMarket: string;
 }
 
-export function AdminNews({ posts, tagRecord, allTags, translationsRecord }: AdminNewsProps) {
+export function AdminNews({ posts, tagRecord, allTags, translationsRecord, currentMarket }: AdminNewsProps) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Post | null>(null);
   const [editingTagIds, setEditingTagIds] = useState<string[]>([]);
@@ -43,6 +44,7 @@ export function AdminNews({ posts, tagRecord, allTags, translationsRecord }: Adm
     if (editing) {
       await updatePostAction(editing.id, formData);
     } else {
+      formData.set("market_id", currentMarket);
       await createPostAction(formData);
     }
     handleClose();

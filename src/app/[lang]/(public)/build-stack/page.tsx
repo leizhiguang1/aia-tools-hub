@@ -1,5 +1,5 @@
 import { getTools, getCategories, getBulkTranslations } from "@/db/queries";
-import { StackBuilder } from "@/components/stack-builder";
+import { StackBuilder } from "@/features/public/components/stack-builder";
 import { getDictionary } from "@/lib/dictionaries";
 import { type Locale, localePath } from "@/lib/i18n";
 import { applyBulkTranslations } from "@/lib/translate";

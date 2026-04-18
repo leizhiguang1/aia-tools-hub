@@ -7,7 +7,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { useRef, useCallback, useState } from "react";
 import { marked } from "marked";
 import { isHtmlContent } from "@/lib/content";
-import { uploadFile } from "@/lib/actions/upload";
+import { uploadFile } from "@/features/admin/actions/upload";
 import {
   Bold,
   Italic,

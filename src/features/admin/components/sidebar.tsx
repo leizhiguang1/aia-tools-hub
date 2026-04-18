@@ -1,8 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { locales, localeConfig, type Locale } from "@/lib/i18n";
+
+const marketLabels: Record<string, string> = Object.fromEntries(
+  locales.map((l) => [l, localeConfig[l].name])
+);
 
 const sidebarGroups = [
   {
@@ -28,14 +33,39 @@ const sidebarGroups = [
   },
 ];
 
-export function AdminSidebar() {
+export function AdminSidebar({ currentMarket }: { currentMarket: string }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  function switchMarket(market: string) {
+    document.cookie = `admin_market=${market};path=/;max-age=31536000`;
+    router.refresh();
+  }
 
   return (
     <aside className="w-56 border-r bg-muted/30 p-4 flex flex-col">
       <Link href="/admin" className="font-bold text-lg mb-6">
         Admin
       </Link>
+
+      {/* Market selector */}
+      <div className="mb-4 px-1">
+        <label className="block text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest mb-1.5">
+          Market
+        </label>
+        <select
+          value={currentMarket}
+          onChange={(e) => switchMarket(e.target.value)}
+          className="w-full text-sm border rounded-md px-2 py-1.5 bg-background focus:outline-none focus:ring-1 focus:ring-primary"
+        >
+          {locales.map((locale) => (
+            <option key={locale} value={locale}>
+              {marketLabels[locale]}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <nav className="flex flex-col gap-4">
         {sidebarGroups.map((group) => (
           <div key={group.label}>
@@ -63,7 +93,7 @@ export function AdminSidebar() {
       </nav>
       <div className="mt-auto pt-4 border-t">
         <Link
-          href="/zh-MY"
+          href={`/${currentMarket}`}
           className="text-sm text-muted-foreground hover:text-foreground"
         >
           &larr; 返回前台

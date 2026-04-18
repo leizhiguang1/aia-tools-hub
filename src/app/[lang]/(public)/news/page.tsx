@@ -2,7 +2,7 @@ import { getPosts, getTagsForPosts, getBulkTranslations } from "@/db/queries";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button-variants";
-import { TagList } from "@/components/tag-list";
+import { TagList } from "@/features/public/components/tag-list";
 import { getDictionary } from "@/lib/dictionaries";
 import { type Locale, localePath, dateLocaleMap } from "@/lib/i18n";
 import { applyBulkTranslations } from "@/lib/translate";
@@ -19,7 +19,8 @@ export default async function NewsPage({
   const dict = await getDictionary(lang as Locale);
 
   const page = Math.max(1, parseInt(pageStr || "1", 10));
-  const { posts: rawPosts, totalPages } = await getPosts(page, 10);
+  // lang IS the market id (cn, my, tw)
+  const { posts: rawPosts, totalPages } = await getPosts(lang, page, 10);
 
   const [tagMap, postTransMap] = await Promise.all([
     getTagsForPosts(rawPosts.map((p) => p.id)),

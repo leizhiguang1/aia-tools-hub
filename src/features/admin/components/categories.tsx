@@ -6,9 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { DeleteButton } from "@/components/admin-delete-button";
-import { AdminTranslationFields } from "@/components/admin-translation-fields";
-import { createCategoryAction, updateCategoryAction, deleteCategoryAction } from "@/lib/actions/categories";
+import { DeleteButton } from "@/features/admin/components/delete-button";
+import { AdminTranslationFields } from "@/features/admin/components/translation-fields";
+import { createCategoryAction, updateCategoryAction, deleteCategoryAction } from "@/features/admin/actions/categories";
 import type { Category } from "@/types";
 
 export function AdminCategories({

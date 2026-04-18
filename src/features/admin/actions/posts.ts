@@ -29,6 +29,7 @@ export async function createPostAction(formData: FormData) {
     cover_image: (formData.get("cover_image") as string) || "",
     author: (formData.get("author") as string) || "",
     is_published: formData.get("is_published") === "on" ? true : false,
+    market_id: (formData.get("market_id") as string) || "cn",
   });
   await setPostTags(id, parseTagIds(formData));
   revalidateAll();

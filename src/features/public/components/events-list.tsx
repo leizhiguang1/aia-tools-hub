@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { TagList } from "@/components/tag-list";
+import { TagList } from "@/features/public/components/tag-list";
 import { localePath } from "@/lib/i18n";
 import type { Event } from "@/types";
 import type { Dictionary } from "@/lib/dictionaries";

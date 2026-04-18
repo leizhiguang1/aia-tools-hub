@@ -5,10 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { RichTextEditor } from "@/components/rich-text-editor";
+import { RichTextEditor } from "@/features/admin/components/rich-text-editor";
 import { cn } from "@/lib/utils";
 import { locales, defaultLocale, localeNames, type Locale } from "@/lib/i18n";
-import { saveTranslationsAction } from "@/lib/actions/translations";
+import { saveTranslationsAction } from "@/features/admin/actions/translations";
 
 interface TranslationField {
   name: string;

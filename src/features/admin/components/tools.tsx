@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { DeleteButton } from "@/components/admin-delete-button";
-import { ToolForm } from "@/components/tool-form";
-import { createToolAction, updateToolAction, deleteToolAction } from "@/lib/actions/tools";
-import { TagList } from "@/components/tag-list";
+import { DeleteButton } from "@/features/admin/components/delete-button";
+import { ToolForm } from "@/features/admin/components/tool-form";
+import { createToolAction, updateToolAction, deleteToolAction } from "@/features/admin/actions/tools";
+import { TagList } from "@/features/public/components/tag-list";
 import type { Tool, Category, Tag } from "@/types";
 
 interface AdminToolsProps {

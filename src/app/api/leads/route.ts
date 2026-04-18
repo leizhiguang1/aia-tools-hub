@@ -25,12 +25,14 @@ export async function POST(req: Request) {
       );
     }
 
+    // locale IS the market id (cn, my, tw)
     const id = createId();
     await createLead({
       id,
       email: email || "",
       whatsapp: cleanWhatsapp,
       locale: locale || "",
+      market_id: locale || "cn",
       source: source || "",
     });
 

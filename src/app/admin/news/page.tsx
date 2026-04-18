@@ -1,31 +1,27 @@
-import { getAllPosts, getTagsForPosts, getTags, getTranslations } from "@/db/queries";
-import { AdminNews } from "@/components/admin-news";
-import { defaultLocale } from "@/lib/i18n";
+import { cookies } from "next/headers";
+import { getAllPosts, getTagsForPosts, getTags, getBulkAllLocaleTranslations } from "@/db/queries";
+import { AdminNews } from "@/features/admin/components/news";
+import { defaultLocale, isValidLocale } from "@/lib/i18n";
 
 export default async function AdminNewsPage() {
+  const cookieStore = await cookies();
+  const marketCookie = cookieStore.get("admin_market")?.value;
+  const currentMarket = marketCookie && isValidLocale(marketCookie) ? marketCookie : defaultLocale;
+
   const [posts, allTags] = await Promise.all([
-    getAllPosts(),
+    getAllPosts(currentMarket),
     getTags(),
   ]);
-  const tagMap = await getTagsForPosts(posts.map((p) => p.id));
+
+  const postIds = posts.map((p) => p.id);
+  const [tagMap, translationsRecord] = await Promise.all([
+    getTagsForPosts(postIds),
+    getBulkAllLocaleTranslations("post", postIds),
+  ]);
 
   const tagRecord: Record<string, { id: string; name: string; slug: string; color: string; sort_order: number; created_at: string }[]> = {};
   for (const [key, value] of tagMap) {
     tagRecord[key] = value;
-  }
-
-  const translationsRecord: Record<string, Record<string, Record<string, string>>> = {};
-  for (const post of posts) {
-    const trans = await getTranslations("post", post.id);
-    const byLocale: Record<string, Record<string, string>> = {};
-    for (const t of trans) {
-      if (t.locale === defaultLocale) continue;
-      if (!byLocale[t.locale]) byLocale[t.locale] = {};
-      byLocale[t.locale][t.field] = t.value;
-    }
-    if (Object.keys(byLocale).length > 0) {
-      translationsRecord[post.id] = byLocale;
-    }
   }
 
   return (
@@ -34,6 +30,7 @@ export default async function AdminNewsPage() {
       tagRecord={tagRecord}
       allTags={allTags}
       translationsRecord={translationsRecord}
+      currentMarket={currentMarket}
     />
   );
 }

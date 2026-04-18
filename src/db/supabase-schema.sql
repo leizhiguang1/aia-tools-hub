@@ -129,8 +129,21 @@ CREATE TABLE leads (
 CREATE INDEX IF NOT EXISTS idx_leads_locale ON leads(locale);
 CREATE INDEX IF NOT EXISTS idx_leads_source ON leads(source);
 
--- Migration for existing installs:
--- ALTER TABLE leads ADD COLUMN IF NOT EXISTS locale TEXT NOT NULL DEFAULT '';
--- ALTER TABLE leads ADD COLUMN IF NOT EXISTS source TEXT NOT NULL DEFAULT '';
--- CREATE INDEX IF NOT EXISTS idx_leads_locale ON leads(locale);
--- CREATE INDEX IF NOT EXISTS idx_leads_source ON leads(source);
+-- Markets
+CREATE TABLE markets (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  locale TEXT NOT NULL,
+  cta_url TEXT DEFAULT '',
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- market_id columns on scoped tables (posts, events, leads)
+ALTER TABLE posts ADD COLUMN market_id TEXT REFERENCES markets(id) DEFAULT 'cn';
+ALTER TABLE events ADD COLUMN market_id TEXT REFERENCES markets(id) DEFAULT 'cn';
+ALTER TABLE leads ADD COLUMN market_id TEXT REFERENCES markets(id) DEFAULT 'cn';
+
+CREATE INDEX IF NOT EXISTS idx_posts_market ON posts(market_id);
+CREATE INDEX IF NOT EXISTS idx_events_market ON events(market_id);
+CREATE INDEX IF NOT EXISTS idx_leads_market ON leads(market_id);

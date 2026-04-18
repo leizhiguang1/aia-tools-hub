@@ -34,6 +34,7 @@ export interface Event {
   cover_image: string;
   location: string;
   external_url: string;
+  market_id: string;
   is_published: boolean;
   created_at: string;
   updated_at: string;
@@ -48,6 +49,7 @@ export interface Post {
   excerpt: string;
   cover_image: string;
   author: string;
+  market_id: string;
   is_published: boolean;
   published_at: string;
   created_at: string;
@@ -69,7 +71,17 @@ export interface Lead {
   email: string;
   whatsapp: string;
   locale: string;
+  market_id: string;
   source: string;
+  created_at: string;
+}
+
+export interface Market {
+  id: string;
+  name: string;
+  locale: string;
+  cta_url: string;
+  is_active: boolean;
   created_at: string;
 }
 

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
-import { TagList } from "@/components/tag-list";
+import { TagList } from "@/features/public/components/tag-list";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getDictionary } from "@/lib/dictionaries";

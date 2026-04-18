@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { uploadFile } from "@/lib/actions/upload";
+import { uploadFile } from "@/features/admin/actions/upload";
 import { ImageIcon, X } from "lucide-react";
 
 interface ImageUploadProps {

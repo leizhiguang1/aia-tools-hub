@@ -5,9 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { TagInput } from "@/components/tag-input";
-import { IconPicker } from "@/components/icon-picker";
-import { AdminTranslationFields } from "@/components/admin-translation-fields";
+import { TagInput } from "@/features/admin/components/tag-input";
+import { IconPicker } from "@/features/admin/components/icon-picker";
+import { AdminTranslationFields } from "@/features/admin/components/translation-fields";
 import type { Tool, Category, Tag } from "@/types";
 
 export function ToolForm({

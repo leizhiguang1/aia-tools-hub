@@ -1,6 +1,6 @@
 import { getTools, getCategories, getTagsForTools, getPopularTools, getBulkTranslations } from "@/db/queries";
-import { ToolsGrid } from "@/components/tools-grid";
-import { PopularTools } from "@/components/popular-tools";
+import { ToolsGrid } from "@/features/public/components/tools-grid";
+import { PopularTools } from "@/features/public/components/popular-tools";
 import { getDictionary } from "@/lib/dictionaries";
 import { type Locale, localePath } from "@/lib/i18n";
 import { applyBulkTranslations } from "@/lib/translate";

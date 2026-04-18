@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { TagInput } from "@/components/tag-input";
-import { RichTextEditor } from "@/components/rich-text-editor";
-import { ImageUpload } from "@/components/image-upload";
-import { AdminTranslationFields } from "@/components/admin-translation-fields";
+import { TagInput } from "@/features/admin/components/tag-input";
+import { RichTextEditor } from "@/features/admin/components/rich-text-editor";
+import { ImageUpload } from "@/features/admin/components/image-upload";
+import { AdminTranslationFields } from "@/features/admin/components/translation-fields";
 import type { Event, Tag } from "@/types";
 
 export function EventForm({

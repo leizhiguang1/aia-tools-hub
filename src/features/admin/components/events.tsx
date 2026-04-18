@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { DeleteButton } from "@/components/admin-delete-button";
-import { EventForm } from "@/components/event-form";
-import { createEventAction, updateEventAction, deleteEventAction } from "@/lib/actions/events";
+import { DeleteButton } from "@/features/admin/components/delete-button";
+import { EventForm } from "@/features/admin/components/event-form";
+import { createEventAction, updateEventAction, deleteEventAction } from "@/features/admin/actions/events";
 import type { Event, Tag } from "@/types";
 
 interface AdminEventsProps {
@@ -15,9 +15,10 @@ interface AdminEventsProps {
   tagRecord: Record<string, Tag[]>;
   allTags: Tag[];
   translationsRecord: Record<string, Record<string, Record<string, string>>>;
+  currentMarket: string;
 }
 
-export function AdminEvents({ events, tagRecord, allTags, translationsRecord }: AdminEventsProps) {
+export function AdminEvents({ events, tagRecord, allTags, translationsRecord, currentMarket }: AdminEventsProps) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Event | null>(null);
   const [editingTagIds, setEditingTagIds] = useState<string[]>([]);
@@ -43,6 +44,7 @@ export function AdminEvents({ events, tagRecord, allTags, translationsRecord }: 
     if (editing) {
       await updateEventAction(editing.id, formData);
     } else {
+      formData.set("market_id", currentMarket);
       await createEventAction(formData);
     }
     handleClose();

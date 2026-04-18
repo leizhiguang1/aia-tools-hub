@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { TagList } from "@/components/tag-list";
+import { TagList } from "@/features/public/components/tag-list";
 import { getDictionary } from "@/lib/dictionaries";
 import { type Locale, localePath, dateLocaleMap } from "@/lib/i18n";
 import { applyTranslations } from "@/lib/translate";
@@ -17,7 +17,7 @@ export default async function PostDetailPage({
   const { lang, slug } = await params;
   const dict = await getDictionary(lang as Locale);
 
-  const post = await getPostBySlug(slug);
+  const post = await getPostBySlug(slug, lang);
   if (!post) notFound();
 
   const [tags, trans] = await Promise.all([

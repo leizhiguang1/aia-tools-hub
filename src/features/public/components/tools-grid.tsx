@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { TagList } from "@/components/tag-list";
-import { VoteButton } from "@/components/vote-button";
+import { TagList } from "@/features/public/components/tag-list";
+import { VoteButton } from "@/features/public/components/vote-button";
 import { ExternalLink } from "lucide-react";
 import type { Tool, Category } from "@/types";
 import type { Dictionary } from "@/lib/dictionaries";

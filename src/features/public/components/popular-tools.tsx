@@ -1,6 +1,6 @@
 "use client";
 
-import { VoteButton } from "@/components/vote-button";
+import { VoteButton } from "@/features/public/components/vote-button";
 import { Trophy } from "lucide-react";
 import type { Tool } from "@/types";
 import type { Dictionary } from "@/lib/dictionaries";

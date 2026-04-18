@@ -7,11 +7,11 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { DeleteButton } from "@/components/admin-delete-button";
+import { DeleteButton } from "@/features/admin/components/delete-button";
 import { cn } from "@/lib/utils";
 import { TAG_COLORS, TAG_COLOR_NAMES, getTagColorStyle } from "@/lib/tag-colors";
-import { AdminTranslationFields } from "@/components/admin-translation-fields";
-import { createTagAction, updateTagAction, deleteTagAction } from "@/lib/actions/tags";
+import { AdminTranslationFields } from "@/features/admin/components/translation-fields";
+import { createTagAction, updateTagAction, deleteTagAction } from "@/features/admin/actions/tags";
 import type { Tag } from "@/types";
 
 export function AdminTags({

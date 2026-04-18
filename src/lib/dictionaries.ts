@@ -2,10 +2,9 @@ import "server-only";
 import type { Locale } from "./i18n";
 
 const dictionaries = {
-  "zh-MY": () => import("@/messages/zh-MY.json").then((m) => m.default),
-  ms: () => import("@/messages/ms.json").then((m) => m.default),
-  en: () => import("@/messages/en.json").then((m) => m.default),
-  "zh-TW": () => import("@/messages/zh-TW.json").then((m) => m.default),
+  cn: () => import("@/messages/cn.json").then((m) => m.default),
+  my: () => import("@/messages/my.json").then((m) => m.default),
+  tw: () => import("@/messages/tw.json").then((m) => m.default),
 };
 
 export async function getDictionary(locale: Locale) {

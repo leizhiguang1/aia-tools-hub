@@ -1,6 +1,6 @@
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { LeadCapture } from "@/components/lead-capture";
+import { Navbar } from "@/features/public/components/navbar";
+import { Footer } from "@/features/public/components/footer";
+import { LeadCapture } from "@/features/public/components/lead-capture";
 import { getDictionary } from "@/lib/dictionaries";
 import { type Locale } from "@/lib/i18n";
 

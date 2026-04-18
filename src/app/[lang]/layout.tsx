@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
-import { locales, isValidLocale, type Locale } from "@/lib/i18n";
+import { locales, isValidLocale, localeConfig, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
 
 const geistSans = Geist({
@@ -31,7 +31,7 @@ export async function generateMetadata({
     description: dict.meta_description,
     alternates: {
       languages: Object.fromEntries(
-        locales.map((l) => [l, `/${l}`])
+        locales.map((l) => [localeConfig[l].htmlLang, `/${l}`])
       ),
     },
   };
@@ -49,7 +49,7 @@ export default async function LangLayout({
 
   return (
     <html
-      lang={lang}
+      lang={localeConfig[lang as Locale].htmlLang}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

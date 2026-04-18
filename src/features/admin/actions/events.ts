@@ -29,6 +29,7 @@ export async function createEventAction(formData: FormData) {
     location: (formData.get("location") as string) || "",
     external_url: (formData.get("external_url") as string) || "",
     is_published: formData.get("is_published") === "on" ? true : false,
+    market_id: (formData.get("market_id") as string) || "cn",
   });
   await setEventTags(id, parseTagIds(formData));
   revalidateAll();

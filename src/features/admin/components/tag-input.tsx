@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { TAG_COLORS, TAG_COLOR_NAMES, getTagColorStyle } from "@/lib/tag-colors";
-import { createTagInlineAction } from "@/lib/actions/tags";
+import { createTagInlineAction } from "@/features/admin/actions/tags";
 import type { Tag } from "@/types";
 
 export function TagInput({

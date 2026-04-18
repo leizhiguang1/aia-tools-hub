@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { uploadFile } from "@/lib/actions/upload";
+import { uploadFile } from "@/features/admin/actions/upload";
 
 // Extracts the first emoji from a string (handles compound emojis like 🖌️, 👨‍💻)
 const emojiRegex = /\p{Emoji_Presentation}(\u200d\p{Emoji_Presentation})*/u;
