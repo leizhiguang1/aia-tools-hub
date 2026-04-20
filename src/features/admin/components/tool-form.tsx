@@ -7,7 +7,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TagInput } from "@/features/admin/components/tag-input";
 import { IconPicker } from "@/features/admin/components/icon-picker";
-import { AdminTranslationFields } from "@/features/admin/components/translation-fields";
 import type { Tool, Category, Tag } from "@/types";
 
 export function ToolForm({
@@ -16,14 +15,12 @@ export function ToolForm({
   allTags,
   selectedTagIds = [],
   action,
-  existingTranslations = {},
 }: {
   tool?: Tool | null;
   categories: Category[];
   allTags: Tag[];
   selectedTagIds?: string[];
   action: (formData: FormData) => Promise<void>;
-  existingTranslations?: Record<string, Record<string, string>>;
 }) {
   return (
     <form action={action} className="space-y-4">
@@ -44,10 +41,10 @@ export function ToolForm({
           <Input id="url" name="url" type="url" defaultValue={tool?.url} required className="flex-1" />
           {tool?.url && (
             <div className="group relative shrink-0">
-              <img 
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(tool.url)}`} 
-                alt="QR" 
-                className="w-10 h-10 border rounded-md cursor-pointer bg-white" 
+              <img
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(tool.url)}`}
+                alt="QR"
+                className="w-10 h-10 border rounded-md cursor-pointer bg-white"
               />
               <div className="absolute z-10 hidden group-hover:block top-12 right-0 p-2 bg-white border rounded-lg shadow-xl">
                 <img src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(tool.url)}`} className="w-32 h-32" alt="Enlarged QR" />
@@ -115,19 +112,6 @@ export function ToolForm({
       </div>
 
       <Button type="submit" size="lg" className="w-full text-base">{tool ? "保存修改" : "创建工具"}</Button>
-
-      {tool && (
-        <AdminTranslationFields
-          entityType="tool"
-          entityId={tool.id}
-          fields={[
-            { name: "name", label: "名称 Name", type: "input" },
-            { name: "description", label: "描述 Description", type: "textarea" },
-            { name: "url", label: "链接网址 URL", type: "input" },
-          ]}
-          existingTranslations={existingTranslations}
-        />
-      )}
     </form>
   );
 }

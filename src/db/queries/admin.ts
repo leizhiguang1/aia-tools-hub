@@ -1,5 +1,5 @@
 import { supabaseAdmin } from "../client";
-import type { Category, Tool, Event, Post, Tag, Translation, Lead } from "@/types";
+import type { Category, Tool, Event, Post, Tag, Translation, Lead, Market } from "@/types";
 import { flattenToolCategories } from "./public";
 import { defaultLocale, locales } from "@/lib/i18n";
 
@@ -32,11 +32,13 @@ export async function deleteCategory(id: string) {
 
 // ============ Tools ============
 
-export async function getAllTools(): Promise<Tool[]> {
-  const { data, error } = await supabaseAdmin
+export async function getAllTools(marketId?: string): Promise<Tool[]> {
+  let query = supabaseAdmin
     .from("tools")
     .select("*, categories!inner(name, slug, sort_order)")
     .order("sort_order", { ascending: true });
+  if (marketId) query = query.eq("market_id", marketId);
+  const { data, error } = await query;
   if (error) throw error;
   const tools = flattenToolCategories(data);
   tools.sort((a, b) => {
@@ -76,6 +78,7 @@ export async function createTool(data: {
   id: string; name: string; description: string;
   url: string; icon: string; category_id: string; pricing: string;
   sort_order: number; is_published: boolean;
+  market_id: string;
 }) {
   const { error } = await supabaseAdmin.from("tools").insert(data);
   if (error) throw error;
@@ -329,4 +332,21 @@ export async function getAllLeads(marketId?: string): Promise<Lead[]> {
   const { data, error } = await query;
   if (error) throw error;
   return data as Lead[];
+}
+
+// ============ Markets ============
+
+export async function getMarketById(id: string): Promise<Market | null> {
+  const { data, error } = await supabaseAdmin
+    .from("markets")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) throw error;
+  return data as Market | null;
+}
+
+export async function updateMarket(id: string, data: { cta_url: string; qr_data_url: string }) {
+  const { error } = await supabaseAdmin.from("markets").update(data).eq("id", id);
+  if (error) throw error;
 }

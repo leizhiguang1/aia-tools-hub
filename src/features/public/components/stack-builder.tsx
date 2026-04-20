@@ -29,11 +29,13 @@ export function StackBuilder({
   categories,
   dict,
   lang,
+  qrDataUrl,
 }: {
   tools: Tool[];
   categories: Category[];
   dict: Dictionary;
   lang: string;
+  qrDataUrl?: string;
 }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [activeCategory, setActiveCategory] = useState("all");
@@ -350,7 +352,7 @@ export function StackBuilder({
               </div>
             </div>
             <img
-              src={`/images/qr-${lang}.png`}
+              src={qrDataUrl || `/images/qr-${lang}.png`}
               alt="QR"
               width={72}
               height={72}

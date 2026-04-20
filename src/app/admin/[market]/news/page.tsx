@@ -1,15 +1,18 @@
-import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import { getAllPosts, getTagsForPosts, getTags, getBulkAllLocaleTranslations } from "@/db/queries";
 import { AdminNews } from "@/features/admin/components/news";
-import { defaultLocale, isValidLocale } from "@/lib/i18n";
+import { isValidLocale } from "@/lib/i18n";
 
-export default async function AdminNewsPage() {
-  const cookieStore = await cookies();
-  const marketCookie = cookieStore.get("admin_market")?.value;
-  const currentMarket = marketCookie && isValidLocale(marketCookie) ? marketCookie : defaultLocale;
+export default async function AdminNewsPage({
+  params,
+}: {
+  params: Promise<{ market: string }>;
+}) {
+  const { market } = await params;
+  if (!isValidLocale(market)) notFound();
 
   const [posts, allTags] = await Promise.all([
-    getAllPosts(currentMarket),
+    getAllPosts(market),
     getTags(),
   ]);
 
@@ -30,7 +33,7 @@ export default async function AdminNewsPage() {
       tagRecord={tagRecord}
       allTags={allTags}
       translationsRecord={translationsRecord}
-      currentMarket={currentMarket}
+      currentMarket={market}
     />
   );
 }

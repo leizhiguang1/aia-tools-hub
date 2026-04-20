@@ -15,29 +15,24 @@ export default async function HomePage({
   const dict = await getDictionary(lang as Locale);
 
   const [tools, categories, { tools: popularTools }] = await Promise.all([
-    getTools(),
+    getTools(lang),
     getCategories(),
-    getPopularTools(),
+    getPopularTools(lang),
   ]);
 
   const allToolIds = [...new Set([...tools.map((t) => t.id), ...popularTools.map((t) => t.id)])];
   const tagMap = await getTagsForTools(allToolIds);
 
-  // Apply translations for non-zh locales
-  const [toolTransMap, catTransMap] = await Promise.all([
-    getBulkTranslations("tool", tools.map((t) => t.id), lang),
-    getBulkTranslations("category", categories.map((c) => c.id), lang),
-  ]);
-
-  const translatedTools = applyBulkTranslations(tools, toolTransMap, ["name", "description", "url"]);
+  // Tools are per-market (each row is already in the market's native language),
+  // so no translation overlay needed. Categories remain global → translate.
+  const catTransMap = await getBulkTranslations("category", categories.map((c) => c.id), lang);
   const translatedCategories = applyBulkTranslations(categories, catTransMap, ["name"]);
-  const translatedPopular = applyBulkTranslations(popularTools, toolTransMap, ["name", "description", "url"]);
 
-  const toolsWithTags = translatedTools.map((tool) => ({
+  const toolsWithTags = tools.map((tool) => ({
     ...tool,
     tag_list: tagMap.get(tool.id) || [],
   }));
-  const popularWithTags = translatedPopular.map((tool) => ({
+  const popularWithTags = popularTools.map((tool) => ({
     ...tool,
     tag_list: tagMap.get(tool.id) || [],
   }));

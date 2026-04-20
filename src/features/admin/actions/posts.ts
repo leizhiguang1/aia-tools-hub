@@ -15,7 +15,7 @@ function parseTagIds(formData: FormData): string[] {
 
 function revalidateAll() {
   for (const locale of locales) revalidatePath(`/${locale}/news`);
-  revalidatePath("/admin/news");
+  revalidatePath("/admin/[market]/news", "page");
 }
 
 export async function createPostAction(formData: FormData) {

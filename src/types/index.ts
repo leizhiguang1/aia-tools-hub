@@ -17,6 +17,7 @@ export interface Tool {
   vote_count: number;
   sort_order: number;
   is_published: boolean;
+  market_id: string;
   created_at: string;
   updated_at: string;
   // joined fields
@@ -81,6 +82,7 @@ export interface Market {
   name: string;
   locale: string;
   cta_url: string;
+  qr_data_url: string;
   is_active: boolean;
   created_at: string;
 }

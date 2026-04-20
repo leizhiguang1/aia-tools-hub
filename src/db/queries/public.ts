@@ -1,5 +1,5 @@
 import { supabasePublic } from "../client";
-import type { Category, Tool, Event, Post, Tag, Lead } from "@/types";
+import type { Category, Tool, Event, Post, Tag, Lead, Market } from "@/types";
 
 // ============ Categories ============
 
@@ -14,12 +14,13 @@ export async function getCategories(): Promise<Category[]> {
 
 // ============ Tools ============
 
-export async function getTools(categorySlug?: string): Promise<Tool[]> {
+export async function getTools(marketId: string, categorySlug?: string): Promise<Tool[]> {
   if (categorySlug && categorySlug !== "all") {
     const { data, error } = await supabasePublic
       .from("tools")
       .select("*, categories!inner(name, slug, sort_order)")
       .eq("is_published", true)
+      .eq("market_id", marketId)
       .eq("categories.slug", categorySlug)
       .order("sort_order", { ascending: true });
     if (error) throw error;
@@ -30,6 +31,7 @@ export async function getTools(categorySlug?: string): Promise<Tool[]> {
     .from("tools")
     .select("*, categories!inner(name, slug, sort_order)")
     .eq("is_published", true)
+    .eq("market_id", marketId)
     .order("sort_order", { ascending: true });
   if (error) throw error;
   const tools = flattenToolCategories(data);
@@ -40,12 +42,13 @@ export async function getTools(categorySlug?: string): Promise<Tool[]> {
   return tools;
 }
 
-export async function getPopularTools(limit = 5): Promise<{ tools: Tool[]; totalVotes: number }> {
+export async function getPopularTools(marketId: string, limit = 5): Promise<{ tools: Tool[]; totalVotes: number }> {
   const [{ data, error }, { count, error: countError }] = await Promise.all([
     supabasePublic
       .from("tools")
       .select("*, categories!inner(name, slug, sort_order)")
       .eq("is_published", true)
+      .eq("market_id", marketId)
       .gt("vote_count", 0)
       .order("vote_count", { ascending: false })
       .order("name", { ascending: true })
@@ -119,6 +122,18 @@ export async function getPostBySlug(slug: string, marketId?: string): Promise<Po
   const { data, error } = await query.maybeSingle();
   if (error) throw error;
   return data as Post | null;
+}
+
+// ============ Markets ============
+
+export async function getMarket(id: string): Promise<Market | null> {
+  const { data, error } = await supabasePublic
+    .from("markets")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) throw error;
+  return data as Market | null;
 }
 
 // ============ Tags ============

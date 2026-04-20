@@ -15,7 +15,7 @@ function parseTagIds(formData: FormData): string[] {
 
 function revalidateAll() {
   for (const locale of locales) revalidatePath(`/${locale}`);
-  revalidatePath("/admin/tools");
+  revalidatePath("/admin/[market]/tools", "page");
 }
 
 export async function createToolAction(formData: FormData) {
@@ -30,6 +30,7 @@ export async function createToolAction(formData: FormData) {
     pricing: (formData.get("pricing") as string) || "freemium",
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
     is_published: formData.get("is_published") === "on" ? true : false,
+    market_id: (formData.get("market_id") as string) || "cn",
   });
   await setToolTags(id, parseTagIds(formData));
   revalidateAll();

@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DeleteButton } from "@/features/admin/components/delete-button";
 import { PostForm } from "@/features/admin/components/post-form";
+import { MarketChip } from "@/features/admin/components/market-chip";
 import { createPostAction, updatePostAction, deletePostAction } from "@/features/admin/actions/posts";
 import type { Post, Tag } from "@/types";
 
@@ -53,14 +54,20 @@ export function AdminNews({ posts, tagRecord, allTags, translationsRecord, curre
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">文章管理</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold">文章管理</h1>
+          <MarketChip market={currentMarket} />
+        </div>
         <Button onClick={openCreate}>添加文章</Button>
       </div>
 
       <Dialog open={open} onOpenChange={(v) => { if (!v) handleClose(); }}>
         <DialogContent className="sm:max-w-3xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{editing ? "编辑文章" : "添加文章"}</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <span>{editing ? "编辑文章" : "添加文章"}</span>
+              <MarketChip market={currentMarket} />
+            </DialogTitle>
           </DialogHeader>
           <PostForm
             key={editing?.id ?? "new"}

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { defaultLocale } from "@/lib/i18n";
 
 export function LoginForm() {
   const [password, setPassword] = useState("");
@@ -29,7 +30,7 @@ export function LoginForm() {
     if (result?.error) {
       setError("密码错误");
     } else {
-      router.push("/admin/tools");
+      router.push(`/admin/${defaultLocale}/tools`);
       router.refresh();
     }
   }

@@ -7,7 +7,7 @@ import { locales } from "@/lib/i18n";
 
 function revalidateAll() {
   for (const locale of locales) revalidatePath(`/${locale}`);
-  revalidatePath("/admin/tags");
+  revalidatePath("/admin/[market]/tags", "page");
 }
 
 export async function createTagAction(formData: FormData) {

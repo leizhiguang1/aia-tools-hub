@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { MarketChip } from "@/features/admin/components/market-chip";
 import type { Lead } from "@/types";
 
 const SOURCE_LABELS: Record<string, string> = {
@@ -48,7 +49,7 @@ function downloadCsv(leads: Lead[]) {
   URL.revokeObjectURL(url);
 }
 
-export function AdminLeads({ leads }: { leads: Lead[] }) {
+export function AdminLeads({ leads, currentMarket }: { leads: Lead[]; currentMarket: string }) {
   const [sourceFilter, setSourceFilter] = useState<string>("all");
   const [localeFilter, setLocaleFilter] = useState<string>("all");
 
@@ -76,7 +77,10 @@ export function AdminLeads({ leads }: { leads: Lead[] }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Lead 管理</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold">Lead 管理</h1>
+          <MarketChip market={currentMarket} />
+        </div>
         <Button onClick={() => downloadCsv(filtered)} disabled={filtered.length === 0}>
           导出 CSV ({filtered.length})
         </Button>

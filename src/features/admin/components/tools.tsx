@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DeleteButton } from "@/features/admin/components/delete-button";
 import { ToolForm } from "@/features/admin/components/tool-form";
+import { MarketChip } from "@/features/admin/components/market-chip";
 import { createToolAction, updateToolAction, deleteToolAction } from "@/features/admin/actions/tools";
 import { TagList } from "@/features/public/components/tag-list";
 import type { Tool, Category, Tag } from "@/types";
@@ -16,10 +17,10 @@ interface AdminToolsProps {
   tagRecord: Record<string, Tag[]>;
   categories: Category[];
   allTags: Tag[];
-  translationsRecord: Record<string, Record<string, Record<string, string>>>;
+  currentMarket: string;
 }
 
-export function AdminTools({ tools, tagRecord, categories, allTags, translationsRecord }: AdminToolsProps) {
+export function AdminTools({ tools, tagRecord, categories, allTags, currentMarket }: AdminToolsProps) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Tool | null>(null);
   const [editingTagIds, setEditingTagIds] = useState<string[]>([]);
@@ -45,6 +46,7 @@ export function AdminTools({ tools, tagRecord, categories, allTags, translations
     if (editing) {
       await updateToolAction(editing.id, formData);
     } else {
+      formData.set("market_id", currentMarket);
       await createToolAction(formData);
     }
     handleClose();
@@ -53,14 +55,20 @@ export function AdminTools({ tools, tagRecord, categories, allTags, translations
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">工具管理</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold">工具管理</h1>
+          <MarketChip market={currentMarket} />
+        </div>
         <Button onClick={openCreate}>添加工具</Button>
       </div>
 
       <Dialog open={open} onOpenChange={(v) => { if (!v) handleClose(); }}>
         <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{editing ? "编辑工具" : "添加工具"}</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <span>{editing ? "编辑工具" : "添加工具"}</span>
+              <MarketChip market={currentMarket} />
+            </DialogTitle>
           </DialogHeader>
           <ToolForm
             key={editing?.id ?? "new"}
@@ -69,7 +77,6 @@ export function AdminTools({ tools, tagRecord, categories, allTags, translations
             allTags={allTags}
             selectedTagIds={editingTagIds}
             action={formAction}
-            existingTranslations={editing ? translationsRecord[editing.id] || {} : {}}
           />
         </DialogContent>
       </Dialog>
@@ -119,7 +126,7 @@ export function AdminTools({ tools, tagRecord, categories, allTags, translations
       </Table>
 
       {tools.length === 0 && (
-        <p className="text-center text-muted-foreground py-12">暂无工具，点击"添加工具"开始</p>
+        <p className="text-center text-muted-foreground py-12">暂无工具，点击&ldquo;添加工具&rdquo;开始</p>
       )}
     </div>
   );

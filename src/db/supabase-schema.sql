@@ -135,6 +135,7 @@ CREATE TABLE markets (
   name TEXT NOT NULL,
   locale TEXT NOT NULL,
   cta_url TEXT DEFAULT '',
+  qr_data_url TEXT DEFAULT '',
   is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT now()
 );

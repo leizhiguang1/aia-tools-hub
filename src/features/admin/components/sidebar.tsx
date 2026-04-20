@@ -1,103 +1,140 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { locales, localeConfig, type Locale } from "@/lib/i18n";
-
-const marketLabels: Record<string, string> = Object.fromEntries(
-  locales.map((l) => [l, localeConfig[l].name])
-);
 
 const sidebarGroups = [
   {
     label: "内容",
+    scope: "market" as const,
     items: [
-      { href: "/admin/tools", label: "工具管理" },
-      { href: "/admin/events", label: "活动管理" },
-      { href: "/admin/news", label: "文章管理" },
-    ],
-  },
-  {
-    label: "分组",
-    items: [
-      { href: "/admin/categories", label: "分类管理" },
-      { href: "/admin/tags", label: "标签管理" },
+      { path: "/tools", label: "工具管理" },
+      { path: "/events", label: "活动管理" },
+      { path: "/news", label: "文章管理" },
     ],
   },
   {
     label: "营销",
+    scope: "market" as const,
     items: [
-      { href: "/admin/leads", label: "Lead 管理" },
+      { path: "/leads", label: "Lead 管理" },
+      { path: "/settings", label: "市场设置" },
+    ],
+  },
+  {
+    label: "共享库",
+    scope: "global" as const,
+    items: [
+      { path: "/categories", label: "分类管理" },
+      { path: "/tags", label: "标签管理" },
     ],
   },
 ];
 
-export function AdminSidebar({ currentMarket }: { currentMarket: string }) {
+export function AdminSidebar({ currentMarket }: { currentMarket: Locale }) {
   const pathname = usePathname();
-  const router = useRouter();
+  const cfg = localeConfig[currentMarket];
+  const accent = cfg.accent;
 
-  function switchMarket(market: string) {
-    document.cookie = `admin_market=${market};path=/;max-age=31536000`;
-    router.refresh();
-  }
+  // Extract the sub-path after /admin/{market} so the market switcher can
+  // swap only the market segment and keep the admin on the same page.
+  const subPath = pathname.replace(/^\/admin\/[^/]+/, "") || "";
 
   return (
-    <aside className="w-56 border-r bg-muted/30 p-4 flex flex-col">
-      <Link href="/admin" className="font-bold text-lg mb-6">
-        Admin
-      </Link>
+    <aside className="w-60 border-r bg-muted/30 flex flex-col">
+      {/* Top stripe tints the sidebar to match the active market. */}
+      <div className={cn("h-1.5 w-full", accent.activeBg)} />
 
-      {/* Market selector */}
-      <div className="mb-4 px-1">
-        <label className="block text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest mb-1.5">
-          Market
-        </label>
-        <select
-          value={currentMarket}
-          onChange={(e) => switchMarket(e.target.value)}
-          className="w-full text-sm border rounded-md px-2 py-1.5 bg-background focus:outline-none focus:ring-1 focus:ring-primary"
+      {/* Brand + active market identity — the thing you see at a glance. */}
+      <div className={cn("px-4 py-4 border-b", accent.bg)}>
+        <div className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">
+          AIA Admin Portal
+        </div>
+        <Link
+          href={`/admin/${currentMarket}`}
+          className={cn("flex items-center gap-2 font-bold text-lg leading-tight", accent.text)}
         >
-          {locales.map((locale) => (
-            <option key={locale} value={locale}>
-              {marketLabels[locale]}
-            </option>
-          ))}
-        </select>
+          <span className="text-2xl leading-none">{cfg.flag}</span>
+          <span>{cfg.marketLabel}</span>
+        </Link>
       </div>
 
-      <nav className="flex flex-col gap-4">
-        {sidebarGroups.map((group) => (
-          <div key={group.label}>
-            <div className="px-3 mb-1.5 text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest">
-              {group.label}
-            </div>
-            <div className="flex flex-col gap-0.5">
-              {group.items.map((item) => (
+      <div className="p-4 flex-1 flex flex-col">
+        {/* Market switcher — Link-based so switching is instant client nav. */}
+        <div className="mb-5 px-1">
+          <label className="block text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest mb-1.5">
+            Switch portal
+          </label>
+          <div className="flex flex-col gap-1">
+            {locales.map((locale) => {
+              const lc = localeConfig[locale];
+              const isActive = locale === currentMarket;
+              return (
                 <Link
-                  key={item.href}
-                  href={item.href}
+                  key={locale}
+                  href={`/admin/${locale}${subPath}`}
                   className={cn(
-                    "px-3 py-1.5 text-sm rounded-md transition-colors",
-                    pathname === item.href
-                      ? "bg-primary/10 text-primary font-medium"
-                      : "text-foreground/80 hover:bg-muted hover:text-foreground"
+                    "flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors border",
+                    isActive
+                      ? `${lc.accent.activeBg} ${lc.accent.activeText} border-transparent font-medium shadow-sm`
+                      : "border-transparent hover:bg-muted text-foreground/80"
                   )}
                 >
-                  {item.label}
+                  <span className="text-base leading-none">{lc.flag}</span>
+                  <span className="truncate">{lc.marketLabel}</span>
                 </Link>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        ))}
-      </nav>
-      <div className="mt-auto pt-4 border-t">
-        <Link
-          href={`/${currentMarket}`}
-          className="text-sm text-muted-foreground hover:text-foreground"
-        >
-          &larr; 返回前台
-        </Link>
+        </div>
+
+        <nav className="flex flex-col gap-4">
+          {sidebarGroups.map((group) => (
+            <div key={group.label}>
+              <div className="px-3 mb-1.5 flex items-center justify-between text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60">
+                <span>{group.label}</span>
+                {group.scope === "global" && (
+                  <span className="text-[9px] font-mono bg-muted px-1 py-0.5 rounded text-muted-foreground/80">
+                    GLOBAL
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-col gap-0.5">
+                {group.items.map((item) => {
+                  const href = `/admin/${currentMarket}${item.path}`;
+                  const isActive = pathname === href;
+                  return (
+                    <Link
+                      key={item.path}
+                      href={href}
+                      className={cn(
+                        "px-3 py-1.5 text-sm rounded-md transition-colors",
+                        isActive
+                          ? group.scope === "market"
+                            ? `${accent.bg} ${accent.text} font-medium`
+                            : "bg-muted text-foreground font-medium"
+                          : "text-foreground/80 hover:bg-muted hover:text-foreground"
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </nav>
+
+        <div className="mt-auto pt-4 border-t">
+          <Link
+            href={`/${currentMarket}`}
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
+            &larr; 返回前台
+          </Link>
+        </div>
       </div>
     </aside>
   );

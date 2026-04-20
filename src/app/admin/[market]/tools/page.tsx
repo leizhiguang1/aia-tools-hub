@@ -1,18 +1,24 @@
-import { getAllTools, getTagsForTools, getCategories, getTags, getBulkAllLocaleTranslations } from "@/db/queries";
+import { notFound } from "next/navigation";
+import { getAllTools, getTagsForTools, getCategories, getTags } from "@/db/queries";
 import { AdminTools } from "@/features/admin/components/tools";
+import { isValidLocale } from "@/lib/i18n";
 
-export default async function AdminToolsPage() {
+export default async function AdminToolsPage({
+  params,
+}: {
+  params: Promise<{ market: string }>;
+}) {
+  const { market } = await params;
+  if (!isValidLocale(market)) notFound();
+
   const [tools, categories, allTags] = await Promise.all([
-    getAllTools(),
+    getAllTools(market),
     getCategories(),
     getTags(),
   ]);
 
   const toolIds = tools.map((t) => t.id);
-  const [tagMap, translationsRecord] = await Promise.all([
-    getTagsForTools(toolIds),
-    getBulkAllLocaleTranslations("tool", toolIds),
-  ]);
+  const tagMap = await getTagsForTools(toolIds);
 
   const tagRecord: Record<string, { id: string; name: string; slug: string; color: string; sort_order: number; created_at: string }[]> = {};
   for (const [key, value] of tagMap) {
@@ -25,7 +31,7 @@ export default async function AdminToolsPage() {
       tagRecord={tagRecord}
       categories={categories}
       allTags={allTags}
-      translationsRecord={translationsRecord}
+      currentMarket={market}
     />
   );
 }

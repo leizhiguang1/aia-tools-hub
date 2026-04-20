@@ -95,9 +95,11 @@ async function seed() {
   console.log(`  ✓ ${categories.length} categories`);
 
   console.log("Seeding tools...");
-  const { error: toolError } = await supabase.from("tools").upsert(tools);
+  // Seed script creates the CN baseline; migration 008 handles per-market duplication.
+  const toolsForCn = tools.map((t) => ({ ...t, market_id: "cn" }));
+  const { error: toolError } = await supabase.from("tools").upsert(toolsForCn);
   if (toolError) { console.error("Tools error:", toolError); return; }
-  console.log(`  ✓ ${tools.length} tools`);
+  console.log(`  ✓ ${tools.length} tools (market_id=cn)`);
 
   console.log("Done!");
 }

@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DeleteButton } from "@/features/admin/components/delete-button";
 import { EventForm } from "@/features/admin/components/event-form";
+import { MarketChip } from "@/features/admin/components/market-chip";
 import { createEventAction, updateEventAction, deleteEventAction } from "@/features/admin/actions/events";
 import type { Event, Tag } from "@/types";
 
@@ -53,14 +54,20 @@ export function AdminEvents({ events, tagRecord, allTags, translationsRecord, cu
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">活动管理</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold">活动管理</h1>
+          <MarketChip market={currentMarket} />
+        </div>
         <Button onClick={openCreate}>添加活动</Button>
       </div>
 
       <Dialog open={open} onOpenChange={(v) => { if (!v) handleClose(); }}>
         <DialogContent className="sm:max-w-3xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{editing ? "编辑活动" : "添加活动"}</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <span>{editing ? "编辑活动" : "添加活动"}</span>
+              <MarketChip market={currentMarket} />
+            </DialogTitle>
           </DialogHeader>
           <EventForm
             key={editing?.id ?? "new"}

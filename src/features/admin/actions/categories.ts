@@ -7,7 +7,7 @@ import { locales } from "@/lib/i18n";
 
 function revalidateAll() {
   for (const locale of locales) revalidatePath(`/${locale}`);
-  revalidatePath("/admin/categories");
+  revalidatePath("/admin/[market]/categories", "page");
 }
 
 export async function createCategoryAction(formData: FormData) {

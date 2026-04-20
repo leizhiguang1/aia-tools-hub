@@ -1,15 +1,18 @@
-import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import { getAllEvents, getTagsForEvents, getTags, getBulkAllLocaleTranslations } from "@/db/queries";
 import { AdminEvents } from "@/features/admin/components/events";
-import { defaultLocale, isValidLocale } from "@/lib/i18n";
+import { isValidLocale } from "@/lib/i18n";
 
-export default async function AdminEventsPage() {
-  const cookieStore = await cookies();
-  const marketCookie = cookieStore.get("admin_market")?.value;
-  const currentMarket = marketCookie && isValidLocale(marketCookie) ? marketCookie : defaultLocale;
+export default async function AdminEventsPage({
+  params,
+}: {
+  params: Promise<{ market: string }>;
+}) {
+  const { market } = await params;
+  if (!isValidLocale(market)) notFound();
 
   const [events, allTags] = await Promise.all([
-    getAllEvents(currentMarket),
+    getAllEvents(market),
     getTags(),
   ]);
 
@@ -30,7 +33,7 @@ export default async function AdminEventsPage() {
       tagRecord={tagRecord}
       allTags={allTags}
       translationsRecord={translationsRecord}
-      currentMarket={currentMarket}
+      currentMarket={market}
     />
   );
 }
