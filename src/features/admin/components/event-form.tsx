@@ -7,7 +7,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { TagInput } from "@/features/admin/components/tag-input";
 import { RichTextEditor } from "@/features/admin/components/rich-text-editor";
 import { ImageUpload } from "@/features/admin/components/image-upload";
-import { AdminTranslationFields } from "@/features/admin/components/translation-fields";
 import type { Event, Tag } from "@/types";
 
 export function EventForm({
@@ -15,13 +14,13 @@ export function EventForm({
   allTags,
   selectedTagIds = [],
   action,
-  existingTranslations = {},
+  market,
 }: {
   event?: Event | null;
   allTags: Tag[];
   selectedTagIds?: string[];
   action: (formData: FormData) => Promise<void>;
-  existingTranslations?: Record<string, Record<string, string>>;
+  market: string;
 }) {
 
   return (
@@ -59,7 +58,7 @@ export function EventForm({
 
       <div className="space-y-2">
         <Label>标签</Label>
-        <TagInput allTags={allTags} selectedTagIds={selectedTagIds} />
+        <TagInput allTags={allTags} selectedTagIds={selectedTagIds} market={market} />
       </div>
 
       <div className="flex items-center gap-2">
@@ -74,19 +73,6 @@ export function EventForm({
       </div>
 
       <Button type="submit" size="lg" className="w-full text-base">{event ? "保存修改" : "创建活动"}</Button>
-
-      {event && (
-        <AdminTranslationFields
-          entityType="event"
-          entityId={event.id}
-          fields={[
-            { name: "title", label: "标题 Title", type: "input" },
-            { name: "description", label: "简介 Description", type: "textarea" },
-            { name: "content", label: "内容 Content", type: "richtext" },
-          ]}
-          existingTranslations={existingTranslations}
-        />
-      )}
     </form>
   );
 }

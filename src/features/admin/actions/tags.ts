@@ -17,6 +17,7 @@ export async function createTagAction(formData: FormData) {
     slug: formData.get("slug") as string,
     color: (formData.get("color") as string) || "",
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
+    market_id: (formData.get("market_id") as string) || "cn",
   });
   revalidateAll();
 }
@@ -25,6 +26,7 @@ export async function createTagAction(formData: FormData) {
 export async function createTagInlineAction(data: {
   name: string;
   color: string;
+  market_id: string;
 }) {
   const slug = data.name
     .toLowerCase()
@@ -37,9 +39,10 @@ export async function createTagInlineAction(data: {
     slug,
     color: data.color,
     sort_order: 0,
+    market_id: data.market_id,
   });
   revalidateAll();
-  return { id, name: data.name, slug, color: data.color, sort_order: 0, created_at: new Date().toISOString() };
+  return { id, name: data.name, slug, color: data.color, sort_order: 0, market_id: data.market_id, created_at: new Date().toISOString() };
 }
 
 export async function updateTagAction(id: string, formData: FormData) {

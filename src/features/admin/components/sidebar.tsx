@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { locales, localeConfig, type Locale } from "@/lib/i18n";
+import { localeConfig, type Locale } from "@/lib/i18n";
 
 const sidebarGroups = [
   {
@@ -38,10 +38,6 @@ export function AdminSidebar({ currentMarket }: { currentMarket: Locale }) {
   const cfg = localeConfig[currentMarket];
   const accent = cfg.accent;
 
-  // Extract the sub-path after /admin/{market} so the market switcher can
-  // swap only the market segment and keep the admin on the same page.
-  const subPath = pathname.replace(/^\/admin\/[^/]+/, "") || "";
-
   return (
     <aside className="w-60 border-r bg-muted/30 flex flex-col">
       {/* Top stripe tints the sidebar to match the active market. */}
@@ -62,34 +58,6 @@ export function AdminSidebar({ currentMarket }: { currentMarket: Locale }) {
       </div>
 
       <div className="p-4 flex-1 flex flex-col">
-        {/* Market switcher — Link-based so switching is instant client nav. */}
-        <div className="mb-5 px-1">
-          <label className="block text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest mb-1.5">
-            Switch portal
-          </label>
-          <div className="flex flex-col gap-1">
-            {locales.map((locale) => {
-              const lc = localeConfig[locale];
-              const isActive = locale === currentMarket;
-              return (
-                <Link
-                  key={locale}
-                  href={`/admin/${locale}${subPath}`}
-                  className={cn(
-                    "flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors border",
-                    isActive
-                      ? `${lc.accent.activeBg} ${lc.accent.activeText} border-transparent font-medium shadow-sm`
-                      : "border-transparent hover:bg-muted text-foreground/80"
-                  )}
-                >
-                  <span className="text-base leading-none">{lc.flag}</span>
-                  <span className="truncate">{lc.marketLabel}</span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-
         <nav className="flex flex-col gap-4">
           {sidebarGroups.map((group) => (
             <div key={group.label}>

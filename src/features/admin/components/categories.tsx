@@ -7,16 +7,16 @@ import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DeleteButton } from "@/features/admin/components/delete-button";
-import { AdminTranslationFields } from "@/features/admin/components/translation-fields";
+import { MarketChip } from "@/features/admin/components/market-chip";
 import { createCategoryAction, updateCategoryAction, deleteCategoryAction } from "@/features/admin/actions/categories";
 import type { Category } from "@/types";
 
 export function AdminCategories({
   categories,
-  translationsRecord = {},
+  currentMarket,
 }: {
   categories: Category[];
-  translationsRecord?: Record<string, Record<string, Record<string, string>>>;
+  currentMarket: string;
 }) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Category | null>(null);
@@ -40,6 +40,7 @@ export function AdminCategories({
     if (editing) {
       await updateCategoryAction(editing.id, formData);
     } else {
+      formData.set("market_id", currentMarket);
       await createCategoryAction(formData);
     }
     handleClose();
@@ -48,14 +49,20 @@ export function AdminCategories({
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">分类管理</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold">分类管理</h1>
+          <MarketChip market={currentMarket} />
+        </div>
         <Button onClick={openCreate}>添加分类</Button>
       </div>
 
       <Dialog open={open} onOpenChange={(v) => { if (!v) handleClose(); }}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>{editing ? "编辑分类" : "添加分类"}</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <span>{editing ? "编辑分类" : "添加分类"}</span>
+              <MarketChip market={currentMarket} />
+            </DialogTitle>
           </DialogHeader>
           <form action={formAction} className="space-y-4" key={editing?.id ?? "new"}>
             <div className="space-y-2">
@@ -73,15 +80,6 @@ export function AdminCategories({
             <div className="flex justify-end">
               <Button type="submit">{editing ? "保存修改" : "添加"}</Button>
             </div>
-
-            {editing && (
-              <AdminTranslationFields
-                entityType="category"
-                entityId={editing.id}
-                fields={[{ name: "name", label: "名称 Name", type: "input" }]}
-                existingTranslations={translationsRecord[editing.id] || {}}
-              />
-            )}
           </form>
         </DialogContent>
       </Dialog>

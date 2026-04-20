@@ -8,18 +8,18 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DeleteButton } from "@/features/admin/components/delete-button";
+import { MarketChip } from "@/features/admin/components/market-chip";
 import { cn } from "@/lib/utils";
 import { TAG_COLORS, TAG_COLOR_NAMES, getTagColorStyle } from "@/lib/tag-colors";
-import { AdminTranslationFields } from "@/features/admin/components/translation-fields";
 import { createTagAction, updateTagAction, deleteTagAction } from "@/features/admin/actions/tags";
 import type { Tag } from "@/types";
 
 export function AdminTags({
   tags,
-  translationsRecord = {},
+  currentMarket,
 }: {
   tags: Tag[];
-  translationsRecord?: Record<string, Record<string, Record<string, string>>>;
+  currentMarket: string;
 }) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Tag | null>(null);
@@ -47,6 +47,7 @@ export function AdminTags({
     if (editing) {
       await updateTagAction(editing.id, formData);
     } else {
+      formData.set("market_id", currentMarket);
       await createTagAction(formData);
     }
     handleClose();
@@ -55,14 +56,20 @@ export function AdminTags({
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">标签管理</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold">标签管理</h1>
+          <MarketChip market={currentMarket} />
+        </div>
         <Button onClick={openCreate}>添加标签</Button>
       </div>
 
       <Dialog open={open} onOpenChange={(v) => { if (!v) handleClose(); }}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>{editing ? "编辑标签" : "添加标签"}</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <span>{editing ? "编辑标签" : "添加标签"}</span>
+              <MarketChip market={currentMarket} />
+            </DialogTitle>
           </DialogHeader>
           <form action={formAction} className="space-y-4" key={editing?.id ?? "new"}>
             <div className="space-y-2">
@@ -105,15 +112,6 @@ export function AdminTags({
             <div className="flex justify-end">
               <Button type="submit">{editing ? "保存修改" : "添加"}</Button>
             </div>
-
-            {editing && (
-              <AdminTranslationFields
-                entityType="tag"
-                entityId={editing.id}
-                fields={[{ name: "name", label: "名称 Name", type: "input" }]}
-                existingTranslations={translationsRecord[editing.id] || {}}
-              />
-            )}
           </form>
         </DialogContent>
       </Dialog>

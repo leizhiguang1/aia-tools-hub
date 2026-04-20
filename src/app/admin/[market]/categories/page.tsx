@@ -1,9 +1,17 @@
-import { getCategories, getBulkAllLocaleTranslations } from "@/db/queries";
+import { notFound } from "next/navigation";
+import { getCategories } from "@/db/queries";
 import { AdminCategories } from "@/features/admin/components/categories";
+import { isValidLocale } from "@/lib/i18n";
 
-export default async function AdminCategoriesPage() {
-  const categories = await getCategories();
-  const translationsRecord = await getBulkAllLocaleTranslations("category", categories.map((c) => c.id));
+export default async function AdminCategoriesPage({
+  params,
+}: {
+  params: Promise<{ market: string }>;
+}) {
+  const { market } = await params;
+  if (!isValidLocale(market)) notFound();
 
-  return <AdminCategories categories={categories} translationsRecord={translationsRecord} />;
+  const categories = await getCategories(market);
+
+  return <AdminCategories categories={categories} currentMarket={market} />;
 }

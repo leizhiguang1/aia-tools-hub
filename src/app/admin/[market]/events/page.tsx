@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
-import { getAllEvents, getTagsForEvents, getTags, getBulkAllLocaleTranslations } from "@/db/queries";
+import { getAllEvents, getTagsForEvents, getTags } from "@/db/queries";
 import { AdminEvents } from "@/features/admin/components/events";
 import { isValidLocale } from "@/lib/i18n";
+import type { Tag } from "@/types";
 
 export default async function AdminEventsPage({
   params,
@@ -13,16 +14,12 @@ export default async function AdminEventsPage({
 
   const [events, allTags] = await Promise.all([
     getAllEvents(market),
-    getTags(),
+    getTags(market),
   ]);
 
-  const eventIds = events.map((e) => e.id);
-  const [tagMap, translationsRecord] = await Promise.all([
-    getTagsForEvents(eventIds),
-    getBulkAllLocaleTranslations("event", eventIds),
-  ]);
+  const tagMap = await getTagsForEvents(events.map((e) => e.id));
 
-  const tagRecord: Record<string, { id: string; name: string; slug: string; color: string; sort_order: number; created_at: string }[]> = {};
+  const tagRecord: Record<string, Tag[]> = {};
   for (const [key, value] of tagMap) {
     tagRecord[key] = value;
   }
@@ -32,7 +29,6 @@ export default async function AdminEventsPage({
       events={events}
       tagRecord={tagRecord}
       allTags={allTags}
-      translationsRecord={translationsRecord}
       currentMarket={market}
     />
   );

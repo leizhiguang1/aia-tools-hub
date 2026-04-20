@@ -33,11 +33,11 @@ export const localeConfig: Record<
   }
 > = {
   cn: {
-    name: "中文",
-    dateLocale: "zh-CN",
-    htmlLang: "zh-CN",
-    marketLabel: "China · 中国",
-    flag: "🇨🇳",
+    name: "中文 (马来西亚)",
+    dateLocale: "zh-MY",
+    htmlLang: "zh-MY",
+    marketLabel: "Malaysia · 大马华人",
+    flag: "🇲🇾",
     accent: {
       bg: "bg-red-50",
       border: "border-red-500",
@@ -51,7 +51,7 @@ export const localeConfig: Record<
     name: "Bahasa Melayu",
     dateLocale: "ms-MY",
     htmlLang: "ms",
-    marketLabel: "Malaysia",
+    marketLabel: "Malaysia · Melayu",
     flag: "🇲🇾",
     accent: {
       bg: "bg-blue-50",

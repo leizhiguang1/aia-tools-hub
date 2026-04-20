@@ -7,13 +7,12 @@ const supabase = createClient(
 );
 
 async function main() {
-  const [categories, tools, tags, events, posts, translations] = await Promise.all([
+  const [categories, tools, tags, events, posts] = await Promise.all([
     supabase.from("categories").select("*").order("sort_order"),
     supabase.from("tools").select("*").order("sort_order"),
     supabase.from("tags").select("*").order("sort_order"),
     supabase.from("events").select("*"),
     supabase.from("posts").select("*"),
-    supabase.from("translations").select("entity_type, entity_id, locale, field"),
   ]);
 
   const summary = {
@@ -22,7 +21,6 @@ async function main() {
     tags: tags.data ?? [],
     events: events.data ?? [],
     posts: posts.data ?? [],
-    existingTranslations: translations.data ?? [],
   };
 
   writeFileSync(
@@ -36,7 +34,6 @@ async function main() {
   console.log("  tags:", summary.tags.length);
   console.log("  events:", summary.events.length);
   console.log("  posts:", summary.posts.length);
-  console.log("  existing translations:", summary.existingTranslations.length);
 }
 
 main();

@@ -3,6 +3,7 @@ export interface Category {
   name: string;
   slug: string;
   sort_order: number;
+  market_id: string;
   created_at: string;
 }
 
@@ -64,6 +65,7 @@ export interface Tag {
   slug: string;
   color: string;
   sort_order: number;
+  market_id: string;
   created_at: string;
 }
 
@@ -87,13 +89,3 @@ export interface Market {
   created_at: string;
 }
 
-export interface Translation {
-  id: string;
-  entity_type: string;
-  entity_id: string;
-  locale: string;
-  field: string;
-  value: string;
-  created_at: string;
-  updated_at: string;
-}

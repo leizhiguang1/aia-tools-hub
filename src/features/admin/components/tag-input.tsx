@@ -12,10 +12,12 @@ export function TagInput({
   allTags,
   selectedTagIds = [],
   name = "tag_ids",
+  market,
 }: {
   allTags: Tag[];
   selectedTagIds?: string[];
   name?: string;
+  market: string;
 }) {
   const [tags, setTags] = useState<Tag[]>(allTags);
   const [selected, setSelected] = useState<Set<string>>(new Set(selectedTagIds));
@@ -46,6 +48,7 @@ export function TagInput({
       const tag = await createTagInlineAction({
         name: trimmed,
         color: newColor,
+        market_id: market,
       });
       setTags((prev) => [...prev, tag as Tag]);
       setSelected((prev) => new Set(prev).add(tag.id));

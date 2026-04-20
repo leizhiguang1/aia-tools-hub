@@ -77,6 +77,7 @@ export function AdminTools({ tools, tagRecord, categories, allTags, currentMarke
             allTags={allTags}
             selectedTagIds={editingTagIds}
             action={formAction}
+            market={currentMarket}
           />
         </DialogContent>
       </Dialog>

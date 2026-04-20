@@ -1,8 +1,7 @@
-import { getTools, getCategories, getBulkTranslations, getMarket } from "@/db/queries";
+import { getTools, getCategories, getMarket } from "@/db/queries";
 import { StackBuilder } from "@/features/public/components/stack-builder";
 import { getDictionary } from "@/lib/dictionaries";
 import { type Locale, localePath } from "@/lib/i18n";
-import { applyBulkTranslations } from "@/lib/translate";
 import Link from "next/link";
 
 export default async function BuildStackPage({
@@ -15,13 +14,9 @@ export default async function BuildStackPage({
 
   const [tools, categories, market] = await Promise.all([
     getTools(lang),
-    getCategories(),
+    getCategories(lang),
     getMarket(lang),
   ]);
-
-  // Tools are per-market (native content per row); categories remain global → translate.
-  const catTransMap = await getBulkTranslations("category", categories.map((c) => c.id), lang);
-  const translatedCategories = applyBulkTranslations(categories, catTransMap, ["name"]);
 
   return (
     <div>
@@ -44,7 +39,7 @@ export default async function BuildStackPage({
 
       <StackBuilder
         tools={tools}
-        categories={translatedCategories}
+        categories={categories}
         dict={dict}
         lang={lang}
         qrDataUrl={market?.qr_data_url || ""}

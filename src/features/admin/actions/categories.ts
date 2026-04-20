@@ -16,6 +16,7 @@ export async function createCategoryAction(formData: FormData) {
     name: formData.get("name") as string,
     slug: formData.get("slug") as string,
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
+    market_id: (formData.get("market_id") as string) || "cn",
   });
   revalidateAll();
 }

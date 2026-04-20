@@ -15,12 +15,14 @@ export function ToolForm({
   allTags,
   selectedTagIds = [],
   action,
+  market,
 }: {
   tool?: Tool | null;
   categories: Category[];
   allTags: Tag[];
   selectedTagIds?: string[];
   action: (formData: FormData) => Promise<void>;
+  market: string;
 }) {
   return (
     <form action={action} className="space-y-4">
@@ -97,7 +99,7 @@ export function ToolForm({
 
       <div className="space-y-2">
         <Label>标签</Label>
-        <TagInput allTags={allTags} selectedTagIds={selectedTagIds} />
+        <TagInput allTags={allTags} selectedTagIds={selectedTagIds} market={market} />
       </div>
 
       <div className="flex items-center gap-2">

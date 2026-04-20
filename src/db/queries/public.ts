@@ -3,10 +3,11 @@ import type { Category, Tool, Event, Post, Tag, Lead, Market } from "@/types";
 
 // ============ Categories ============
 
-export async function getCategories(): Promise<Category[]> {
+export async function getCategories(marketId: string): Promise<Category[]> {
   const { data, error } = await supabasePublic
     .from("categories")
     .select("*")
+    .eq("market_id", marketId)
     .order("sort_order", { ascending: true });
   if (error) throw error;
   return data as Category[];
@@ -138,10 +139,11 @@ export async function getMarket(id: string): Promise<Market | null> {
 
 // ============ Tags ============
 
-export async function getTags(): Promise<Tag[]> {
+export async function getTags(marketId: string): Promise<Tag[]> {
   const { data, error } = await supabasePublic
     .from("tags")
     .select("*")
+    .eq("market_id", marketId)
     .order("sort_order", { ascending: true })
     .order("name", { ascending: true });
   if (error) throw error;
@@ -217,51 +219,6 @@ export async function getTagsForPost(postId: string): Promise<Tag[]> {
     .eq("post_id", postId);
   if (error) throw error;
   return (data ?? []).map((row) => row.tags as unknown as Tag).filter(Boolean);
-}
-
-// ============ Translations ============
-
-export async function getTranslationsForLocale(
-  entityType: string,
-  entityId: string,
-  locale: string
-): Promise<Record<string, string>> {
-  if (locale === "cn") return {};
-  const { data, error } = await supabasePublic
-    .from("translations")
-    .select("field, value")
-    .eq("entity_type", entityType)
-    .eq("entity_id", entityId)
-    .eq("locale", locale);
-  if (error) {
-    if (error.code === "PGRST205") return {};
-    throw error;
-  }
-  return Object.fromEntries((data ?? []).map((r) => [r.field, r.value]));
-}
-
-export async function getBulkTranslations(
-  entityType: string,
-  entityIds: string[],
-  locale: string
-): Promise<Map<string, Record<string, string>>> {
-  const map = new Map<string, Record<string, string>>();
-  if (entityIds.length === 0 || locale === "cn") return map;
-  const { data, error } = await supabasePublic
-    .from("translations")
-    .select("entity_id, field, value")
-    .eq("entity_type", entityType)
-    .eq("locale", locale)
-    .in("entity_id", entityIds);
-  if (error) {
-    if (error.code === "PGRST205") return map;
-    throw error;
-  }
-  for (const row of data ?? []) {
-    if (!map.has(row.entity_id)) map.set(row.entity_id, {});
-    map.get(row.entity_id)![row.field] = row.value;
-  }
-  return map;
 }
 
 // ============ Votes (writes — needs service role for insert) ============

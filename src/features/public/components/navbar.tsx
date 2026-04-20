@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LanguageSwitcher } from "@/features/public/components/language-switcher";
 import type { Dictionary } from "@/lib/dictionaries";
 import { Menu, X } from "lucide-react";
 
@@ -61,11 +60,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: Dictionary }) {
           ))}
         </nav>
 
-        {/* Desktop language switcher */}
-        <div className="hidden md:block">
-          <LanguageSwitcher currentLocale={lang} />
-        </div>
-
         {/* Mobile: spacer + hamburger */}
         <div className="flex-1 md:hidden" />
         <button
@@ -96,9 +90,6 @@ export function Navbar({ lang, dict }: { lang: string; dict: Dictionary }) {
                 {item.label}
               </Link>
             ))}
-            <div className="pt-2 border-t mt-1">
-              <LanguageSwitcher currentLocale={lang} />
-            </div>
           </nav>
         </div>
       )}

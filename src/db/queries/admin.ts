@@ -1,7 +1,6 @@
 import { supabaseAdmin } from "../client";
-import type { Category, Tool, Event, Post, Tag, Translation, Lead, Market } from "@/types";
+import type { Category, Tool, Event, Post, Tag, Lead, Market } from "@/types";
 import { flattenToolCategories } from "./public";
-import { defaultLocale, locales } from "@/lib/i18n";
 
 // ============ Categories ============
 
@@ -15,7 +14,7 @@ export async function getCategoryById(id: string): Promise<Category | null> {
   return data as Category | null;
 }
 
-export async function createCategory(data: { id: string; name: string; slug: string; sort_order: number }) {
+export async function createCategory(data: { id: string; name: string; slug: string; sort_order: number; market_id: string }) {
   const { error } = await supabaseAdmin.from("categories").insert(data);
   if (error) throw error;
 }
@@ -192,7 +191,7 @@ export async function getTagById(id: string): Promise<Tag | null> {
   return data as Tag | null;
 }
 
-export async function createTag(data: { id: string; name: string; slug: string; color: string; sort_order: number }) {
+export async function createTag(data: { id: string; name: string; slug: string; color: string; sort_order: number; market_id: string }) {
   const { error } = await supabaseAdmin.from("tags").insert(data);
   if (error) throw error;
 }
@@ -246,79 +245,6 @@ export async function setPostTags(postId: string, tagIds: string[]) {
       .insert(tagIds.map((tagId) => ({ post_id: postId, tag_id: tagId })));
     if (error) throw error;
   }
-}
-
-// ============ Translations ============
-
-export async function getTranslations(
-  entityType: string,
-  entityId: string
-): Promise<Translation[]> {
-  const { data, error } = await supabaseAdmin
-    .from("translations")
-    .select("*")
-    .eq("entity_type", entityType)
-    .eq("entity_id", entityId);
-  if (error) {
-    if (error.code === "PGRST205") return [];
-    throw error;
-  }
-  return data as Translation[];
-}
-
-export async function getBulkAllLocaleTranslations(
-  entityType: string,
-  entityIds: string[]
-): Promise<Record<string, Record<string, Record<string, string>>>> {
-  // Returns: { [entityId]: { [locale]: { [field]: value } } }
-  const result: Record<string, Record<string, Record<string, string>>> = {};
-  if (entityIds.length === 0) return result;
-
-  const { data, error } = await supabaseAdmin
-    .from("translations")
-    .select("entity_id, locale, field, value")
-    .eq("entity_type", entityType)
-    .in("entity_id", entityIds)
-    .neq("locale", defaultLocale);
-  if (error) {
-    if (error.code === "PGRST205") return result;
-    throw error;
-  }
-
-  for (const row of data ?? []) {
-    if (!result[row.entity_id]) result[row.entity_id] = {};
-    if (!result[row.entity_id][row.locale]) result[row.entity_id][row.locale] = {};
-    result[row.entity_id][row.locale][row.field] = row.value;
-  }
-  return result;
-}
-
-export async function upsertTranslation(data: {
-  entity_type: string;
-  entity_id: string;
-  locale: string;
-  field: string;
-  value: string;
-}) {
-  const { error } = await supabaseAdmin
-    .from("translations")
-    .upsert(
-      { ...data, updated_at: new Date().toISOString() },
-      { onConflict: "entity_type,entity_id,locale,field" }
-    );
-  if (error) throw error;
-}
-
-export async function deleteTranslationsForEntity(
-  entityType: string,
-  entityId: string
-) {
-  const { error } = await supabaseAdmin
-    .from("translations")
-    .delete()
-    .eq("entity_type", entityType)
-    .eq("entity_id", entityId);
-  if (error) throw error;
 }
 
 // ============ Leads ============

@@ -114,7 +114,10 @@ function ToolCard({ tool, dict }: { tool: Tool; dict: Dictionary }) {
       )}
 
       {/* Description */}
-      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+      <p
+        className="text-sm text-muted-foreground line-clamp-3 leading-relaxed"
+        title={tool.description}
+      >
         {tool.description}
       </p>
 

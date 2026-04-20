@@ -1,4 +1,4 @@
-import { getPostBySlug, getTagsForPost, getTranslationsForLocale } from "@/db/queries";
+import { getPostBySlug, getTagsForPost } from "@/db/queries";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
@@ -6,7 +6,6 @@ import remarkGfm from "remark-gfm";
 import { TagList } from "@/features/public/components/tag-list";
 import { getDictionary } from "@/lib/dictionaries";
 import { type Locale, localePath, dateLocaleMap } from "@/lib/i18n";
-import { applyTranslations } from "@/lib/translate";
 import { isHtmlContent, sanitizeContent } from "@/lib/content";
 
 export default async function PostDetailPage({
@@ -20,15 +19,10 @@ export default async function PostDetailPage({
   const post = await getPostBySlug(slug, lang);
   if (!post) notFound();
 
-  const [tags, trans] = await Promise.all([
-    getTagsForPost(post.id),
-    getTranslationsForLocale("post", post.id, lang),
-  ]);
-
-  const translated = applyTranslations(post, trans, ["title", "content", "excerpt"]);
+  const tags = await getTagsForPost(post.id);
   const dateFmt = dateLocaleMap[lang as Locale] || "zh-CN";
-  const ts = Number(translated.published_at);
-  const date = new Date(isNaN(ts) ? translated.published_at : ts * 1000).toLocaleDateString(dateFmt);
+  const ts = Number(post.published_at);
+  const date = new Date(isNaN(ts) ? post.published_at : ts * 1000).toLocaleDateString(dateFmt);
 
   return (
     <article className="max-w-3xl mx-auto">
@@ -39,11 +33,11 @@ export default async function PostDetailPage({
         &larr; {dict.news.back}
       </Link>
 
-      {translated.cover_image && (
+      {post.cover_image && (
         <div className="aspect-video overflow-hidden rounded-lg mb-6">
           <img
-            src={translated.cover_image}
-            alt={translated.title}
+            src={post.cover_image}
+            alt={post.title}
             className="w-full h-full object-cover"
           />
         </div>
@@ -52,24 +46,24 @@ export default async function PostDetailPage({
       <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
         <span>{date}</span>
         <span>·</span>
-        <span>{translated.author}</span>
+        <span>{post.author}</span>
       </div>
 
-      <h1 className="text-3xl font-bold mb-4">{translated.title}</h1>
+      <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
 
       <div className="mb-8">
         <TagList tags={tags} max={10} />
       </div>
 
-      {isHtmlContent(translated.content) ? (
+      {isHtmlContent(post.content) ? (
         <div
           className="prose prose-neutral max-w-none"
-          dangerouslySetInnerHTML={{ __html: sanitizeContent(translated.content) }}
+          dangerouslySetInnerHTML={{ __html: sanitizeContent(post.content) }}
         />
       ) : (
         <div className="prose prose-neutral max-w-none">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {translated.content}
+            {post.content}
           </ReactMarkdown>
         </div>
       )}

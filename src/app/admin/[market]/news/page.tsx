@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
-import { getAllPosts, getTagsForPosts, getTags, getBulkAllLocaleTranslations } from "@/db/queries";
+import { getAllPosts, getTagsForPosts, getTags } from "@/db/queries";
 import { AdminNews } from "@/features/admin/components/news";
 import { isValidLocale } from "@/lib/i18n";
+import type { Tag } from "@/types";
 
 export default async function AdminNewsPage({
   params,
@@ -13,16 +14,12 @@ export default async function AdminNewsPage({
 
   const [posts, allTags] = await Promise.all([
     getAllPosts(market),
-    getTags(),
+    getTags(market),
   ]);
 
-  const postIds = posts.map((p) => p.id);
-  const [tagMap, translationsRecord] = await Promise.all([
-    getTagsForPosts(postIds),
-    getBulkAllLocaleTranslations("post", postIds),
-  ]);
+  const tagMap = await getTagsForPosts(posts.map((p) => p.id));
 
-  const tagRecord: Record<string, { id: string; name: string; slug: string; color: string; sort_order: number; created_at: string }[]> = {};
+  const tagRecord: Record<string, Tag[]> = {};
   for (const [key, value] of tagMap) {
     tagRecord[key] = value;
   }
@@ -32,7 +29,6 @@ export default async function AdminNewsPage({
       posts={posts}
       tagRecord={tagRecord}
       allTags={allTags}
-      translationsRecord={translationsRecord}
       currentMarket={market}
     />
   );

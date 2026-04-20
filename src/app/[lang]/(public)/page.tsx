@@ -1,9 +1,8 @@
-import { getTools, getCategories, getTagsForTools, getPopularTools, getBulkTranslations } from "@/db/queries";
+import { getTools, getCategories, getTagsForTools, getPopularTools } from "@/db/queries";
 import { ToolsGrid } from "@/features/public/components/tools-grid";
 import { PopularTools } from "@/features/public/components/popular-tools";
 import { getDictionary } from "@/lib/dictionaries";
 import { type Locale, localePath } from "@/lib/i18n";
-import { applyBulkTranslations } from "@/lib/translate";
 import Link from "next/link";
 
 export default async function HomePage({
@@ -16,17 +15,12 @@ export default async function HomePage({
 
   const [tools, categories, { tools: popularTools }] = await Promise.all([
     getTools(lang),
-    getCategories(),
+    getCategories(lang),
     getPopularTools(lang),
   ]);
 
   const allToolIds = [...new Set([...tools.map((t) => t.id), ...popularTools.map((t) => t.id)])];
   const tagMap = await getTagsForTools(allToolIds);
-
-  // Tools are per-market (each row is already in the market's native language),
-  // so no translation overlay needed. Categories remain global → translate.
-  const catTransMap = await getBulkTranslations("category", categories.map((c) => c.id), lang);
-  const translatedCategories = applyBulkTranslations(categories, catTransMap, ["name"]);
 
   const toolsWithTags = tools.map((tool) => ({
     ...tool,
@@ -77,7 +71,7 @@ export default async function HomePage({
         <PopularTools tools={popularWithTags} dict={dict} />
       )}
 
-      <ToolsGrid tools={toolsWithTags} categories={translatedCategories} dict={dict} lang={lang} />
+      <ToolsGrid tools={toolsWithTags} categories={categories} dict={dict} lang={lang} />
     </div>
   );
 }
