@@ -119,15 +119,18 @@ export function StackPreview({
                   {dict.stack.preview_download}
                 </a>
               )}
+              {lang === "cn" && (
+                <a
+                  href="https://api.whatsapp.com/send?phone=60178966906&text=Hi%20Reeve%20%E5%9B%A2%E9%98%9F%EF%BC%8C%E6%88%91%E6%83%B3%E4%BA%86%E8%A7%A3%E3%80%90AI%20%E7%BD%91%E7%BB%9C%E8%87%AA%E7%94%B1%E5%88%9B%E4%B8%9A%E3%80%91%EF%BC%81%E8%AF%B7%E9%97%AE%E5%AD%A6%E4%B9%A0%E7%BE%A4%E9%93%BE%E6%8E%A5%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F%E6%88%91%E8%A6%81%E9%A2%86%E5%8F%96%20BONUS%20%F0%9F%8E%81"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-center py-2 px-3 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/40 rounded-lg text-sm font-bold hover:bg-[#25D366]/20 transition-colors animate-pulse-border"
+                >
+                  🎁 领取小礼物
+                </a>
+              )}
             </>
           )}
-
-          <button
-            onClick={onClose}
-            className="block w-full text-center py-2.5 px-4 border rounded-lg text-muted-foreground hover:bg-muted transition-colors"
-          >
-            {dict.stack.preview_reselect}
-          </button>
         </div>
       </div>
     </div>

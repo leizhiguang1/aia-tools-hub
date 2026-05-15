@@ -160,3 +160,16 @@
   outline: 2px solid var(--primary);
   border-radius: 0.375rem;
 }
+
+@keyframes pulse-border {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(37, 211, 102, 0);
+  }
+}
+
+.animate-pulse-border {
+  animation: pulse-border 1.8s ease-in-out infinite;
+}
